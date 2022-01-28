@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 
         <Question text={getQuestion()} />
 
-        <PlayerAnswer name="player 1"  answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero." />
+        <PlayerAnswer name="name"  answer="Lorem ipsum dolor sit." />
 
         <PlayerScore />
 

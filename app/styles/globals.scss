@@ -40,7 +40,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
   background-color: $secondary-color;
   position: fixed;
   width: 102vw;
-  height: 10vh;
+  height: 4.75rem;
   left:-1vw;
   display:flex;
   justify-content: space-around;
@@ -72,9 +72,6 @@ $lightened-tertiary-color: rgba(white, 0.7);
   background-color: $tertiary-color;
   color: white;
   &:focus {
-    outline:none;
-  }
-  &:focus {
     background-color: $secondary-color;
     border: 2px solid $secondary-color;
   }
@@ -103,7 +100,6 @@ $lightened-tertiary-color: rgba(white, 0.7);
   width: 80%;
   outline: 2px solid $secondary-color;
   border-radius: 1rem;
-  padding: 0.5rem;
   display:flex;
   justify-content: space-between;
   box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
