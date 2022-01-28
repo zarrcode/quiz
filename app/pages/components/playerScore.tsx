@@ -1,12 +1,13 @@
 import type { NextPage } from 'next'
+import { playerScoreProps } from '../interfaces'
 
-const PlayerScore: NextPage = () => {
+const PlayerScore: NextPage<playerScoreProps> = ({ name, score }) => {
 
   return (
     <div className="flex justify-center">
       <div className="playerScore">
-        <p className="name">name</p>
-        <p>5</p>
+        <p className="name">{name}</p>
+        <p>{score}</p>
       </div>
     </div>
   )

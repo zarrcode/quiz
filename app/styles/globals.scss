@@ -60,7 +60,6 @@ $lightened-tertiary-color: rgba(white, 0.7);
 
 .activeBtn {
   background-color: $secondary-color;
-  // background-color: $lightened-tertiary-color;
   box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
 }
 
@@ -80,7 +79,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
     opacity: 1;
   }
   box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
-  transition: all 0.5s;
+  transition: all 0.6s;
 }
 
 .questionSubmit {

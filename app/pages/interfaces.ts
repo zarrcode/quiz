@@ -21,3 +21,8 @@ export interface playerAnswerProps {
   name:string;
   answer:string;
 }
+
+export interface playerScoreProps {
+  name:string;
+  score:number;
+}
