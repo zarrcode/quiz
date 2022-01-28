@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding:0;
+  margin: 0;
+}
+
+$base-color: #29282C;
+$secondary-color: #27B7C0;
+
+
+/*
+
+  1.0 Navbar
+
+
+
+
+*/
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: $base-color;
+}
+
+.navbar {
+  background-color: $secondary-color;
+  position: fixed;
+  width: 100vw;
+  height: 10vh;
+  display:flex;
+  justify-content: space-around;
+}
