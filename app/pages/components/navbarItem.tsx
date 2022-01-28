@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import { NavbarProps } from '../interfaces'
+import { textProp } from '../interfaces'
 
-const NavbarItem: NextPage<NavbarProps> = ({text}) => {
+const NavbarItem: NextPage<textProp> = ({text}) => {
   return (
-    <div>
-      <p className="text-green-500" >{text}</p>
+    <div className="navbarItem w-[100%] flex justify-center border-x border-black py-[0.25rem]">
+      <p className="text-white text-xl" >{text}</p>
     </div>
   )
 }
