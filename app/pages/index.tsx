@@ -4,8 +4,10 @@ import Option from './components/option'
 import Question from './components/question'
 import PlayerAnswer from './components/playerAnswer'
 import PlayerScore from './components/playerScore'
+import Home from './home'
+import Link from 'next/link'
 
-const Home: NextPage = () => {
+const Index: NextPage = () => {
 
   function getQuestion() {
     return 'Lorem ipsum dolor sit amet?'
@@ -23,9 +25,14 @@ const Home: NextPage = () => {
 
         <PlayerScore name="name" score={5} />
 
+
+        <Link href={{ pathname: "/home", query: { name: "some name" } }} as="/">
+        <h1> hi</h1>
+        </Link>
       </div>
+      {/* <Home /> */}
     </div>
   )
 }
 
-export default Home
+export default Index

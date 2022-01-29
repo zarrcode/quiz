@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     './pages/index.tsx',
+    './pages/home.tsx',
     './pages/navbar.tsx',
     './pages/components/navbarItem.tsx',
     './pages/components/button.tsx',
