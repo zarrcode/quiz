@@ -1,13 +1,37 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import Option from './components/option';
+import {
+  socket,
+  SESSION_ID,
+  addSocketEventListeners,
+  removeSocketEventListeners,
+} from '../services/socket';
 
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreateingQuiz] = useState(false);
   // const [gameState, setGameState] = useState('');
+
+  useEffect(() => {
+    // on mount, add socket event listeners
+    addSocketEventListeners();
+
+    // if session exists, reconnect to server
+    const sessionID = localStorage.getItem(SESSION_ID);
+    if (sessionID) {
+      socket.auth = { sessionID };
+      socket.connect();
+    }
+
+    // on unmount, remove socket event listeners and disconnect socket
+    return () => {
+      removeSocketEventListeners();
+      if (socket.connected) socket.disconnect();
+    };
+  });
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
