@@ -1,5 +1,6 @@
-export interface textProp {
-  text:string
+export interface navbarProps {
+  text:string;
+  url:string;
 }
 
 export interface buttonProps {

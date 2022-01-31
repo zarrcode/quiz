@@ -9,14 +9,14 @@ body {
 }
 
 .bg {
-  background-color: #1a1919;
+  background: radial-gradient(ellipse at top, #1d1c1c, #1a1919);
 }
 
 /*
 
   --Components--
 
-  Navbar
+  navbar
 
   mainBtn
   activeBtn
@@ -26,6 +26,16 @@ body {
 
   playerAnswer
   playerScore
+
+  --Utility Classes--
+
+  wrapper
+
+  fontSizelarge
+  fontSizeMedium
+  fontSizeSmall
+
+  gapSize
 
 */
 .navbar {
@@ -46,20 +56,30 @@ body {
 }
 
 .mainBtn {
-  width: 10ch;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  width: 12ch;
+  height: 6ch;
   padding: 0.75rem;
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid #2c086d;
   -webkit-box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
           box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
-  outline: 1px solid black;
+  outline: 1px solid rgba(0, 0, 0, 0.6);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .activeBtn {
   background-color: #2c086d;
-  -webkit-box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
-          box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
+  -webkit-transition: all 0.7s;
+  transition: all 0.7s;
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  outline: 1px solid rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
+          box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
 }
 
 .questionInput {
@@ -138,5 +158,26 @@ body {
 .playerAnswer p,
 .playerScore p {
   padding: 0.5rem;
+}
+
+.wrapper {
+  border: 1px solid red;
+  width: Min(95vw, 60rem);
+}
+
+.fontSizeLarge {
+  font-size: calc(1.25rem + 1vw);
+}
+
+.fontSizeMedium {
+  font-size: calc(1rem + 0.75vw);
+}
+
+.fontSizeSmall {
+  font-size: calc(0.75rem + 0.5vw);
+}
+
+.gapSize {
+  gap: calc(-10px + 8vw);
 }
 /*# sourceMappingURL=globals.css.map */

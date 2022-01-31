@@ -1,11 +1,16 @@
 import type { NextPage } from 'next'
-import { textProp } from '../interfaces'
+import { navbarProps } from '../interfaces'
+import Link from 'next/link'
 
-const NavbarItem: NextPage<textProp> = ({text}) => {
+const NavbarItem: NextPage<navbarProps> = ({text, url}) => {
   return (
-    <div className="navbarItem w-[100%] flex justify-center border-x border-black py-[0.25rem]">
-      <p className="text-white text-xl" >{text}</p>
-    </div>
+    <Link href={{ pathname: url}}>
+      <div className="navbarItem w-full h-full flex justify-center items-center py-[0.25rem]">
+        <div className="w-full h-1/2 flex flex-col items-center justify-center border-x border-black">
+          <p className="text-white fontSizeMedium" >{text}</p>
+        </div>
+      </div>
+    </Link>
   )
 }
 

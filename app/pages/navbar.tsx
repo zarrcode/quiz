@@ -5,9 +5,9 @@ const Navbar: NextPage = () => {
 
   return (
     <div className="navbar">
-      <NavbarItem  text="rules"  />
-      <NavbarItem  text="Home"  />
-      <NavbarItem  text="Quiz"  />
+      <NavbarItem  text="Rules" url="/rules"  />
+      <NavbarItem  text="Home"  url="/" />
+      <NavbarItem  text="Quiz" url="/quiz"  />
     </div>
   )
 }

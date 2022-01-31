@@ -5,8 +5,8 @@ const Button: NextPage<buttonProps> = ({text, btnPress, isActive}) => {
 
   return (
     <div>
-      <button className={`mainBtn ${isActive && 'activeBtn'}`}
-      onClick={() => btnPress(text)}
+      <button className={`mainBtn fontSizeSmall ${isActive && 'activeBtn'}`}
+      onClick={() => {btnPress(text)}}
       >{text}</button>
     </div>
   )
