@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface navbarProps {
   text:string;
   url:string;

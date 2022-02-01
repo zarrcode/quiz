@@ -1,15 +1,12 @@
-import type { NextPage } from 'next'
-import NavbarItem from './components/navbarItem'
+import type { NextPage } from 'next';
+import NavbarItem from './components/navbarItem';
 
-const Navbar: NextPage = () => {
-
-  return (
+const Navbar: NextPage = () => (
     <div className="navbar">
-      <NavbarItem  text="Rules" url="/rules"  />
-      <NavbarItem  text="Home"  url="/" />
-      <NavbarItem  text="Quiz" url="/quiz"  />
+      <NavbarItem text="Rules" url="/rules" />
+      <NavbarItem text="Home" url="/" />
+      <NavbarItem text="Quiz" url="/quiz" />
     </div>
-  )
-}
+);
 
-export default Navbar
+export default Navbar;

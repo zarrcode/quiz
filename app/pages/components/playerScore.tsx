@@ -1,16 +1,13 @@
-import type { NextPage } from 'next'
-import { playerScoreProps } from '../interfaces'
+import type { NextPage } from 'next';
+import { playerScoreProps } from '../interfaces';
 
-const PlayerScore: NextPage<playerScoreProps> = ({ name, score }) => {
-
-  return (
+const PlayerScore: NextPage<playerScoreProps> = ({ name, score }) => (
     <div className="flex justify-center">
       <div className="playerScore">
         <p className="name">{name}</p>
         <p>{score}</p>
       </div>
     </div>
-  )
-}
+);
 
-export default PlayerScore
+export default PlayerScore;
