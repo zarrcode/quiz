@@ -1,9 +1,7 @@
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
 
-const CreateQuiz: NextPage= () => {
-  return (
+const CreateQuiz: NextPage = () => (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
-      {/* <form onSubmit={(e) => {handleSubmit(e)}} > */}
 
       <div className="p-4">
         <label htmlFor="test" className="mainBtn" >This is not a button</label>
@@ -20,9 +18,7 @@ const CreateQuiz: NextPage= () => {
         <input type="radio" name="test" id="test3" className="" />
       </div>
 
-      {/* </form> */}
     </div>
-  )
-}
+);
 
-export default CreateQuiz
+export default CreateQuiz;

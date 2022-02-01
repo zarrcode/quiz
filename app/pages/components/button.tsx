@@ -1,15 +1,12 @@
-import type { NextPage } from 'next'
-import { buttonProps } from '../interfaces'
+import type { NextPage } from 'next';
+import { buttonProps } from '../interfaces';
 
-const Button: NextPage<buttonProps> = ({text, btnPress, isActive}) => {
-
-  return (
+const Button: NextPage<buttonProps> = ({ text, btnPress, isActive }) => (
     <div>
       <button className={`mainBtn fontSizeSmall ${isActive && 'activeBtn'}`}
-      onClick={() => {btnPress(text)}}
+      onClick={() => { btnPress(text); }}
       >{text}</button>
     </div>
-  )
-}
+);
 
-export default Button
+export default Button;
