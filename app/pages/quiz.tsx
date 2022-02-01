@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import type { NextPage } from 'next';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import Option from './components/option';
@@ -12,9 +12,10 @@ import {
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreatingQuiz] = useState(false);
-  // const [gameState, setGameState] = useState('');
 
   useEffect(() => {
+    // on mount, add socket event listeners
+
     // if session exists, reconnect to server
     const sessionID = localStorage.getItem(SESSION_ID);
     if (sessionID) {
@@ -22,7 +23,7 @@ const Quiz: NextPage = () => {
       socket.connect();
     }
 
-    // on unmount, disconnect socket
+    // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
     };
@@ -71,41 +72,6 @@ const Quiz: NextPage = () => {
             <input type="number" placeholder="0" min="1" max="40" className="questionInput fontSizeSmall mt-4" onChange={(e) => { setNumberOfQuestions(e.target.value); }}/>
             <Option text="Category" buttons={['Easy', 'Medium', 'Hard', '4', '5', '6', '7', '8']} active={changeCategory} />
           </div>
-        )
-        : (
-            // NOT INGAME
-            <div>
-              {!inGame && creatingQuiz
-                ? (
-                    // CREATE QUIZ OPTIONS PAGE
-                    <div>
-                      <div className="py-8 wrapper text-center h-screen">
-                    <Button text="Cancel" btnPress={() => { setCreateingQuiz(!creatingQuiz); }} isActive={false} />
-                        <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} />
-                        <Option text="Multiple Choice" buttons={['No', 'Yes']} />
-                      </div>
-                    </div>
-                )
-                : (
-                  // JOIN / CREATE QUIZ PAGE
-                  <div>
-                    <Navbar />
-                    <div className="py-20 wrapper text-center min-h-screen">
-                      <div className="flex flex-col h-full">
-                        <form onSubmit={() => { }} className="flex flex-col items-center gap-5" >
-                          <p className="fontSizeLarge py-4">USERNAME</p>
-                          <input type="text" placeholder="Username..." className="questionInput fontSizeSmall" />
-                          <div className="py-4">
-                            <p className="fontSizeLarge py-4">JOIN QUIZ</p>
-                          <Button text="Join Quiz" btnPress={() => { setInGame(!inGame); }} isActive={false} />
-                          </div>
-                          <div className="py-4">
-                            <p className="fontSizeLarge py-4">CREATE QUIZ</p>
-                          <Button text="Create Quiz" btnPress={() => { setCreateingQuiz(!creatingQuiz); }} isActive={false} />
-                          </div>
-                        </form>
-                      </div>
-                    </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
           : <div>
