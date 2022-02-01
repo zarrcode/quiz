@@ -68,7 +68,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
   outline: 1px solid rgba(black, 0.6);
   transition: all 0.5s;
 }
@@ -77,11 +77,12 @@ $lightened-tertiary-color: rgba(white, 0.7);
   background-color: $secondary-color;
   transition: all 0.7s;
   border: 2px solid rgba(black, 0.6);
-  outline: 1px solid rgba(0, 0, 0, 0);
-  box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(0, 0, 0, 0.4);
+  outline: 1px solid rgba(black, 0);
+  box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.2);
 }
 
 .questionInput {
+  width: 20ch;
   padding: 1rem;
   border-radius: 0.5rem;
   border: 2px solid $secondary-color;
@@ -133,7 +134,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
 // --UTILITY CLASSES--
 
 .wrapper {
-  border: 1px solid red;
+  // border: 1px solid red;
   width: Min(95vw, 60rem);
 }
 
@@ -148,7 +149,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .gapSize {
-  gap: calc(-10px + 8vw);
+  gap: calc(-10px + 6vw);
 }
 
 
