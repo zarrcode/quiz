@@ -12,9 +12,9 @@ const Question: NextPage<optionProps> = ({ text, buttons }) => {
     setIsActive(btnName)
   }
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <p className="fontSizeLarge text-white pt-4">{text}</p>
-      <div className="flex w-[90%] justify-center gapSize py-2">
+      <div className="grid grid-cols-custom-3 gapSize py-2 w-full">
         {buttons.map((string) => {
             return <Button text={string} btnPress={buttonPress} isActive={isActive===string} key={string}/>
           })}

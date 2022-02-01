@@ -14,7 +14,11 @@ module.exports = {
     './pages/components/createQuiz.tsx',
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'custom-3': 'repeat(auto-fit, minmax(25vw, 1fr))',
+      },
+    },
   },
   plugins: [],
 }

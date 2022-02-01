@@ -82,6 +82,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .questionInput {
+  width: 20ch;
   padding: 1rem;
   border-radius: 0.5rem;
   border: 2px solid $secondary-color;
@@ -148,7 +149,7 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .gapSize {
-  gap: calc(-10px + 8vw);
+  gap: calc(-10px + 6vw);
 }
 
 
