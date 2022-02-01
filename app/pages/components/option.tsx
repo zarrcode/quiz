@@ -12,8 +12,8 @@ const Question: NextPage<optionProps> = ({ text, buttons }) => {
     setIsActive(btnName)
   }
   return (
-    <div className="flex flex-col items-center py-2">
-      <p className="fontSizeLarge text-white pb-2 pt-4">{text}</p>
+    <div className="flex flex-col items-center">
+      <p className="fontSizeLarge text-white pt-4">{text}</p>
       <div className="flex w-[90%] justify-center gapSize py-2">
         {buttons.map((string) => {
             return <Button text={string} btnPress={buttonPress} isActive={isActive===string} key={string}/>

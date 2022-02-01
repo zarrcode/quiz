@@ -12,6 +12,7 @@ export interface buttonProps {
 export interface optionProps {
   text: string;
   buttons: string[];
+  active:(x:string) => void;
 }
 
 export interface questionProps {

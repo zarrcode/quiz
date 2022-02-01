@@ -11,6 +11,7 @@ module.exports = {
     './pages/components/question.tsx',
     './pages/components/playerAnswer.tsx',
     './pages/components/playerScore.tsx',
+    './pages/components/createQuiz.tsx',
   ],
   theme: {
     extend: {},
