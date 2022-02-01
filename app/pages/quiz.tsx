@@ -1,24 +1,20 @@
 import type { NextPage } from 'next';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import Option from './components/option';
 import {
   socket,
   SESSION_ID,
-  addSocketEventListeners,
-  removeSocketEventListeners,
 } from '../services/socket';
 
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreateingQuiz] = useState(false);
+  const [zouInput, setZouInput] = useState(''); // TODO: remove
   // const [gameState, setGameState] = useState('');
 
   useEffect(() => {
-    // on mount, add socket event listeners
-    addSocketEventListeners();
-
     // if session exists, reconnect to server
     const sessionID = localStorage.getItem(SESSION_ID);
     if (sessionID) {
@@ -26,12 +22,24 @@ const Quiz: NextPage = () => {
       socket.connect();
     }
 
-    // on unmount, remove socket event listeners and disconnect socket
+    // on unmount, disconnect socket
     return () => {
-      removeSocketEventListeners();
       if (socket.connected) socket.disconnect();
     };
   });
+
+  // handler for Create Lobby button
+  const createLobby = (event: any) => {
+    // connect socket (first time connection)
+    socket.auth = { username: event.target.value };
+    socket.connect();
+
+    // TODO: emit create game event
+  };
+
+  const handleZouInputChange = (event: any) => {
+    setZouInput(event.target.value);
+  };
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
@@ -55,6 +63,9 @@ const Quiz: NextPage = () => {
                     <Button text="Cancel" btnPress={() => { setCreateingQuiz(!creatingQuiz); }} isActive={false} />
                         <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} />
                         <Option text="Multiple Choice" buttons={['No', 'Yes']} />
+                        {/* TODO: switch with real button */}
+                        <input value={zouInput} onChange={handleZouInputChange}/>
+                        <button onClick={createLobby}>CREATE LOBBY TEMP</button>
                       </div>
                     </div>
                 )
