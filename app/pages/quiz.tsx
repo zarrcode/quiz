@@ -41,24 +41,24 @@ const Quiz: NextPage = () => {
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
+  const [globalState, setGlobalState] = useState({
+    difficulty: '',
+    title: '',
+    multipleChoice: '',
+    questions: '',
+    category: '',
+    username: '',
+  });
 
-  function changeDifficulty(active:string) {
-    setDifficulty(active);
-  }
-  function changeMultipleChoice(active:string) {
-    setDifficulty(active);
-  }
-  function changeCategory(active:string) {
-    setCategory(active);
-  }
   console.log(`username: ${username}`);
   console.log(`Quiz Code: ${quizCode}`);
   console.log(`title: ${title}`);
+  console.log(`Difficulty: ${difficulty}`);
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       {inGame
-      // INGAME
+        // INGAME
         ? <div className="py-32 wrapper text-center h-screen">
         <p>INGAME</p>
         <Button text="leave game" btnPress={() => { setInGame(!inGame); }} isActive={false} />
@@ -71,11 +71,12 @@ const Quiz: NextPage = () => {
           <div className="py-4 wrapper text-center min-h-screen h-full">
             <Button text="Back" btnPress={() => { setCreatingQuiz(!creatingQuiz); }} isActive={true} />
             <input type="text" placeholder="Quiz Title ..." className="questionInput fontSizeSmall mt-4" onChange={(e) => { setTitle(e.target.value); }}/>
-            <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} active={changeDifficulty} />
-            <Option text="Multiple Choice" buttons={['No', 'Yes']} active={changeMultipleChoice} />
+            <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} active={setDifficulty} />
+            <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
             <p className="fontSizeLarge text-white pt-4">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min="1" max="40" className="questionInput fontSizeSmall mt-4" onChange={(e) => { setNumberOfQuestions(e.target.value); }}/>
-            <Option text="Category" buttons={['Easy', 'Medium', 'Hard', '4', '5', '6', '7', '8']} active={changeCategory} />
+            <Option text="Category" buttons={['Easy', 'Medium', 'Hard', '4', '5', '6', '7', '8']} active={setCategory} />
+            <button className="" >SomeThing</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE

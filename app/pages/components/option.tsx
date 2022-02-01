@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import Button from './button';
 import { optionProps } from '../interfaces';
 
-const Question: NextPage<optionProps> = ({ text, buttons }) => {
+const Question: NextPage<optionProps> = ({ text, buttons, active }) => {
   const [isActive, setIsActive] = useState('');
 
   function buttonPress(btnName:string) {
-    console.log(btnName);
+    active(btnName);
     setIsActive(btnName);
   }
+
   return (
     <div className="flex flex-col items-center w-full">
       <p className="fontSizeLarge text-white pt-4">{text}</p>
