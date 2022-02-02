@@ -16,7 +16,7 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'custom-3': 'repeat(auto-fit, minmax(25vw, 1fr))',
+        'custom-3': 'repeat(auto-fit, minmax(6rem, 1fr))',
       },
     },
   },
