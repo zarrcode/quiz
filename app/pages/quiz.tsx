@@ -14,14 +14,27 @@ const Quiz: NextPage = () => {
   const [creatingQuiz, setCreatingQuiz] = useState(false);
 
   useEffect(() => {
-    // on mount, add socket event listeners
-
     // if session exists, reconnect to server
     const sessionID = localStorage.getItem(SESSION_ID);
     if (sessionID) {
       socket.auth = { sessionID };
       socket.connect();
     }
+
+    socket.onAny((event, ...args) => {
+      console.log(event, ...args);
+    });
+
+    socket.on('connect_error', (err) => {
+      if (err.message === 'lobby closed' && inGame) {
+        // eslint-disable-next-line no-alert
+        alert(err.message);
+      }
+    });
+
+    socket.on('session', (newSessionID) => {
+      localStorage.setItem(SESSION_ID, newSessionID);
+    });
 
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
@@ -49,6 +62,29 @@ const Quiz: NextPage = () => {
   console.log(`username: ${username}`);
   console.log(`Quiz Code: ${quizCode}`);
   console.log(`title: ${title}`);
+
+  // TODO: hook up to button
+  function sioCreateGame() {
+    // send all options in payload
+    const payload = {
+      username,
+      title,
+      difficulty,
+      category,
+      type: multipleChoice,
+      questions: numberOfQuestions,
+    };
+    socket.emit('game_create', payload);
+  }
+
+  // TODO: hook up to button
+  function sioJoinGame() {
+    const payload = {
+      username,
+      // TODO: add game ID
+    };
+    socket.emit('game_join', payload);
+  }
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
