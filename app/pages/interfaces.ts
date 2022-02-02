@@ -1,4 +1,11 @@
 /* eslint-disable no-unused-vars */
+
+export interface User {
+  username: string;
+  answer?:string;
+  score?:number;
+}
+
 export interface navbarProps {
   text:string;
   url:string;

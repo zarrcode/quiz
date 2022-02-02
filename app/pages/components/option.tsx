@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from './button';
 import { optionProps } from '../interfaces';
 
@@ -12,8 +12,8 @@ const Question: NextPage<optionProps> = ({ text, buttons, active }) => {
   }
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <p className="fontSizeLarge text-white pt-4">{text}</p>
+    <div className="flex flex-col items-center w-full py-2">
+      <p className="fontSizeLarge text-white pt-6">{text}</p>
       <div className="grid grid-cols-custom-3 gapSize py-2 w-full">
         {buttons.map((string) => <Button text={string} btnPress={buttonPress}
          isActive={isActive === string} key={string}/>)}

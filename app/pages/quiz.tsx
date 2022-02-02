@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import Option from './components/option';
+import PlayerCard from './components/playerCard';
+import { User } from './interfaces';
 import {
   socket,
   SESSION_ID,
@@ -14,7 +16,7 @@ import {
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreatingQuiz] = useState(false);
-  // const [gameState, setGameState] = useState('');
+  const [gameState, setGameState] = useState('');
 
   useEffect(() => {
     // on mount, add socket event listeners
@@ -41,27 +43,62 @@ const Quiz: NextPage = () => {
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
-  const [globalState, setGlobalState] = useState({
-    difficulty: '',
-    title: '',
-    multipleChoice: '',
-    questions: '',
-    category: '',
-    username: '',
-  });
+  const [users, setUsers] = useState<User[]>([{ username: 'name', answer: 'answer' }]);
+  const [isHost, setIshost] = useState(false);
 
-  console.log(`username: ${username}`);
-  console.log(`Quiz Code: ${quizCode}`);
-  console.log(`title: ${title}`);
-  console.log(`Difficulty: ${difficulty}`);
+  // console.log('---------------------');
+  // console.log(`username: ${username}`);
+  // console.log(`quizCode: ${quizCode}`);
+  // console.log(`difficulty: ${difficulty}`);
+  // console.log(`multipleChoice: ${multipleChoice}`);
+  // console.log(`numberOfQuestions: ${numberOfQuestions}`);
+  // console.log(`category: ${category}`);
+  // console.log(`title: ${title}`);
+  console.log(users);
+
+  function renderGameState() {
+    switch (gameState) {
+      case ('lobby'): return (
+        <div className="wrapper flex flex-col items-center">
+          <h1 className="fontSizeLarge py-4">TITLE</h1>
+          <h2 className="fontSizeLarge py-4">ABCDE</h2>
+          {users.map((user) => <PlayerCard key={user.username} username={user.username}
+           answer={user.answer}/>)}
+          <Button text="go to question" btnPress={() => { setGameState('question'); }} isActive={false} />
+        </div>
+      );
+
+      case ('question'): return (
+        <div>
+          <p>This page is the question page, username: {username} and title: {title}</p>
+          <Button text="go to answers" btnPress={() => { setGameState('answers'); }} isActive={false} />
+        </div>
+      );
+
+      case ('answers'): return (
+        <div>
+          <p>This page is the answers page! ( i need some answers )</p>
+          <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+        </div>
+      );
+
+      case ('scoreboard'): return (
+        <div>
+          <p>This page is the scoreboard! ( i need some scores )</p>
+          <Button text="leave Game" btnPress={() => { setInGame(!inGame); }} isActive={false} />
+        </div>
+      );
+
+      default: return (<div></div>);
+    }
+  }
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       {inGame
         // INGAME
-        ? <div className="py-32 wrapper text-center h-screen">
-        <p>INGAME</p>
-        <Button text="leave game" btnPress={() => { setInGame(!inGame); }} isActive={false} />
+        ? <div className="wrapper h-full">
+          { renderGameState() }
       </div>
       // NOT INGAME
         : <div>
@@ -70,13 +107,13 @@ const Quiz: NextPage = () => {
           ? <div>
           <div className="py-4 wrapper text-center min-h-screen h-full">
             <Button text="Back" btnPress={() => { setCreatingQuiz(!creatingQuiz); }} isActive={true} />
-            <input type="text" placeholder="Quiz Title ..." className="questionInput fontSizeSmall mt-4" onChange={(e) => { setTitle(e.target.value); }}/>
+            <input type="text" placeholder="Quiz Title ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setTitle(e.target.value); }}/>
             <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} active={setDifficulty} />
             <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
-            <p className="fontSizeLarge text-white pt-4">Number of Questions (1 - 40) </p>
-            <input type="number" placeholder="0" min="1" max="40" className="questionInput fontSizeSmall mt-4" onChange={(e) => { setNumberOfQuestions(e.target.value); }}/>
+            <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
+            <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; setNumberOfQuestions(e.target.value); }}/>
             <Option text="Category" buttons={['Easy', 'Medium', 'Hard', '4', '5', '6', '7', '8']} active={setCategory} />
-            <button className="" >SomeThing</button>
+            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE

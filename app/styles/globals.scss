@@ -36,6 +36,8 @@ $lightened-tertiary-color: rgba(white, 0.7);
   playerAnswer
   playerScore
 
+  playerCard
+
   --Utility Classes--
 
   wrapper
@@ -130,11 +132,34 @@ $lightened-tertiary-color: rgba(white, 0.7);
   }
 }
 
+.playerCard {
+  display:flex;
+  justify-content: space-between;
+  width: 90%;
+  // border: 2px solid $secondary-color;
+  border-radius: 1rem;
+  margin: 1rem;
+  .pc-left {
+    border-radius: 1rem 0 0 1rem;
+    background-color: $secondary-color;
+    height: 100%;
+    width: 25%;
+  }
+  .pc-right {
+    border-radius: 0 1rem 1rem 0;
+    background-color: rgba(white, 0.8);
+    height: 100%;
+    width: 75%;
+    display:flex;
+    justify-content: flex-end;
+  }
+}
+
 
 // --UTILITY CLASSES--
 
 .wrapper {
-  // border: 1px solid red;
+  border: 1px solid red;
   width: Min(95vw, 60rem);
 }
 
@@ -151,9 +176,4 @@ $lightened-tertiary-color: rgba(white, 0.7);
 .gapSize {
   gap: calc(-10px + 6vw);
 }
-
-
-
-
-
 
