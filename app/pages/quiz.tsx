@@ -4,44 +4,11 @@ import { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import Option from './components/option';
-import {
-  socket,
-  SESSION_ID,
-} from '../services/socket';
+import { socket } from '../services/socket';
 
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreatingQuiz] = useState(false);
-
-  useEffect(() => {
-    // if session exists, reconnect to server
-    const sessionID = localStorage.getItem(SESSION_ID);
-    if (sessionID) {
-      socket.auth = { sessionID };
-      socket.connect();
-    }
-
-    socket.onAny((event, ...args) => {
-      console.log(event, ...args);
-    });
-
-    socket.on('connect_error', (err) => {
-      if (err.message === 'lobby closed' && inGame) {
-        // eslint-disable-next-line no-alert
-        alert(err.message);
-      }
-    });
-
-    socket.on('session', (newSessionID) => {
-      localStorage.setItem(SESSION_ID, newSessionID);
-    });
-
-    // on unmount, remove socket event listeners and disconnect socket
-    return () => {
-      if (socket.connected) socket.disconnect();
-    };
-  });
-
   const [username, setUsername] = useState('');
   const [quizCode, setQuizCode] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -49,6 +16,86 @@ const Quiz: NextPage = () => {
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    // if session exists, reconnect to server
+    const sessionID = localStorage.getItem('sessionID');
+    if (sessionID) {
+      socket.auth = { sessionID };
+      socket.connect();
+    }
+
+    // for developement purposes
+    socket.onAny((event, ...args) => {
+      console.log(event, ...args);
+    });
+
+    socket.on('connect_error', () => {
+      const errorMessage = inGame ? 'lobby has been closed' : 'username invalid';
+      alert(errorMessage); // TODO: replace with user-friendly modal
+    });
+
+    // custom disconnect handler
+    socket.on('disconnect_custom', (reason) => {
+      socket.disconnect();
+      alert(reason);
+    });
+
+    socket.on('session', (newSessionID) => {
+      localStorage.setItem('sessionID', newSessionID);
+    });
+
+    socket.on('game_created', (gameID) => {
+      // TODO: update game ID state for displaying in lobby
+      // TODO: add user to user array
+      setInGame(true);
+    });
+
+    socket.on('game_joined', (user) => {
+      // TODO: add user to user array
+      setInGame(true);
+    });
+
+    socket.on('game_joined_other_user', (user) => {
+      // TODO: add user to user array
+    });
+
+    // on unmount, remove socket event listeners and disconnect socket
+    return () => {
+      if (socket.connected) {
+        socket.disconnect();
+      }
+    };
+  });
+
+  // TODO: hook up to button
+  function sioCreateGame() {
+    socket.auth = { username };
+    socket.connect();
+
+    const options = {
+      username,
+      title,
+      difficulty,
+      category,
+      type: multipleChoice,
+      questions: numberOfQuestions,
+    };
+    socket.emit('game_create', options);
+  }
+
+  // TODO: hook up to button
+  function sioJoinGame() {
+    socket.auth = { username };
+    socket.connect();
+    socket.emit('game_join', quizCode);
+  }
+
+  // TODO: hook up to button
+  function sioStartGame() {
+    // TODO: add check for host flag
+    socket.emit('game_start');
+  }
 
   function changeDifficulty(active:string) {
     setDifficulty(active);
@@ -62,29 +109,6 @@ const Quiz: NextPage = () => {
   console.log(`username: ${username}`);
   console.log(`Quiz Code: ${quizCode}`);
   console.log(`title: ${title}`);
-
-  // TODO: hook up to button
-  function sioCreateGame() {
-    // send all options in payload
-    const payload = {
-      username,
-      title,
-      difficulty,
-      category,
-      type: multipleChoice,
-      questions: numberOfQuestions,
-    };
-    socket.emit('game_create', payload);
-  }
-
-  // TODO: hook up to button
-  function sioJoinGame() {
-    const payload = {
-      username,
-      // TODO: add game ID
-    };
-    socket.emit('game_join', payload);
-  }
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
