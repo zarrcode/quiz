@@ -19,7 +19,7 @@ const Quiz: NextPage = () => {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [gameState, setGameState] = useState('');
-  const [users, setUsers] = useState<User[]>([{ username: 'name', answer: 'answer' }]);
+  const [users, setUsers] = useState<User[]>([]);
   const [isHost, setIshost] = useState(false);
 
   useEffect(() => {
@@ -31,13 +31,14 @@ const Quiz: NextPage = () => {
     }
 
     // for developement purposes
-    socket.onAny((event, ...args) => {
-      console.log(event, ...args);
-    });
+    socket.onAny((event, ...args) => console.log(event, ...args));
 
     socket.on('connect_error', () => {
-      const errorMessage = inGame ? 'lobby has been closed' : 'username invalid';
-      alert(errorMessage); // TODO: replace with user-friendly modal
+      let errorMessage;
+      if (inGame) errorMessage = 'lobby has been closed';
+      if (username) errorMessage = 'username invalid'; // FIXME: alert shows when disconnecting on the lobby page
+
+      if (errorMessage) alert(errorMessage); // TODO: replace with user-friendly modal
     });
 
     // custom disconnect handler
@@ -51,27 +52,30 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('game_created', (gameID) => {
-      // TODO: update game ID state for displaying in lobby
-      // TODO: add user to user array
-      setInGame(true);
+      setQuizCode(gameID);
     });
 
-    socket.on('game_joined', (user) => {
-      // TODO: add user to user array
-      setInGame(true);
+    socket.on('users', (newUsers) => {
+      console.log(newUsers);
+      setUsers((prevUsers) => [
+        ...prevUsers,
+        ...newUsers,
+      ]);
     });
 
-    socket.on('game_joined_other_user', (user) => {
-      // TODO: add user to user array
+    socket.on('users_join', (newUser) => {
+      console.log(newUser);
+      setUsers((prevUsers) => [
+        ...prevUsers,
+        newUser,
+      ]);
     });
 
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
-      if (socket.connected) {
-        socket.disconnect();
-      }
+      if (socket.connected) socket.disconnect();
     };
-  });
+  }, []);
 
   // console.log('---------------------');
   // console.log(`username: ${username}`);
@@ -81,7 +85,7 @@ const Quiz: NextPage = () => {
   // console.log(`numberOfQuestions: ${numberOfQuestions}`);
   // console.log(`category: ${category}`);
   // console.log(`title: ${title}`);
-  console.log(users);
+  // console.log(users);
 
   function renderGameState() {
     switch (gameState) {
@@ -120,7 +124,6 @@ const Quiz: NextPage = () => {
     }
   }
 
-  // TODO: hook up to button
   function sioCreateGame() {
     socket.auth = { username };
     socket.connect();
@@ -136,7 +139,6 @@ const Quiz: NextPage = () => {
     socket.emit('game_create', options);
   }
 
-  // TODO: hook up to button
   function sioJoinGame() {
     socket.auth = { username };
     socket.connect();
@@ -158,9 +160,9 @@ const Quiz: NextPage = () => {
   function changeCategory(active:string) {
     setCategory(active);
   }
-  console.log(`username: ${username}`);
-  console.log(`Quiz Code: ${quizCode}`);
-  console.log(`title: ${title}`);
+  // console.log(`username: ${username}`);
+  // console.log(`Quiz Code: ${quizCode}`);
+  // console.log(`title: ${title}`);
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
@@ -182,7 +184,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; setNumberOfQuestions(e.target.value); }}/>
             <Option text="Category" buttons={['Easy', 'Medium', 'Hard', '4', '5', '6', '7', '8']} active={setCategory} />
-            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
+                <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
@@ -196,7 +198,7 @@ const Quiz: NextPage = () => {
                   <div className="">
                     <p className="fontSizeLarge py-4">JOIN QUIZ</p>
                     <input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
-                    <Button text="Join Quiz" btnPress={() => { setInGame(!inGame); }} isActive={false} />
+                      <Button text="Join Quiz" btnPress={() => { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); }} isActive={false} />
                   </div>
                   <div className="">
                     <p className="fontSizeLarge py-4">CREATE QUIZ</p>
