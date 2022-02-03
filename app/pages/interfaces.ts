@@ -5,7 +5,8 @@ import { Dispatch, SetStateAction } from 'react';
 export interface User {
   username: string;
   answer?:string;
-  score?:number;
+  score?: number;
+  sessionID?: string,
 }
 
 export interface navbarProps {
