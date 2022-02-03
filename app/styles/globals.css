@@ -63,7 +63,7 @@ body {
 
 .mainBtn {
   width: 15ch;
-  height: 8ch;
+  height: 7ch;
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid #2c086d;
@@ -86,7 +86,7 @@ body {
 
 .questionInput {
   width: 25ch;
-  height: 8ch;
+  height: 7ch;
   padding-left: 1rem;
   border-radius: 0.5rem;
   border: 2px solid #2c086d;
@@ -173,15 +173,12 @@ body {
 }
 
 .playerCard .pc-lobby .pc-lobby-name {
-  background-color: #220655;
-  width: 40%;
-  min-width: -webkit-min-content;
-  min-width: -moz-min-content;
-  min-width: min-content;
+  background-color: rgba(34, 6, 85, 0.6);
+  width: 90%;
 }
 
 .playerCard .pc-lobby .pc-lobby-name.self {
-  background-color: #3f0b9d;
+  background-color: rgba(63, 11, 157, 0.6);
 }
 
 .playerCard .pc-lobby.self {

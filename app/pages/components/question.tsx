@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import React, { FormEvent } from 'react';
+import React from 'react';
 import { questionProps } from '../interfaces';
 
 const Question: NextPage<questionProps> = ({ text }) => {

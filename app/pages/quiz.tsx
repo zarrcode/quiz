@@ -21,9 +21,10 @@ const Quiz: NextPage = () => {
   const [title, setTitle] = useState('');
   const [gameState, setGameState] = useState('');
   const [users, setUsers] = useState<User[]>([{ username: '', answer: 'answer', score: 5 }, { username: 'user', answer: 'users answer', score: 2 }]);
-  const [isHost, setIshost] = useState(false);
+  const [isHost, setIsHost] = useState(false);
   const [question, setQuestion] = useState('Is this the question?');
   const [answer, setAnswer] = useState('');
+  const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -86,10 +87,6 @@ const Quiz: NextPage = () => {
     };
   }, []);
 
-  function setCats(cats:string[]) {
-    setCategories(cats);
-  }
-
   function sioCreateGame() {
     socket.auth = { username };
     socket.connect();
@@ -116,11 +113,24 @@ const Quiz: NextPage = () => {
     // TODO: add check for host flag
     socket.emit('game_start');
   }
+  function changeCorrectAnswers(ans:string) {
+    if (correctAnswers.includes(ans)) {
+      const index = correctAnswers.indexOf(ans);
+      setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
+    } else {
+      setCorrectAnswers([...correctAnswers, ans]);
+    }
+    console.log(correctAnswers);
+  }
+
+  function setCats(cats:string[]) {
+    setCategories(cats);
+  }
 
   function refreshStates() {
     setInGame(false); setCreatingQuiz(false); setUsername(''); setQuizCode(''); setDifficulty('');
     setMultipleChoice(''); setNumberOfQuestions(''); setCategories([]); setTitle('');
-    setGameState(''); setUsers([]); setIshost(false); setQuestion(''); setAnswer('');
+    setGameState(''); setUsers([]); setIsHost(false); setQuestion(''); setAnswer('');
   }
 
   function renderGameState() {
@@ -148,11 +158,24 @@ const Quiz: NextPage = () => {
       );
 
       case ('answers'): return (
-        <div className="wrapper flex flex-col items-center">
-          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-          {users.map((user) => <PlayerCard key={user.username} username={user.username}
-          gameState={gameState} answer={user.answer} self={user.username === username} />)}
-          <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+        <div>
+          { isHost //  FIXME: ishost
+            ? <div className="wrapper flex flex-col items-center">
+            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            {users.map((user) => <PlayerCard key={user.username} username={user.username}
+              gameState={gameState} answer={user.answer} self={user.username === username}
+              stateChange={changeCorrectAnswers} correct={correctAnswers.includes(user.username)}
+               />)} {/* FIXME: change this to correct/not */}
+            <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+          </div>
+            : <div className="wrapper flex flex-col items-center">
+            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            {users.map((user) => <PlayerCard key={user.username} username={user.username}
+              gameState={gameState} answer={user.answer} self={user.username === username}
+              correct={correctAnswers.includes(user.username)} />)}
+            <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+          </div>
+          }
         </div>
       );
 
@@ -197,10 +220,10 @@ const Quiz: NextPage = () => {
             <Navbar/>
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col items-center gap-5">
-                <div className='mb-16'><p className="fontSizeMedium pb-[0.25rem] pt-8">Username</p>
+                <div className='mb-12'><p className="fontSizeMedium pb-[0.25rem] pt-8">Username</p>
                   <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" onChange={(e) => { setUsername(e.target.value); }}/></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create Quiz</p>
-                  <Button text="Create Quiz" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); } }} isActive={false} /></div>
+                  <Button text="Create Quiz" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]">Join Quiz</p>
                   <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
                     <Button text="Join Quiz" btnPress={() => { if (username) { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); } }} isActive={false} /></div></div>
