@@ -44,6 +44,12 @@ const Quiz: NextPage = () => {
     // custom disconnect handler
     socket.on('disconnect_custom', (reason) => {
       socket.disconnect();
+
+      // reset state
+      setInGame(false);
+      setCreatingQuiz(false);
+      setGameState('');
+
       alert(reason);
     });
 
