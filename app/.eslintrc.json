@@ -15,6 +15,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-alert": "off",
         "import/extensions": [
             "error",
             "ignorePackages",

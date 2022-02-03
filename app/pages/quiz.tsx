@@ -7,45 +7,11 @@ import Option from './components/option';
 import PlayerCard from './components/playerCard';
 import Categories from './components/categories';
 import { User } from './interfaces';
-import {
-  socket,
-  SESSION_ID,
-} from '../services/socket';
+import { socket } from '../services/socket';
 
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreatingQuiz] = useState(false);
-  const [gameState, setGameState] = useState('');
-
-  useEffect(() => {
-    // if session exists, reconnect to server
-    const sessionID = localStorage.getItem(SESSION_ID);
-    if (sessionID) {
-      socket.auth = { sessionID };
-      socket.connect();
-    }
-
-    socket.onAny((event, ...args) => {
-      console.log(event, ...args);
-    });
-
-    socket.on('connect_error', (err) => {
-      if (err.message === 'lobby closed' && inGame) {
-        // eslint-disable-next-line no-alert
-        alert(err.message);
-      }
-    });
-
-    socket.on('session', (newSessionID) => {
-      localStorage.setItem(SESSION_ID, newSessionID);
-    });
-
-    // on unmount, remove socket event listeners and disconnect socket
-    return () => {
-      if (socket.connected) socket.disconnect();
-    };
-  }, []);
-
   const [username, setUsername] = useState('');
   const [quizCode, setQuizCode] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -53,8 +19,64 @@ const Quiz: NextPage = () => {
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
   const [title, setTitle] = useState('');
-  const [users, setUsers] = useState<User[]>([{ username: 'Test', answer: 'answer' }, { username: 'Not You', answer: 'answer' }]);
+  const [gameState, setGameState] = useState('');
+  const [users, setUsers] = useState<User[]>([]);
   const [isHost, setIshost] = useState(false);
+
+  useEffect(() => {
+    // if session exists, reconnect to server
+    const sessionID = localStorage.getItem('sessionID');
+    if (sessionID) {
+      socket.auth = { sessionID };
+      socket.connect();
+    }
+
+    // for developement purposes
+    socket.onAny((event, ...args) => console.log(event, ...args));
+
+    socket.on('connect_error', () => {
+      let errorMessage;
+      if (inGame) errorMessage = 'lobby has been closed';
+      if (username) errorMessage = 'username invalid'; // FIXME: alert shows when disconnecting on the lobby page
+
+      if (errorMessage) alert(errorMessage); // TODO: replace with user-friendly modal
+    });
+
+    // custom disconnect handler
+    socket.on('disconnect_custom', (reason) => {
+      socket.disconnect();
+      alert(reason);
+    });
+
+    socket.on('session', (newSessionID) => {
+      localStorage.setItem('sessionID', newSessionID);
+    });
+
+    socket.on('game_created', (gameID) => {
+      setQuizCode(gameID);
+    });
+
+    socket.on('users', (newUsers) => {
+      console.log(newUsers);
+      setUsers((prevUsers) => [
+        ...prevUsers,
+        ...newUsers,
+      ]);
+    });
+
+    socket.on('users_join', (newUser) => {
+      console.log(newUser);
+      setUsers((prevUsers) => [
+        ...prevUsers,
+        newUser,
+      ]);
+    });
+
+    // on unmount, remove socket event listeners and disconnect socket
+    return () => {
+      if (socket.connected) socket.disconnect();
+    };
+  }, []);
 
   // console.log('---------------------');
   // console.log(`username: ${username}`);
@@ -64,6 +86,7 @@ const Quiz: NextPage = () => {
   // console.log(`numberOfQuestions: ${numberOfQuestions}`);
   // console.log(`category: ${category}`);
   // console.log(`title: ${title}`);
+
   console.log(users);
   console.log(categories);
 
@@ -113,10 +136,11 @@ const Quiz: NextPage = () => {
     }
   }
 
-  // TODO: hook up to button
   function sioCreateGame() {
-    // send all options in payload
-    const payload = {
+    socket.auth = { username };
+    socket.connect();
+
+    const options = {
       username,
       title,
       difficulty,
@@ -124,17 +148,33 @@ const Quiz: NextPage = () => {
       type: multipleChoice,
       questions: numberOfQuestions,
     };
-    socket.emit('game_create', payload);
+    socket.emit('game_create', options);
+  }
+
+  function sioJoinGame() {
+    socket.auth = { username };
+    socket.connect();
+    socket.emit('game_join', quizCode);
   }
 
   // TODO: hook up to button
-  function sioJoinGame() {
-    const payload = {
-      username,
-      // TODO: add game Index
-    };
-    socket.emit('game_join', payload);
+  function sioStartGame() {
+    // TODO: add check for host flag
+    socket.emit('game_start');
   }
+
+  function changeDifficulty(active:string) {
+    setDifficulty(active);
+  }
+  function changeMultipleChoice(active:string) {
+    setDifficulty(active);
+  }
+  function changeCategory(active:string[]) {
+    setCategories(active);
+  }
+  // console.log(`username: ${username}`);
+  // console.log(`Quiz Code: ${quizCode}`);
+  // console.log(`title: ${title}`);
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
@@ -170,7 +210,7 @@ const Quiz: NextPage = () => {
                   <div className="">
                     <p className="fontSizeLarge py-4">Join Quiz</p>
                     <input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
-                    <Button text="Join Quiz" btnPress={() => { setInGame(!inGame); setGameState('lobby'); }} isActive={false} />
+                    <Button text="Join Quiz" btnPress={() => { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); }} isActive={false} />
                   </div>
                   <div className="">
                     <p className="fontSizeLarge py-4">Create Quiz</p>
