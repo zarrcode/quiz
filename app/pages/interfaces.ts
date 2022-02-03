@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { Dispatch, SetStateAction } from 'react';
+
 export interface User {
   username: string;
   answer?:string;
@@ -35,4 +37,13 @@ export interface playerAnswerProps {
 export interface playerScoreProps {
   name:string;
   score:number;
+}
+
+export interface playerCardProps extends User {
+  self: boolean;
+}
+
+export interface categoriesProps {
+  cats: string[];
+  setCats: (cats:string[]) => void;
 }
