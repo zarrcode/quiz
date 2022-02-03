@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import type { NextPage } from 'next';
 import { playerCardProps } from '../interfaces';
 
@@ -11,8 +12,8 @@ const PlayerCard: NextPage<playerCardProps> = ({
       </div>
       <div className="pc-right fontSizeSmall">
         <h2>{answer}</h2>
+        <h2>{score}</h2>
       </div>
     </div>
 );
-
 export default PlayerCard;

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 export interface User {
   username: string;
