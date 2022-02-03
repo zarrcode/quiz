@@ -177,8 +177,6 @@ const Quiz: NextPage = () => {
     }
   }
 
-  console.log('rendering', users);
-
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       {inGame
