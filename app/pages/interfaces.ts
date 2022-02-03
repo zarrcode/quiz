@@ -42,6 +42,7 @@ export interface playerScoreProps {
 
 export interface playerCardProps extends User {
   self: boolean;
+  gameState: string;
 }
 
 export interface categoriesProps {

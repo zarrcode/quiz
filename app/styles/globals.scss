@@ -11,14 +11,13 @@ body {
 
 
 $base-color: #1a1919;
-// $base-color: #29282C;
 $secondary-color: #2c086d;
 $tertiary-color: rgba(white, 0.2);
-$lightened-tertiary-color: rgba(white, 0.7);
+$lightened-tertiary-color: rgba(white, 0.3);
 
-// .bg {background-color: $base-color;}
 .bg {
-  background: radial-gradient(ellipse at top, lighten($base-color, 1%), $base-color )
+  // background: radial-gradient(ellipse at top, lighten($base-color, 1%), $base-color )
+  background-color: $base-color;
 }
 
 /*
@@ -66,10 +65,8 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .mainBtn {
-  min-width: fit-content;
-  width: 12ch;
-  height: 6ch;
-  padding: 0.75rem;
+  width: 15ch;
+  height: 8ch;
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
@@ -87,8 +84,9 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .questionInput {
-  width: 20ch;
-  padding: 1rem;
+  width: 25ch;
+  height: 8ch;
+  padding-left: 1rem;
   border-radius: 0.5rem;
   border: 2px solid $secondary-color;
   outline: 1px solid black;
@@ -136,48 +134,41 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .playerCard {
-  position: relative;
-  display:flex;
-  justify-content: space-between;
-  width: 90%;
-  height: 3rem;
-  border-radius: 1rem;
-  margin: 0.25rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(black, 0.7);
-  @mixin pc {
-    border: 2px solid black;
-    height: 100%;
-    padding: 0rem 1rem 0rem 1rem;
-    display:flex;
-    align-items: center;
-  }
-  .pc-left {
-    @include pc;
-    background-color: lighten($secondary-color, 5%);
-    border-radius: 1rem 0 0 1rem;
-    width: 30%;
-    justify-content: flex-start;
-  }
-  .pc-right {
-    @include pc;
-    border-left: none;
+  .pc-lobby {
+    border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
+    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
     background-color: $tertiary-color;
-    border-radius: 0 1rem 1rem 0;
-    justify-content: flex-end;
-    width: 70%;
+    border: 2px solid $secondary-color;
+    .pc-lobby-name {
+      background-color: darken($secondary-color, 5%);
+      width: 40%;
+      min-width: min-content;
+      &.self {
+        background-color: lighten($secondary-color, 10%);
+      }
+    }
+    &.self {
+      background-color: $lightened-tertiary-color;
+    }
   }
-  .pc-self {
-    @include pc;
-    background-color: lighten($secondary-color, 15%);
-    border-radius: 1rem 0 0 1rem;
-    width: 30%;
-    justify-content: flex-start;
+  .pc-answers-name {
+    background-color: $secondary-color;
+    border-bottom: 2px solid $base-color;
+    &.self {
+      background-color: lighten($secondary-color, 15%);
+    }
   }
-  &.self {
-    box-shadow: 0 0 0.5rem 0.1rem rgba(white, 0.5);
+  .pc-answers {
+    border: 2px solid $secondary-color;
+    border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
+    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
+    background-color: $tertiary-color;
+    &.self {
+      background-color: rgba(white, 0.3);
+      border: 2px solid lighten($secondary-color, 15%);
+    }
   }
 }
-
 
 // --UTILITY CLASSES--
 
@@ -197,6 +188,6 @@ $lightened-tertiary-color: rgba(white, 0.7);
 }
 
 .gapSize {
-  gap: calc(-10px + 6vw);
+  gap: calc(-5px + 4vw);
 }
 

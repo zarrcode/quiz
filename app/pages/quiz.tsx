@@ -88,6 +88,15 @@ const Quiz: NextPage = () => {
       setUsers((prevUsers) => prevUsers.filter((user) => user.sessionID !== sessionID));
     });
 
+    socket.on('new_question', (questionsAndAnswers) => {
+      setQuestion(questionsAndAnswers.question);
+      // setCorrectAnswer(questionsAndAnswers.correctAnswer);
+    });
+
+    socket.on('answer_list', (answerList) => {
+      setUsers(answerList);
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -125,6 +134,14 @@ const Quiz: NextPage = () => {
     socket.emit('game_start');
   }
 
+  function sioRetrieveQuestion() {
+    socket.emit('retrieve_question', quizCode);
+  }
+
+  function sioSubmitAnswer() {
+    socket.emit('submit_answer', quizCode, answer, username);
+  }
+
   function refreshStates() {
     setInGame(false); setCreatingQuiz(false); setUsername(''); setQuizCode(''); setDifficulty('');
     setMultipleChoice(''); setNumberOfQuestions(''); setCategories([]); setTitle('');
@@ -138,7 +155,7 @@ const Quiz: NextPage = () => {
           <h1 className="fontSizeLarge py-4">{title}</h1>
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
-          self={user.username === username} />)}
+          gameState={gameState} self={user.username === username} />)}
           <Button text="go to question" btnPress={() => { setGameState('question'); }} isActive={false} />
           {isHost && <h1>You are host! (add button here)</h1>}
         </div>
@@ -159,7 +176,7 @@ const Quiz: NextPage = () => {
         <div className="wrapper flex flex-col items-center">
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
-           answer={user.answer} self={user.username === username} />)}
+          gameState={gameState} answer={user.answer} self={user.username === username} />)}
           <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
         </div>
       );
@@ -168,7 +185,7 @@ const Quiz: NextPage = () => {
         <div className="wrapper flex flex-col items-center">
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
-           score={user.score} self={user.username === username} />)}
+          gameState={gameState} score={user.score} self={user.username === username} />)}
           <Button text="leave Game" btnPress={() => { refreshStates(); }} isActive={false} />
         </div>
       );
@@ -196,7 +213,7 @@ const Quiz: NextPage = () => {
             <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
-            <Categories cats={['category1', 'cat2', 'cat3', 'cat4']} setCats={setCats} />
+            <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geogoraphy', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
             <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
           </div>
         </div>
@@ -205,13 +222,13 @@ const Quiz: NextPage = () => {
             <Navbar/>
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col items-center gap-5">
-                <p className="fontSizeLarge pt-4">Username</p>
-                <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" onChange={(e) => { setUsername(e.target.value); }}/>
-                <div><p className="fontSizeLarge py-4">Join Quiz</p>
-                  <input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
-                  <Button text="Join Quiz" btnPress={() => { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); }} isActive={false} /></div>
-                <div><p className="fontSizeLarge py-4">Create Quiz</p>
-                  <Button text="Create Quiz" btnPress={() => { setCreatingQuiz(!creatingQuiz); }} isActive={false} /></div>
+                <div className='mb-16'><p className="fontSizeMedium pb-[0.25rem] pt-8">Username</p>
+                  <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" onChange={(e) => { setUsername(e.target.value); }}/></div>
+                <div><p className="fontSizeMedium pb-[0.25rem]">Create Quiz</p>
+                  <Button text="Create Quiz" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); } }} isActive={false} /></div>
+                <div><p className="fontSizeMedium pb-[0.25rem]">Join Quiz</p>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
+                    <Button text="Join Quiz" btnPress={() => { if (username) { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); } }} isActive={false} /></div></div>
               </div>
             </div>
           </div>

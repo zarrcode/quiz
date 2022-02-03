@@ -8,7 +8,7 @@ const Categories: NextPage<categoriesProps> = ({ cats, setCats }) => {
 
   useEffect(() => {
     if (any) {
-      setCats(['any']);
+      setCats([]);
     } else {
       setCats(activeBtns);
     }
@@ -33,7 +33,7 @@ const Categories: NextPage<categoriesProps> = ({ cats, setCats }) => {
       <h1 className="fontSizeLarge">Categories</h1>
       <button className={`${any && 'activeBtn'} mainBtn my-4 fontSizeSmall`}onClick={() => { handleClickAny(); }} >Any</button>
       <div className="grid grid-cols-custom-3 gapSize py-2 w-[90%]">
-        {cats.map((category) => <div className="flex justify-center w-full"><button key={category}
+        {cats.map((category) => <div className="flex justify-center w-full" key={category}><button
         className={` mainBtn ${activeBtns.includes(category) && 'activeBtn'} fontSizeSmall`}
         onClick={() => { handleClickCat(category); }} >{category}</button></div>)}
       </div>
