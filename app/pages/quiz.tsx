@@ -94,14 +94,16 @@ const Quiz: NextPage = () => {
       );
 
       case ('answers'): return (
-        <div>
+        <div className="wrapper flex flex-col items-center">
+          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           <p>This page is the answers page! ( i need some answers )</p>
           <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
         </div>
       );
 
       case ('scoreboard'): return (
-        <div>
+        <div className="wrapper flex flex-col items-center">
+          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           <p>This page is the scoreboard! ( i need some scores )</p>
           <Button text="leave Game" btnPress={() => { setInGame(!inGame); }} isActive={false} />
         </div>
@@ -168,7 +170,7 @@ const Quiz: NextPage = () => {
                   <div className="">
                     <p className="fontSizeLarge py-4">Join Quiz</p>
                     <input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
-                    <Button text="Join Quiz" btnPress={() => { setInGame(!inGame); }} isActive={false} />
+                    <Button text="Join Quiz" btnPress={() => { setInGame(!inGame); setGameState('lobby'); }} isActive={false} />
                   </div>
                   <div className="">
                     <p className="fontSizeLarge py-4">Create Quiz</p>
