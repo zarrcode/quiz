@@ -9,7 +9,7 @@ body {
 }
 
 .bg {
-  background: radial-gradient(ellipse at top, #1d1c1c, #1a1919);
+  background-color: #1a1919;
 }
 
 /*
@@ -62,12 +62,8 @@ body {
 }
 
 .mainBtn {
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  width: 12ch;
-  height: 6ch;
-  padding: 0.75rem;
+  width: 15ch;
+  height: 8ch;
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid #2c086d;
@@ -89,8 +85,9 @@ body {
 }
 
 .questionInput {
-  width: 20ch;
-  padding: 1rem;
+  width: 25ch;
+  height: 8ch;
+  padding-left: 1rem;
   border-radius: 0.5rem;
   border: 2px solid #2c086d;
   outline: 1px solid black;
@@ -167,80 +164,50 @@ body {
   padding: 0.5rem;
 }
 
-.playerCard {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 90%;
-  height: 3rem;
-  border-radius: 1rem;
-  margin: 0.25rem;
-  -webkit-box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.7);
-          box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.7);
-}
-
-.playerCard .pc-left {
-  border: 2px solid black;
-  height: 100%;
-  padding: 0rem 1rem 0rem 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: #360a85;
-  border-radius: 1rem 0 0 1rem;
-  width: 30%;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-}
-
-.playerCard .pc-right {
-  border: 2px solid black;
-  height: 100%;
-  padding: 0rem 1rem 0rem 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-left: none;
+.playerCard .pc-lobby {
+  border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
+  -webkit-box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.6);
+          box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.6);
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 0 1rem 1rem 0;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  width: 70%;
+  border: 2px solid #2c086d;
 }
 
-.playerCard .pc-self {
-  border: 2px solid black;
-  height: 100%;
-  padding: 0rem 1rem 0rem 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.playerCard .pc-lobby .pc-lobby-name {
+  background-color: #220655;
+  width: 40%;
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
+  min-width: min-content;
+}
+
+.playerCard .pc-lobby .pc-lobby-name.self {
+  background-color: #3f0b9d;
+}
+
+.playerCard .pc-lobby.self {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.playerCard .pc-answers-name {
+  background-color: #2c086d;
+  border-bottom: 2px solid #1a1919;
+}
+
+.playerCard .pc-answers-name.self {
   background-color: #490db4;
-  border-radius: 1rem 0 0 1rem;
-  width: 30%;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
 }
 
-.playerCard.self {
-  -webkit-box-shadow: 0 0 0.5rem 0.1rem rgba(255, 255, 255, 0.5);
-          box-shadow: 0 0 0.5rem 0.1rem rgba(255, 255, 255, 0.5);
+.playerCard .pc-answers {
+  border: 2px solid #2c086d;
+  border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
+  -webkit-box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.6);
+          box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.playerCard .pc-answers.self {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid #490db4;
 }
 
 .wrapper {
@@ -260,6 +227,6 @@ body {
 }
 
 .gapSize {
-  gap: calc(-10px + 6vw);
+  gap: calc(-5px + 4vw);
 }
 /*# sourceMappingURL=globals.css.map */
