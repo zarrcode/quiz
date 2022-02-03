@@ -20,7 +20,7 @@ const Quiz: NextPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [gameState, setGameState] = useState('');
-  const [users, setUsers] = useState<User[]>([{ username: '', answer: 'answer', score: 5 }, { username: 'user', answer: 'users answer', score: 2 }]);
+  const [users, setUsers] = useState<User[]>([]);
   const [isHost, setIshost] = useState(false);
   const [question, setQuestion] = useState('Is this the question?');
   const [answer, setAnswer] = useState('');
@@ -36,24 +36,21 @@ const Quiz: NextPage = () => {
     // for developement purposes
     socket.onAny((event, ...args) => console.log(event, ...args));
 
-    socket.on('connect_error', () => {
-      let errorMessage;
-      if (inGame) errorMessage = 'lobby has been closed';
-      if (username) errorMessage = 'username invalid'; // FIXME: alert shows when disconnecting on the lobby page
-
-      if (errorMessage) alert(errorMessage); // TODO: replace with user-friendly modal
+    socket.on('connect_error', (err) => {
+      if (err.message === 'username invalid') {
+        alert(err.message); // TODO: replace with user-friendly modal
+      } else if (err.message === 'session deleted' && inGame) {
+        alert(err.message); // TODO: replace with user-friendly modal
+      }
+      refreshStates();
     });
 
     // custom disconnect handler
     socket.on('disconnect_custom', (reason) => {
+      alert(reason);
       socket.disconnect();
 
-      // reset state
-      setInGame(false);
-      setCreatingQuiz(false);
-      setGameState('');
-
-      alert(reason);
+      refreshStates();
     });
 
     socket.on('session', (newSessionID) => {
@@ -64,8 +61,16 @@ const Quiz: NextPage = () => {
       setQuizCode(gameID);
     });
 
+    socket.on('game_joined', (newTitle) => {
+      setTitle(newTitle);
+    });
+
+    socket.on('game_rejoined', (game) => {
+      setInGame(true);
+      // TODO: add other required state
+    });
+
     socket.on('users', (newUsers) => {
-      console.log(newUsers);
       setUsers((prevUsers) => [
         ...prevUsers,
         ...newUsers,
@@ -73,11 +78,14 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('users_join', (newUser) => {
-      console.log(newUser);
       setUsers((prevUsers) => [
         ...prevUsers,
         newUser,
       ]);
+    });
+
+    socket.on('users_leave', (sessionID) => {
+      setUsers((prevUsers) => prevUsers.filter((user) => user.sessionID !== sessionID));
     });
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -168,6 +176,8 @@ const Quiz: NextPage = () => {
       default: return (<div></div>);
     }
   }
+
+  console.log('rendering', users);
 
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
