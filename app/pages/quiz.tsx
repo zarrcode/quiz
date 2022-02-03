@@ -74,6 +74,15 @@ const Quiz: NextPage = () => {
       ]);
     });
 
+    socket.on('new_question', (questionsAndAnswers) => {
+      setQuestion(questionsAndAnswers.question);
+      // setCorrectAnswer(questionsAndAnswers.correctAnswer);
+    });
+
+    socket.on('answer_list', (answerList) => {
+      setUsers(answerList);
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -109,6 +118,14 @@ const Quiz: NextPage = () => {
   function sioStartGame() {
     // TODO: add check for host flag
     socket.emit('game_start');
+  }
+
+  function sioRetrieveQuestion() {
+    socket.emit('retrieve_question', quizCode);
+  }
+
+  function sioSubmitAnswer() {
+    socket.emit('submit_answer', quizCode, answer, username);
   }
 
   function refreshStates() {
