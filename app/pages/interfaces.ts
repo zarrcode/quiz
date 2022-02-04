@@ -48,9 +48,16 @@ export interface playerCardProps extends User {
   result?: boolean;
   correct?: boolean;
   isHost: boolean;
+  position?: string;
 }
 
 export interface categoriesProps {
   cats: string[];
   setCats: (cats:string[]) => void;
+}
+
+export interface finalProps {
+  position: number;
+  username: string;
+  score?: number;
 }

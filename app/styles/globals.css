@@ -29,6 +29,8 @@ body {
 
   playerCard
 
+  winner
+
   --Utility Classes--
 
   wrapper
@@ -178,7 +180,7 @@ body {
 
 .playerCard .pc-lobby .pc-lobby-name {
   background-color: rgba(34, 6, 85, 0.6);
-  width: 90%;
+  width: 80%;
 }
 
 .playerCard .pc-lobby .pc-lobby-name.self {
@@ -209,6 +211,21 @@ body {
 .playerCard .pc-answers.self {
   background-color: rgba(255, 255, 255, 0.3);
   border: 2px solid #490db4;
+}
+
+.winner.first {
+  background-color: #f1ba23;
+  width: 90%;
+}
+
+.winner.second {
+  background-color: #999ea3;
+  width: 90%;
+}
+
+.winner.third {
+  background-color: #b1715d;
+  width: 90%;
 }
 
 .wrapper {

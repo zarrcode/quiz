@@ -38,6 +38,8 @@ $lightened-tertiary-color: rgba(white, 0.3);
 
   playerCard
 
+  winner
+
   --Utility Classes--
 
   wrapper
@@ -143,7 +145,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
     border: 2px solid $secondary-color;
     .pc-lobby-name {
       background-color: darken(rgba($secondary-color, 0.6), 5%);
-      width: 90%;
+      width: 80%;
       &.self {
         background-color: lighten(rgba($secondary-color, 0.6), 10%);
       }
@@ -170,6 +172,22 @@ $lightened-tertiary-color: rgba(white, 0.3);
     }
   }
 }
+
+.winner {
+  &.first {
+    background-color: rgba(#F1BA23, 1);
+    width: 90%;
+  }
+  &.second {
+    background-color: rgba(#999EA3, 1);
+    width: 90%;
+  }
+  &.third {
+    background-color: rgba(#B1715D,1);
+    width: 90%;
+  }
+}
+
 
 // --UTILITY CLASSES--
 
