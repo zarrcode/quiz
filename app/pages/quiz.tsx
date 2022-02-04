@@ -20,7 +20,7 @@ const Quiz: NextPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [gameState, setGameState] = useState('');
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([{ username: 'USERNAME', answer: 'THIS IS THE ANSWER', score: 5 }, { username: 'USER2', answer: 'ANS2', score: 3 }, { username: 'USER3', answer: 'ANS3', score: 2 }]);
   const [isHost, setIsHost] = useState(false);
   const [question, setQuestion] = useState('Is this the question?');
   const [answer, setAnswer] = useState('');
@@ -45,7 +45,7 @@ const Quiz: NextPage = () => {
       } else if (err.message === 'session deleted' && inGame) {
         alert(err.message); // TODO: replace with user-friendly modal
       }
-      refreshStates();
+      // refreshStates();
     });
 
     // custom disconnect handler
@@ -53,7 +53,7 @@ const Quiz: NextPage = () => {
       alert(reason);
       socket.disconnect();
 
-      refreshStates();
+      // refreshStates();
     });
 
     socket.on('session', (newSessionID) => {
@@ -171,8 +171,8 @@ const Quiz: NextPage = () => {
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} />)}
-          <Button text="go to question" btnPress={() => { setGameState('question'); }} isActive={false} />
-          {isHost && <Button text="start game" btnPress={() => { sioStartGame(); }} isActive={false} />}
+          {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioStartGame(); setGameState('question'); }} isActive={false} /></div>}
+          <div className="py-8"><Button text="go to question" btnPress={() => { setGameState('question'); }} isActive={false} /></div>
         </div>
       );
 
@@ -182,8 +182,8 @@ const Quiz: NextPage = () => {
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           <p className="fontSizeMedium">{question}</p>
           <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
-          <button className="" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
-          <Button text="go to answers" btnPress={() => { setGameState('answers'); }} isActive={false} />
+          <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
+          <div className="py-4"><Button text="go to answers" btnPress={() => { setGameState('answers'); }} isActive={false} /></div>
           <p>your answer: {answer}</p>
         </div>
       );
@@ -197,14 +197,14 @@ const Quiz: NextPage = () => {
               gameState={gameState} answer={user.answer} self={user.username === username}
               stateChange={changeCorrectAnswers} correct={correctAnswers.includes(user.username)}
                />)} {/* FIXME: change this to correct/not */}
-            <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+            <div className="py-6"><Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} /></div>
           </div>
             : <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               correct={correctAnswers.includes(user.username)} />)}
-            <Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} />
+            <div className="py-6"><Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} /></div>
           </div>
           }
         </div>
