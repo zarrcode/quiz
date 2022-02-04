@@ -1,12 +1,16 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable no-param-reassign */
 import type { NextPage } from 'next';
+import { useEffect } from 'react';
 import { playerCardProps } from '../interfaces';
 
 // CHANGE PROP TO INCLUDE 'PAGE' AND RENDER DIFFERENTLY
 const PlayerCard: NextPage<playerCardProps> = ({
-  username, answer, score, self, gameState, stateChange, correct,
+  username, answer, score, self, gameState, stateChange, result, correct, isHost, position,
 }) => {
+  useEffect(() => {
+    if (result && stateChange) { stateChange(username); }
+  }, []);
   switch (gameState) {
     case ('lobby'): return (
       <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col'>
@@ -19,7 +23,7 @@ const PlayerCard: NextPage<playerCardProps> = ({
     );
     case ('answers'): return (
       <div className='w-full h-full'>
-        { true // FIXME: ishost
+        { isHost
           ? <div className='playerCard w-[90%] h-[5rem] m-[0.25rem] rounded flex flex-col'>
             <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
               <p>{username}</p>
@@ -31,7 +35,6 @@ const PlayerCard: NextPage<playerCardProps> = ({
                 : <button onClick={() => { if (stateChange) { stateChange(username); } }}>
                 Wrong!</button>
               }
-              {console.log(correct)}
               <p>{answer}</p>
             </div>
           </div>
@@ -55,6 +58,16 @@ const PlayerCard: NextPage<playerCardProps> = ({
         <p>{score}</p>
       </div>
     </div>
+    );
+    case ('final'): return (
+      <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col items-center'>
+        <div className={` pc-lobby h-full flex items-center justify-center px-2 winner ${position}`}>
+          <div className={`flex items-center justify-between h-[101%] w-[90%] winner ${position}`}>
+            <p className="font-bold px-4">{username}</p>
+            <p className="font-bold px-4">{score}</p>
+          </div>
+        </div>
+      </div>
     );
     default: return (<div></div>);
   }

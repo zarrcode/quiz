@@ -29,6 +29,8 @@ body {
 
   playerCard
 
+  winner
+
   --Utility Classes--
 
   wrapper
@@ -62,7 +64,7 @@ body {
 }
 
 .mainBtn {
-  width: 15ch;
+  width: 13ch;
   height: 7ch;
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
@@ -106,22 +108,26 @@ body {
 
 .questionInput::-webkit-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput:-ms-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput::-ms-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput::placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionSubmit {
@@ -174,7 +180,7 @@ body {
 
 .playerCard .pc-lobby .pc-lobby-name {
   background-color: rgba(34, 6, 85, 0.6);
-  width: 90%;
+  width: 80%;
 }
 
 .playerCard .pc-lobby .pc-lobby-name.self {
@@ -205,6 +211,28 @@ body {
 .playerCard .pc-answers.self {
   background-color: rgba(255, 255, 255, 0.3);
   border: 2px solid #490db4;
+}
+
+.winner.first {
+  background-color: #f1ba23;
+  width: 90%;
+  font-size: 1.75rem;
+}
+
+.winner.second {
+  background-color: #999ea3;
+  width: 90%;
+  font-size: 1.5rem;
+}
+
+.winner.third {
+  background-color: #b1715d;
+  width: 90%;
+  font-size: 1.25rem;
+}
+
+.winner.loser {
+  width: 90%;
 }
 
 .wrapper {

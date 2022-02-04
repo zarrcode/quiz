@@ -7,6 +7,7 @@ body {
   margin: 0;
   -webkit-tap-highlight-color: transparent;
   color: white;
+  // font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 
@@ -37,6 +38,8 @@ $lightened-tertiary-color: rgba(white, 0.3);
 
   playerCard
 
+  winner
+
   --Utility Classes--
 
   wrapper
@@ -65,7 +68,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
 }
 
 .mainBtn {
-  width: 15ch;
+  width: 13ch;
   height: 7ch;
   border-radius: 0.75rem;
   background-color: $tertiary-color;
@@ -98,7 +101,8 @@ $lightened-tertiary-color: rgba(white, 0.3);
   }
   &::placeholder {
     color: white;
-    opacity: 1;
+    opacity: .3;
+    font-style: italic;
   }
   box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
   transition: all 0.6s;
@@ -141,7 +145,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
     border: 2px solid $secondary-color;
     .pc-lobby-name {
       background-color: darken(rgba($secondary-color, 0.6), 5%);
-      width: 90%;
+      width: 80%;
       &.self {
         background-color: lighten(rgba($secondary-color, 0.6), 10%);
       }
@@ -168,6 +172,28 @@ $lightened-tertiary-color: rgba(white, 0.3);
     }
   }
 }
+
+.winner {
+  &.first {
+    background-color: rgba(#F1BA23, 1);
+    width: 90%;
+    font-size: 1.75rem;
+  }
+  &.second {
+    background-color: rgba(#999EA3, 1);
+    width: 90%;
+    font-size: 1.5rem;
+  }
+  &.third {
+    background-color: rgba(#B1715D,1);
+    width: 90%;
+    font-size: 1.25rem;
+  }
+  &.loser {
+    width: 90%;
+  }
+}
+
 
 // --UTILITY CLASSES--
 
