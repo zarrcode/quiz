@@ -16,7 +16,10 @@ const FinalScore: NextPage<finalProps> = ({ position, username, score }) => {
       <PlayerCard self={false} gameState={'final'} isHost={false}
        username={username} score={score} position={'third'} />
     );
-    default: return (<div></div>);
+    default: return (
+      <PlayerCard self={false} gameState={'final'} isHost={false}
+      username={username} score={score} position={'loser'} />
+    );
   }
 };
 
