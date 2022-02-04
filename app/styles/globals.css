@@ -216,15 +216,22 @@ body {
 .winner.first {
   background-color: #f1ba23;
   width: 90%;
+  font-size: 1.75rem;
 }
 
 .winner.second {
   background-color: #999ea3;
   width: 90%;
+  font-size: 1.5rem;
 }
 
 .winner.third {
   background-color: #b1715d;
+  width: 90%;
+  font-size: 1.25rem;
+}
+
+.winner.loser {
   width: 90%;
 }
 
