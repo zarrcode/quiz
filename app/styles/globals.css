@@ -106,22 +106,26 @@ body {
 
 .questionInput::-webkit-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput:-ms-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput::-ms-input-placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionInput::placeholder {
   color: white;
-  opacity: 1;
+  opacity: .3;
+  font-style: italic;
 }
 
 .questionSubmit {

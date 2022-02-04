@@ -91,6 +91,7 @@ const Quiz: NextPage = () => {
 
     socket.on('new_question', (questionsAndAnswers) => {
       setQuestion(questionsAndAnswers.question);
+      setGameState('question');
       // setCorrectAnswer(questionsAndAnswers.correctAnswer);
     });
 
@@ -130,6 +131,15 @@ const Quiz: NextPage = () => {
     // TODO: add check for host flag
     socket.emit('game_start');
   }
+
+  function sioRetrieveQuestion() {
+    socket.emit('retrieve_question', quizCode);
+  }
+
+  function sioSubmitAnswer() {
+    socket.emit('submit_answer', quizCode, answer, username);
+  }
+
   function changeCorrectAnswers(ans:string) {
     if (correctAnswers.includes(ans)) {
       const index = correctAnswers.indexOf(ans);
@@ -142,14 +152,6 @@ const Quiz: NextPage = () => {
 
   function setCats(cats:string[]) {
     setCategories(cats);
-  }
-
-  function sioRetrieveQuestion() {
-    socket.emit('retrieve_question', quizCode);
-  }
-
-  function sioSubmitAnswer() {
-    socket.emit('submit_answer', quizCode, answer, username);
   }
 
   function refreshStates() {
@@ -167,7 +169,7 @@ const Quiz: NextPage = () => {
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} />)}
           <Button text="go to question" btnPress={() => { setGameState('question'); }} isActive={false} />
-          {isHost && <h1>You are host! (add button here)</h1>}
+          {isHost && <Button text="start game" btnPress={() => { sioStartGame(); }} isActive={false} />}
         </div>
       );
 
@@ -177,6 +179,7 @@ const Quiz: NextPage = () => {
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           <p className="fontSizeMedium">{question}</p>
           <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
+          <button className="" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
           <Button text="go to answers" btnPress={() => { setGameState('answers'); }} isActive={false} />
           <p>your answer: {answer}</p>
         </div>
@@ -209,7 +212,10 @@ const Quiz: NextPage = () => {
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} score={user.score} self={user.username === username} />)}
-          <Button text="leave Game" btnPress={() => { refreshStates(); }} isActive={false} />
+          <div className="flex">
+            <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
+            <Button text="leave Game" btnPress={() => { refreshStates(); }} isActive={false} />
+          </div>
         </div>
       );
 
