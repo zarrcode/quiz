@@ -109,8 +109,8 @@ const Quiz: NextPage = () => {
     socket.connect();
 
     const options = {
-      username,
       title,
+      username,
       difficulty,
       categories,
       type: multipleChoice,
@@ -125,11 +125,6 @@ const Quiz: NextPage = () => {
     socket.emit('game_join', quizCode);
   }
 
-  // TODO: hook up to button
-  function sioStartGame() {
-    // TODO: add check for host flag
-    socket.emit('game_start');
-  }
   function changeCorrectAnswers(ans:string) {
     if (correctAnswers.includes(ans)) {
       const index = correctAnswers.indexOf(ans);
