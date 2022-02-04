@@ -33,6 +33,7 @@ const Quiz: NextPage = () => {
   const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [allAnswered, setAllAnswered] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -108,6 +109,11 @@ const Quiz: NextPage = () => {
       setAllAnswered(isAllAnswered);
     });
 
+    socket.on('scoreboard', (scoreboard, isGameOver) => {
+      setUsers(scoreboard);
+      setGameOver(isGameOver);
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -149,9 +155,13 @@ const Quiz: NextPage = () => {
     socket.emit('submit_answer', quizCode, answer, username);
   }
 
-  function changeCorrectAnswers(usr:string) {
-    if (correctAnswers.includes(usr)) {
-      const index = correctAnswers.indexOf(usr);
+  function sioCorrectAnswers() {
+    socket.emit('correct_answers', quizCode, correctAnswers);
+  }
+
+  function changeCorrectAnswers(ans:string) {
+    if (correctAnswers.includes(ans)) {
+      const index = correctAnswers.indexOf(ans);
       setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
     } else {
       setCorrectAnswers([...correctAnswers, usr]);
