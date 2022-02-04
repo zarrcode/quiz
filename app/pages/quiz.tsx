@@ -25,6 +25,8 @@ const Quiz: NextPage = () => {
   const [question, setQuestion] = useState('Is this the question?');
   const [answer, setAnswer] = useState('');
   const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
+  const [correctAnswer, setCorrectAnswer] = useState('');
+  const [allAnswered, setAllAnswered] = useState(false);
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -91,12 +93,13 @@ const Quiz: NextPage = () => {
 
     socket.on('new_question', (questionsAndAnswers) => {
       setQuestion(questionsAndAnswers.question);
+      setCorrectAnswer(questionsAndAnswers.correctAnswer);
       setGameState('question');
-      // setCorrectAnswer(questionsAndAnswers.correctAnswer);
     });
 
-    socket.on('answer_list', (answerList) => {
+    socket.on('answer_list', (answerList, isAllAnswered) => {
       setUsers(answerList);
+      setAllAnswered(isAllAnswered);
     });
 
     // on unmount, remove socket event listeners and disconnect socket
