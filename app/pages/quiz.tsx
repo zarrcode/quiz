@@ -102,7 +102,7 @@ const Quiz: NextPage = () => {
 
     socket.on('new_question', (questionsAndAnswers) => {
       const qna = questionsAndAnswers;
-      setQuestion(qna.question);
+      setQuestion(qna.currentQuestion);
       setCorrectAnswer(qna.correctAnswer);
       if (qna.incorrectAnswer1) {
         setIsMCQ(true);
