@@ -108,7 +108,10 @@ const Quiz: NextPage = () => {
       setCorrectAnswer(qna.correctAnswer);
       if (qna.incorrectAnswer1) {
         setIsMCQ(true);
-        setAllAnswers([qna.incorrectAnswer1, qna.incorrectAnswer2, qna.incorrectAnswer3]);
+        setAllAnswers(
+          [qna.incorrectAnswer1, qna.incorrectAnswer2,
+            qna.incorrectAnswer3, qna.correctAnswer].sort(),
+        );
       }
       setGameState('question');
     });
@@ -202,10 +205,9 @@ const Quiz: NextPage = () => {
       case ('question'): return (
         <div>
           {isMCQ
-            ? <div className="wrapper flex flex-col items-center">
+            ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            {/* <p className="fontSizeMedium">{question}</p> */}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
           </div>
@@ -220,7 +222,7 @@ const Quiz: NextPage = () => {
         </div>
       );
 
-      case ('answers'): return (
+      case ('answers'): return ( // FIXME: do another state for having answered early
         <div>
           { isHost
             ? <div className="wrapper flex flex-col items-center">
@@ -276,7 +278,7 @@ const Quiz: NextPage = () => {
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       {inGame
         // INGAME
-        ? <div className="wrapper h-full">
+        ? <div className="wrapper h-screen">
           { renderGameState() }
       </div>
       // NOT INGAME
