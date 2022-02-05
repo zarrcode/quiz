@@ -14,7 +14,7 @@ const MultipleAnswers: NextPage<optionProps> = ({ text, buttons, active }) => {
 
   return (
     <div className="flex flex-col items-center w-full py-2">
-      <p className="fontSizeLarge text-white pt-6">{text} Hiya</p>
+      <p className="fontSizeLarge text-white pt-6">{text}</p>
       <div className="grid grid-cols-2 gapSize py-2 w-full">
         {buttons.map((string) => <Button text={string} btnPress={buttonPress}
          isActive={isActive === string} key={string}/>)}

@@ -120,6 +120,7 @@ const Quiz: NextPage = () => {
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
       setUsers(scoreboard);
+      setGameState('scoreboard');
       setGameOver(isGameOver);
     });
 
@@ -199,16 +200,16 @@ const Quiz: NextPage = () => {
 
       case ('question'): return (
         <div>
-          {!isMCQ
+          {isMCQ
             ? <div className="wrapper flex flex-col items-center">
-            <h1 className="fontSizeLarge py-4">{title} mcq</h1>
+            <h1 className="fontSizeLarge py-4">{title}</h1>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             {/* <p className="fontSizeMedium">{question}</p> */}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
-              <h1 className="fontSizeLarge py-4">{title} not mcq</h1>
+              <h1 className="fontSizeLarge py-4">{title}</h1>
               <h2 className="fontSizeLarge py-4">{quizCode}</h2>
               <p className="fontSizeMedium">{question}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
@@ -228,7 +229,7 @@ const Quiz: NextPage = () => {
               stateChange={changeCorrectAnswers} result={user.result}
               correct={correctAnswers.includes(user.username)} isHost={isHost}
                />)}
-            <div className="py-6"><Button text="go to scoreboard" btnPress={() => { setGameState('scoreboard'); }} isActive={false} /></div>
+            <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioCorrectAnswers(); }} isActive={false} /></div>
           </div>
             : <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
