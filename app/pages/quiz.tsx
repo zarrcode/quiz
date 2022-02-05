@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable no-unused-vars */
 import type { NextPage } from 'next';
 import { useState, useEffect } from 'react';
@@ -131,13 +132,15 @@ const Quiz: NextPage = () => {
   function sioCreateGame() {
     socket.auth = { username };
     socket.connect();
-
+    let type;
+    if (multipleChoice === 'yes') { type = 'multiple'; }
+    const diff = difficulty.toLowerCase();
     const options = {
       title,
       username,
-      difficulty,
+      difficulty: diff,
       categories,
-      type: multipleChoice,
+      type,
       questions: numberOfQuestions,
     };
     socket.emit('game_create', options);
@@ -282,8 +285,8 @@ const Quiz: NextPage = () => {
           <div className="py-4 wrapper text-center min-h-screen h-full">
             <Button text="Back" btnPress={() => { setCreatingQuiz(!creatingQuiz); }} isActive={true} />
             <input type="text" placeholder="Quiz Title ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setTitle(e.target.value); }}/>
-            <Option text="Difficulty" buttons={['Easy', 'medium', 'Hard']} active={setDifficulty} />
-            <Option text="Multiple Choice" buttons={['No', 'multiple']} active={setMultipleChoice} />
+            <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} active={setDifficulty} />
+            <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geogoraphy', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
