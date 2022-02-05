@@ -132,7 +132,7 @@ const Quiz: NextPage = () => {
   function sioCreateGame() {
     socket.auth = { username };
     socket.connect();
-    let type;
+    let type = 'not multiple';
     if (multipleChoice === 'yes') { type = 'multiple'; }
     const diff = difficulty.toLowerCase();
     const options = {
@@ -199,21 +199,21 @@ const Quiz: NextPage = () => {
 
       case ('question'): return (
         <div>
-          {isMCQ
+          {!isMCQ
             ? <div className="wrapper flex flex-col items-center">
-              <h1 className="fontSizeLarge py-4">{title}</h1>
-              <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-              <p className="fontSizeMedium">{question}</p>
-              <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
-              <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
-            </div>
-            : <div className="wrapper flex flex-col items-center">
-            <h1 className="fontSizeLarge py-4">{title}</h1>
+            <h1 className="fontSizeLarge py-4">{title} mcq</h1>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             {/* <p className="fontSizeMedium">{question}</p> */}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
           </div>
+            : <div className="wrapper flex flex-col items-center">
+              <h1 className="fontSizeLarge py-4">{title} not mcq</h1>
+              <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+              <p className="fontSizeMedium">{question}</p>
+              <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
+              <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
+            </div>
           }
         </div>
       );
@@ -289,7 +289,7 @@ const Quiz: NextPage = () => {
             <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
-            <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geogoraphy', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
+            <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
             <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
           </div>
         </div>

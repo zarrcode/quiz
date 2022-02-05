@@ -15,6 +15,7 @@ module.exports = {
     './pages/components/createQuiz.tsx',
     './pages/components/categories.tsx',
     './pages/components/finalScore.tsx',
+    './pages/components/multipleAnswers.tsx',
   ],
   theme: {
     extend: {
