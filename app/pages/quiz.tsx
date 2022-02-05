@@ -103,6 +103,7 @@ const Quiz: NextPage = () => {
 
     socket.on('new_question', (questionsAndAnswers) => {
       const qna = questionsAndAnswers;
+      setCorrectAnswers([]);
       setQuestion(qna.currentQuestion);
       setCorrectAnswer(qna.correctAnswer);
       if (qna.incorrectAnswer1) {
@@ -134,7 +135,7 @@ const Quiz: NextPage = () => {
     socket.auth = { username };
     socket.connect();
     let type = 'not multiple';
-    if (multipleChoice === 'yes') { type = 'multiple'; }
+    if (multipleChoice === 'Yes') { type = 'multiple'; }
     const diff = difficulty.toLowerCase();
     const options = {
       title,
@@ -304,7 +305,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                     <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); } }} isActive={false} /></div></div>
               </div>
             </div>
