@@ -55,15 +55,17 @@ const Quiz: NextPage = () => {
       } else if (err.message === 'session deleted' && inGame) {
         alert(err.message); // TODO: replace with user-friendly modal
       }
-      // refreshStates();
+      refreshStates();
     });
+
+    socket.on('disconnect', () => refreshStates());
 
     // custom disconnect handler
     socket.on('disconnect_custom', (reason) => {
       alert(reason);
       socket.disconnect();
 
-      // refreshStates();
+      refreshStates();
     });
 
     socket.on('session', (newSessionID) => {
