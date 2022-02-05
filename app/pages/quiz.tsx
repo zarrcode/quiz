@@ -105,11 +105,15 @@ const Quiz: NextPage = () => {
 
     socket.on('new_question', (questionsAndAnswers) => {
       const qna = questionsAndAnswers;
+      setCorrectAnswers([]);
       setQuestion(qna.currentQuestion);
       setCorrectAnswer(qna.correctAnswer);
       if (qna.incorrectAnswer1) {
         setIsMCQ(true);
-        setAllAnswers([qna.incorrectAnswer1, qna.incorrectAnswer2, qna.incorrectAnswer3]);
+        setAllAnswers(
+          [qna.incorrectAnswer1, qna.incorrectAnswer2,
+            qna.incorrectAnswer3, qna.correctAnswer].sort(),
+        );
       }
       setGameState('question');
     });
@@ -136,7 +140,7 @@ const Quiz: NextPage = () => {
     socket.auth = { username };
     socket.connect();
     let type = 'not multiple';
-    if (multipleChoice === 'yes') { type = 'multiple'; }
+    if (multipleChoice === 'Yes') { type = 'multiple'; }
     const diff = difficulty.toLowerCase();
     const options = {
       title,
@@ -203,10 +207,9 @@ const Quiz: NextPage = () => {
       case ('question'): return (
         <div>
           {isMCQ
-            ? <div className="wrapper flex flex-col items-center">
+            ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            {/* <p className="fontSizeMedium">{question}</p> */}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
           </div>
@@ -221,7 +224,7 @@ const Quiz: NextPage = () => {
         </div>
       );
 
-      case ('answers'): return (
+      case ('answers'): return ( // FIXME: do another state for having answered early
         <div>
           { isHost
             ? <div className="wrapper flex flex-col items-center">
@@ -277,7 +280,7 @@ const Quiz: NextPage = () => {
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       {inGame
         // INGAME
-        ? <div className="wrapper h-full">
+        ? <div className="wrapper h-screen">
           { renderGameState() }
       </div>
       // NOT INGAME
@@ -306,7 +309,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                     <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); } }} isActive={false} /></div></div>
               </div>
             </div>

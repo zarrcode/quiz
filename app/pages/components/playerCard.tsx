@@ -9,7 +9,7 @@ const PlayerCard: NextPage<playerCardProps> = ({
   username, answer, score, self, gameState, stateChange, result, correct, isHost, position,
 }) => {
   useEffect(() => {
-    if (result && stateChange) { stateChange(username); }
+    if (result === 'true' && stateChange) { stateChange(username); }
   }, []);
   switch (gameState) {
     case ('lobby'): return (

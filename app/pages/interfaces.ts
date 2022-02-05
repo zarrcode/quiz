@@ -7,7 +7,7 @@ export interface User {
   answer?:string;
   score?: number;
   sessionID?: string;
-  result?: boolean;
+  result?: string;
 }
 
 export interface navbarProps {
@@ -45,7 +45,7 @@ export interface playerCardProps extends User {
   self: boolean;
   gameState: string;
   stateChange?: (ans:string) => void;
-  result?: boolean;
+  result?: string;
   correct?: boolean;
   isHost: boolean;
   position?: string;

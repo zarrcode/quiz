@@ -16,6 +16,7 @@ module.exports = {
     './pages/components/categories.tsx',
     './pages/components/finalScore.tsx',
     './pages/components/multipleAnswers.tsx',
+    './pages/components/mcqButton.tsx',
   ],
   theme: {
     extend: {
