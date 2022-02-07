@@ -146,6 +146,10 @@ const Quiz: NextPage = () => {
       }
     });
 
+    socket.on('final_scoreboard', () => {
+      // Reub-choob add stuff here
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -191,6 +195,10 @@ const Quiz: NextPage = () => {
     socket.emit('correct_answers', quizCode, username);
   }
 
+  function sioFinalScoreboard() {
+    socket.emit('final_scoreboard', quizCode);
+  }
+
   function sioStartTimer() {
     socket.emit('start_timer');
   }
@@ -227,7 +235,7 @@ const Quiz: NextPage = () => {
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
           {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
-          <button onClick={() => { setGameState('final');  }} > send to final</button>
+          <button onClick={() => { setGameState('final'); }} > send to final</button>
         </div>
       );
 
