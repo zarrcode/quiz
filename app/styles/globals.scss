@@ -10,9 +10,14 @@ body {
   // font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-
 $base-color: #1a1919;
-$secondary-color: #2c086d;
+// $secondary-color: #b31973;
+// $secondary-color: #b31973;
+// $secondary-color: #1d95b9;
+// $secondary-color: #e6d11b;
+$secondary-color: #189e71;
+// $secondary-color: #a2c918;
+// $secondary-color: #2c086d;
 $tertiary-color: rgba(white, 0.2);
 $lightened-tertiary-color: rgba(white, 0.3);
 
@@ -20,6 +25,9 @@ $lightened-tertiary-color: rgba(white, 0.3);
   // background: radial-gradient(ellipse at top, lighten($base-color, 1%), $base-color )
   background-color: $base-color;
 }
+
+$shadow: 0.5rem 0.5rem 0.5rem rgba(black, 0.8);
+$shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
 
 /*
 
@@ -64,6 +72,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   justify-content: space-around;
   align-items: center;
   border-bottom: 2px solid black;
+  box-shadow: 0 1px 5px 5px rgba(black, 0.3);
   &:hover {
     cursor: pointer;
   }
@@ -75,7 +84,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
+  box-shadow: $shadow;
   outline: 1px solid rgba(black, 0.6);
   transition: all 0.5s;
 }
@@ -86,20 +95,18 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
+  box-shadow: $shadow;
   outline: 1px solid rgba(black, 0.6);
   transition: all 0.5s;
 }
 
 .activeBtn {
   background-color: $secondary-color;
-  transition: all 0.7s;
+  transition: all 0.8s;
   border: 2px solid rgba(black, 0.6);
   outline: 1px solid rgba(black, 0);
-  box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.2);
+  box-shadow: $shadowClose;
 }
-
-
 
 .questionInput {
   width: 25ch;
@@ -112,14 +119,19 @@ $lightened-tertiary-color: rgba(white, 0.3);
   color: white;
   &:focus {
     background-color: $secondary-color;
-    border: 2px solid $secondary-color;
+    border: 2px solid black;
+    box-shadow: $shadowClose;
+
   }
   &::placeholder {
     color: white;
     opacity: .3;
     font-style: italic;
   }
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  box-shadow: $shadow;
   transition: all 0.6s;
 }
 
@@ -142,8 +154,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 1rem;
   display:flex;
   justify-content: space-between;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
-
+  box-shadow: $shadow;
   .name {
     font-weight: bold;
   }
@@ -155,7 +166,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
 .playerCard {
   .pc-lobby {
     border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
-    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
+    box-shadow: $shadow;
     background-color: $tertiary-color;
     border: 2px solid $secondary-color;
     .pc-lobby-name {
@@ -179,7 +190,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   .pc-answers {
     border: 2px solid $secondary-color;
     border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
-    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
+    box-shadow: $shadow;
     background-color: $tertiary-color;
     &.self {
       background-color: rgba(white, 0.3);
@@ -236,4 +247,3 @@ $lightened-tertiary-color: rgba(white, 0.3);
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
 }
-

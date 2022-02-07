@@ -46,6 +46,7 @@ const Quiz: NextPage = () => {
   const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
+    document.documentElement.style.setProperty('$secondary-color', 'green');
     // if session exists, reconnect to server
     const sessionID = localStorage.getItem('sessionID');
     if (sessionID) {
@@ -137,6 +138,7 @@ const Quiz: NextPage = () => {
         );
       }
       setAnswer('');
+      setTimer(questionsAndAnswers.timer);
       setGameState('question');
     });
 
@@ -145,28 +147,28 @@ const Quiz: NextPage = () => {
       setAllAnswered(isAllAnswered);
     });
 
-    socket.on('scoreboard', (scoreboard, isGameOver) => {
+    socket.on('scoreboard', (scoreboard) => {
       setUsers(scoreboard);
       setGameState('scoreboard');
-      setGameOver(isGameOver);
     });
 
     socket.on('toggle_answers', (users) => {
       setUsers(users);
     });
 
-    socket.on('final_scoreboard', () => {
+    socket.on('final_scoreboard', (scoreboard) => {
+      setUsers(scoreboard);
       setGameState('final');
     });
 
     socket.on('timer', (seconds) => {
       setTimer(seconds);
-      if (seconds < 0) setGameState('answer');
+      if (seconds < 0 && gameState === 'question') setGameState('answer');
       console.log(timer);
     });
 
     socket.on('timeout', () => {
-      setGameState('answer');
+      setGameState('answers');
       setAllAnswered(true);
     });
 
@@ -209,15 +211,17 @@ const Quiz: NextPage = () => {
   }
 
   function sioFinalCorrectAnswers() {
-    socket.emit('final_correct_answers', quizCode, correctAnswers);
+    const correctUsernames:string[] = [];
+    users.forEach((user) => {
+      if (user.result === 'true') {
+        correctUsernames.push(user.username);
+      }
+    });
+    socket.emit('final_correct_answers', quizCode, correctUsernames);
   }
 
   function sioCorrectAnswers() {
     socket.emit('correct_answers', quizCode, users);
-  }
-
-  function sioFinalScoreboard() {
-    socket.emit('final_scoreboard', quizCode);
   }
 
   function sioEndGame() {
@@ -258,7 +262,6 @@ const Quiz: NextPage = () => {
           {users.map((user) => <PlayerCard user={user} key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
           {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
-          <button onClick={() => { setGameState('final'); }} > send to final</button>
         </div>
       );
 
@@ -267,17 +270,16 @@ const Quiz: NextPage = () => {
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
-            <div>
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            </div>
+            <h2 className="fontSizeLarge py-2">{quizCode}</h2>
+            <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
-              <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+              <h2 className="fontSizeLarge py-2">{quizCode}</h2>
+              <p className="py-2">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
               <p className="fontSizeMedium">{question}</p>
-              <p>username = {username}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
             </div>
@@ -314,7 +316,6 @@ const Quiz: NextPage = () => {
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   result={user.result} isHost={isHost} allAnswered={allAnswered}
                   user={user} />)}
-                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
               }
             </div>
@@ -331,10 +332,7 @@ const Quiz: NextPage = () => {
           <div className="flex">
             {isHost
               && <div className="px-4">
-                {gameOver
-                  ? <Button text="TO FINAL" btnPress={() => { sioFinalScoreboard(); }} isActive={false} />
-                  : <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
-                }
+              <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
               </div>
             }
           </div>
@@ -363,7 +361,7 @@ const Quiz: NextPage = () => {
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="exit-button flex mt-20">
-            <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
+            <div className="px-4 z-20"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>
       );
@@ -392,7 +390,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
-            <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
+            <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 300) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
             <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { setInGame(!inGame); setGameState('lobby'); setCreatingQuiz(!creatingQuiz); sioCreateGame(); }}>Create the Quiz!</button>
           </div>
@@ -403,7 +401,7 @@ const Quiz: NextPage = () => {
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col items-center gap-5">
                 <div className='mb-12'><p className="fontSizeMedium pb-[0.5rem] pt-8">What shall we call you?</p>
-                    <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" value={username} onChange={(e) => { setUsername(e.target.value); }}/></div>
+                    <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" value={username || ''} onChange={(e) => { setUsername(e.target.value); }}/></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>

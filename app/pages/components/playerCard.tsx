@@ -18,7 +18,7 @@ const PlayerCard: NextPage<playerCardProps> = ({
       </div>
     );
     case ('answers'): return (
-      <div className='w-full h-full'>
+      <div className='w-full h-full flex justify-center'>
         { isHost
           ? <div className='playerCard w-[90%] h-[5rem] m-[0.25rem] rounded flex flex-col'>
             <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
