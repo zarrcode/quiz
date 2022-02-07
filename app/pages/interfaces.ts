@@ -49,6 +49,7 @@ export interface playerCardProps extends User {
   correct?: boolean;
   isHost: boolean;
   position?: string;
+  allAnswered?: boolean;
 }
 
 export interface categoriesProps {
