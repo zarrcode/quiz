@@ -1,16 +1,12 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable no-param-reassign */
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
 import { playerCardProps } from '../interfaces';
 
 const PlayerCard: NextPage<playerCardProps> = ({
-  username, answer, score, self, gameState, stateChange, result, correct, isHost,
-  position, allAnswered,
+  username, answer, score, self, gameState, stateChange, result, isHost,
+  position, allAnswered, user,
 }) => {
-  useEffect(() => {
-    if (result === 'true' && stateChange) { stateChange(username); }
-  }, []);
   switch (gameState) {
     case ('lobby'): return (
       <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col'>
@@ -31,10 +27,10 @@ const PlayerCard: NextPage<playerCardProps> = ({
             <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center ${allAnswered ? 'justify-between' : 'justify-end'} px-2`}>
               {allAnswered
                 && <div>
-                  {correct
-                    ? <button onClick={() => { if (stateChange) { stateChange(username); } }}>
+                  {result === 'true'
+                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
                     Correct!</button>
-                    : <button onClick={() => { if (stateChange) { stateChange(username); } }}>
+                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
                     Wrong!</button>
                   }
                   </div>
@@ -49,10 +45,10 @@ const PlayerCard: NextPage<playerCardProps> = ({
             <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center ${allAnswered ? 'justify-between' : 'justify-end'} px-2`}>
               {allAnswered
                 && <div>
-                  {correct
-                    ? <button onClick={() => { if (stateChange) { stateChange(username); } }}>
+                  {result === 'true'
+                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
                     Correct!</button>
-                    : <button onClick={() => { if (stateChange) { stateChange(username); } }}>
+                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
                     Wrong!</button>
                  }
                   </div>
