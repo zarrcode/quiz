@@ -33,7 +33,7 @@ const Quiz: NextPage = () => {
   const [answer, setAnswer] = useState('');
   const [allAnswers, setAllAnswers] = useState<string[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
-  const [correctAnswer, setCorrectAnswer] = useState('');
+  const [correctAnswer, setCorrectAnswer] = useState('');a
   const [allAnswered, setAllAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
