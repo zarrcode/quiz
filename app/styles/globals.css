@@ -272,5 +272,11 @@ body {
 .quizLogo {
   height: 250px;
   width: 250px;
+  /* margin-bottom: 0; */
 }
-/*# sourceMappingURL=globals.css.map */
+.logoCreateQuiz {
+  height: 130px;
+  width: 130px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}

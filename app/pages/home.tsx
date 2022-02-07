@@ -5,7 +5,7 @@ import Navbar from './navbar';
 import Button from './components/button';
 import { getFact } from './api/apiService';
 import React from 'react';
-import logo from '../logo/Quiz.png';
+import logo from '../logo/Quiz.jpeg';
 
 const Home: NextPage = () => {
   const [randomFact, setRandomFact] = useState('');

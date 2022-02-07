@@ -4,8 +4,7 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 import { Fireworks } from 'fireworks-js/dist/react';
 import Navbar from './navbar';
 import Button from './components/button';
@@ -16,7 +15,7 @@ import { User } from './interfaces';
 import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
-import logo from '../logo/quiz.png';
+import logo from '../logo/Quiz.jpeg';
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
@@ -400,13 +399,16 @@ const Quiz: NextPage = () => {
           : <div>
             <Navbar/>
             <div className="py-20 wrapper text-center min-h-screen">
-              <div className="flex flex-col items-center gap-5">
+              <div className="flex flex-col justify-start items-center gap-5">
+              <div className="logoCreateQuiz">
+              <Image src={logo} alt="logo" />
+              </div>
                 <div className='mb-12'><p className="fontSizeMedium pb-[0.5rem] pt-8">What shall we call you?</p>
-                    <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" value={username || ''} onChange={(e) => { setUsername(e.target.value); }}/></div>
+                    <input type="text" placeholder="Username..." className="questionInput fontSizeSmall" value={username || ''} onChange={(e) => { setUsername(e.target.value); }}/></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                       <Button text="Join" btnPress={() => { if (username) { setInGame(!inGame); setGameState('lobby'); sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
