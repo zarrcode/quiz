@@ -268,4 +268,9 @@ body {
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
 }
+
+.quizLogo {
+  height: 250px;
+  width: 250px;
+}
 /*# sourceMappingURL=globals.css.map */
