@@ -364,7 +364,7 @@ const Quiz: NextPage = () => {
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
-          <div className="flex mt-20">
+          <div className="exit-button flex mt-20">
             <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>

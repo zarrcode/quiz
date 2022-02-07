@@ -256,6 +256,7 @@ body {
 
 .winnerFont {
   font-size: 1.75rem;
+  font-family: "Merienda";
   /* font-style: italic; */
   font-weight: bold;
   color: #f1ba23;
@@ -292,6 +293,11 @@ body {
 }
 .thirdMedal {
   color: #b1715d;
+}
+
+.exit-button {
+  z-index: 2;
+  /* width: 1000px; */
 }
 
 .wrapper {
