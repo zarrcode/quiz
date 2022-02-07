@@ -117,7 +117,7 @@ const Quiz: NextPage = () => {
 
     socket.on('user_data', (userData) => {
       setUsername(userData.username);
-      setQuizCode(userData.quizCode);
+      setQuizCode(userData.gameID);
     });
 
     socket.on('users_leave', (sessionID) => {
