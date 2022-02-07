@@ -137,8 +137,13 @@ const Quiz: NextPage = () => {
       setGameOver(isGameOver);
     });
 
-    socket.on('toggle_answers', (toggledAnswers) => {
-      setCorrectAnswers(toggledAnswers);
+    socket.on('toggle_answers', (username) => {
+      if (correctAnswers.includes(username)) {
+        const index = correctAnswers.indexOf(username);
+        setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
+      } else {
+        setCorrectAnswers([...correctAnswers, username]);
+      }
     });
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -182,8 +187,8 @@ const Quiz: NextPage = () => {
     socket.emit('final_correct_answers', quizCode, correctAnswers);
   }
 
-  function sioCorrectAnswers() {
-    socket.emit('correct_answers', quizCode, correctAnswers);
+  function sioCorrectAnswers(username: string) {
+    socket.emit('correct_answers', quizCode, username);
   }
 
   function sioStartTimer() {
@@ -193,18 +198,17 @@ const Quiz: NextPage = () => {
     socket.emit('game_end');
   }
 
-  function changeCorrectAnswers(ans:string) {
+  function changeCorrectAnswers(ans: string) {
     if (correctAnswers.includes(ans)) {
       const index = correctAnswers.indexOf(ans);
       setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
     } else {
       setCorrectAnswers([...correctAnswers, ans]);
     }
-    console.log(correctAnswers);
     sioCorrectAnswers(ans);
   }
 
-  function setCats(cats:string[]) {
+  function setCats(cats: string[]) {
     setCategories(cats);
   }
 
