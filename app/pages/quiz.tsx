@@ -68,8 +68,10 @@ const Quiz: NextPage = () => {
       refreshStates();
     });
 
-    socket.on('session', (newSessionID) => {
-      localStorage.setItem('sessionID', newSessionID);
+    socket.on('session', (session) => {
+      localStorage.setItem('sessionID', session.sessionID);
+      setUsername(session.username);
+      setQuizCode(session.quizCode);
     });
 
     socket.on('game_created', (gameID) => {
@@ -88,7 +90,16 @@ const Quiz: NextPage = () => {
 
     socket.on('game_data', (gameData) => {
       setInGame(true);
-      // TODO: add other required state
+      setTitle(gameData.title);
+      setIsHost(gameData.isHost);
+      setGameOver(gameData.isGameOver);
+      setQuestion(gameData.currentQuestion);
+      setCorrectAnswer(gameData.correctAnswer);
+      setIsMCQ(gameData.isMultipleChoice);
+      setAllAnswers(gameData.multipleChoiceAnswers);
+      setCorrectAnswers(gameData.playersCorrectlyAnswered);
+      setAllAnswered(gameData.allAnswered);
+      setGameState(gameData.gameState);
     });
 
     socket.on('users', (newUsers) => {
