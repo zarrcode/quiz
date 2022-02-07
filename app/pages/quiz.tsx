@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-fallthrough */
 /* eslint-disable no-unused-vars */
 import type { NextPage } from 'next';
@@ -27,7 +28,7 @@ const Quiz: NextPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [gameState, setGameState] = useState('');
-  const [users, setUsers] = useState<User[]>(mockUsers);
+  const [users, setUsers] = useState<User[]>([]);
   const [isHost, setIsHost] = useState(false);
   const [question, setQuestion] = useState('Is this the question?');
   const [answer, setAnswer] = useState('');
@@ -37,6 +38,7 @@ const Quiz: NextPage = () => {
   const [allAnswered, setAllAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
+  const [timer, setTimer] = useState('');
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -132,13 +134,13 @@ const Quiz: NextPage = () => {
             qna.incorrectAnswer3, qna.correctAnswer].sort(),
         );
       }
+      setAnswer('');
       setGameState('question');
     });
 
     socket.on('answer_list', (answerList, isAllAnswered) => {
       setUsers(answerList);
-      // setAllAnswered(isAllAnswered);
-      if (isAllAnswered) setAllAnswered(true);
+      setAllAnswered(isAllAnswered);
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
@@ -147,8 +149,25 @@ const Quiz: NextPage = () => {
       setGameOver(isGameOver);
     });
 
-    socket.on('toggle_answers', (toggledAnswers) => {
-      setCorrectAnswers(toggledAnswers);
+    socket.on('toggle_answers', (username) => {
+      console.log(username);
+      if (correctAnswers.includes(username)) {
+        const index = correctAnswers.indexOf(username);
+        setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
+      } else {
+        setCorrectAnswers([...correctAnswers, username]);
+      }
+      console.log(correctAnswers);
+    });
+
+    socket.on('final_scoreboard', () => {
+      setGameState('final');
+    });
+
+    socket.on('timer', (seconds) => {
+      setTimer(seconds);
+      if (!seconds) setGameState('answer');
+      console.log(timer);
     });
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -192,25 +211,31 @@ const Quiz: NextPage = () => {
     socket.emit('final_correct_answers', quizCode, correctAnswers);
   }
 
-  function sioCorrectAnswers() {
-    socket.emit('correct_answers', quizCode, correctAnswers);
+  function sioCorrectAnswers(username: string) {
+    socket.emit('correct_answers', quizCode, username);
   }
 
-  function sioStartTimer() {
-    socket.emit('start_timer');
+  function sioFinalScoreboard() {
+    socket.emit('final_scoreboard', quizCode);
   }
 
-  function changeCorrectAnswers(ans:string) {
-    if (correctAnswers.includes(ans)) {
-      const index = correctAnswers.indexOf(ans);
-      setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
-    } else {
-      setCorrectAnswers([...correctAnswers, ans]);
-    }
-    console.log(correctAnswers);
+  function sioEndGame() {
+    socket.emit('game_end');
   }
 
-  function setCats(cats:string[]) {
+  function changeCorrectAnswers(obj: User) {
+    users.forEach((user) => {
+      if (user === obj) {
+        if (user.result === 'true') { user.result = 'false'; }
+        else if (user.result === 'false') { user.result = 'true'; }
+        const index = users.indexOf(user);
+        setUsers([...users.slice(0, index), user, ...users.slice(index + 1)]);
+      }
+    });
+    sioCorrectAnswers(users);
+  }
+
+  function setCats(cats: string[]) {
     setCategories(cats);
   }
 
@@ -226,7 +251,7 @@ const Quiz: NextPage = () => {
         <div className="wrapper flex flex-col items-center">
           <h1 className="fontSizeLarge py-4">{title}</h1>
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-          {users.map((user) => <PlayerCard key={user.username} username={user.username}
+          {users.map((user) => <PlayerCard user={user} key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
           {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
           <button onClick={() => { setGameState('final'); }} > send to final</button>
@@ -240,14 +265,14 @@ const Quiz: NextPage = () => {
             <h1 className="fontSizeLarge py-4">{title}</h1>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
-            <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
+            <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
               <h2 className="fontSizeLarge py-4">{quizCode}</h2>
               <p className="fontSizeMedium">{question}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
-              <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); }} >Submit Answer</button>
+              <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
             </div>
           }
         </div>
@@ -255,35 +280,37 @@ const Quiz: NextPage = () => {
 
       case ('answers'): return (
         <div>
-          { allAnswered
-            && <div className="wrapper flex flex-col items-center">
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            {users.map((user) => <PlayerCard key={user.username} username={user.username}
-              gameState={gameState} answer={user.answer} self={user.username === username}
-              stateChange={changeCorrectAnswers} result={user.result}
-              isHost={isHost}
-               />)}
-          </div>
-          }
-          { !allAnswered && isHost
+          { !allAnswered
             ? <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            <h3>Answer: {correctAnswer}</h3>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
-              stateChange={changeCorrectAnswers} result={user.result}
-              correct={correctAnswers.includes(user.username)} isHost={isHost}
-               />)}
-            <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioCorrectAnswers(); }} isActive={false} /></div>
-          </div>
-            : <div className="wrapper flex flex-col items-center">
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            <h3>Answer: {correctAnswer}</h3>
-            {users.map((user) => <PlayerCard key={user.username} username={user.username}
-              gameState={gameState} answer={user.answer} self={user.username === username}
-              result={user.result} isHost={isHost} correct={correctAnswers.includes(user.username)}
+              isHost={isHost} allAnswered={allAnswered} user={user}
                />)}
           </div>
+            : <div>
+              {isHost
+                ? <div className="wrapper flex flex-col items-center">
+                <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+                <h3>Answer: {correctAnswer}</h3>
+                {users.map((user) => <PlayerCard key={user.username} username={user.username}
+                  gameState={gameState} answer={user.answer} self={user.username === username}
+                  stateChange={changeCorrectAnswers} result={user.result}
+                  isHost={isHost}
+                  allAnswered={allAnswered} user={user} />)}
+                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
+              </div>
+                : <div className="wrapper flex flex-col items-center">
+                <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+                <h3>Answer: {correctAnswer}</h3>
+                {users.map((user) => <PlayerCard key={user.username} username={user.username}
+                  gameState={gameState} answer={user.answer} self={user.username === username}
+                  result={user.result} isHost={isHost} allAnswered={allAnswered}
+                  user={user} />)}
+                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
+              </div>
+              }
+            </div>
           }
         </div>
       );
@@ -293,10 +320,16 @@ const Quiz: NextPage = () => {
           <h2 className="fontSizeLarge py-4">{quizCode}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} score={user.score} self={user.username === username}
-          isHost={isHost} />)}
+          isHost={isHost} user={user} />)}
           <div className="flex">
-            <div className="px-4"><Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>
-            <div className="px-4"><Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} /></div>
+            {isHost
+              && <div className="px-4">
+                {gameOver
+                  ? <Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} />
+                  : <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
+                }
+              </div>
+            }
           </div>
         </div>
       );
@@ -307,8 +340,7 @@ const Quiz: NextPage = () => {
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="flex mt-20">
-            <div className="px-4"><Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>
-            <div className="px-4"><Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} /></div>
+            <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>
       );
