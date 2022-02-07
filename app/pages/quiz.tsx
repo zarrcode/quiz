@@ -2,10 +2,12 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable no-unused-vars */
 import type { NextPage } from 'next';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Confetti from 'react-confetti';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { Fireworks } from 'fireworks-js/dist/react';
 import Navbar from './navbar';
-import React from 'react';
-import Confetti from 'react-confetti'
 import Button from './components/button';
 import Option from './components/option';
 import PlayerCard from './components/playerCard';
@@ -14,9 +16,6 @@ import { User } from './interfaces';
 import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedal } from '@fortawesome/free-solid-svg-icons'
-import { Fireworks } from 'fireworks-js/dist/react'
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
@@ -44,6 +43,7 @@ const Quiz: NextPage = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
+  const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -144,8 +144,13 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('answer_list', (answerList, isAllAnswered) => {
-      setUsers(answerList);
-      setAllAnswered(isAllAnswered);
+      if (isAllAnswered === 'timeout') {
+        setGameState('answer');
+        setAllAnswered(true);
+      } else {
+        setUsers(answerList);
+        setAllAnswered(isAllAnswered);
+      }
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
@@ -187,6 +192,7 @@ const Quiz: NextPage = () => {
       categories,
       type,
       questions: numberOfQuestions,
+      timer: questionTime,
     };
     socket.emit('game_create', options);
   }
@@ -233,7 +239,7 @@ const Quiz: NextPage = () => {
         setUsers([...users.slice(0, index), user, ...users.slice(index + 1)]);
       }
     });
-    sioCorrectAnswers(users);
+    sioCorrectAnswers();
   }
 
   function setCats(cats: string[]) {
@@ -264,7 +270,9 @@ const Quiz: NextPage = () => {
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
+            <div>
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            </div>
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
@@ -344,12 +352,14 @@ const Quiz: NextPage = () => {
           recycle={false}
           />
           <Fireworks options = {{
-            speed: 3}}style={{top: 0,
+            speed: 3,
+          }}style={{
+            top: 0,
             left: 0,
             width: '100%',
             height: '100%',
             position: 'fixed',
-            }} />
+          }} />
           <h2 className="fontSizeLarge py-4">{title}</h2>
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
@@ -383,6 +393,8 @@ const Quiz: NextPage = () => {
             <Option text="Multiple Choice" buttons={['No', 'Yes']} active={setMultipleChoice} />
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
+            <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
+            <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
             <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); }}>Create the Quiz!</button>
           </div>
@@ -397,7 +409,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                       <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
