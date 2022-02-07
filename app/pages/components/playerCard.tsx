@@ -42,7 +42,11 @@ const PlayerCard: NextPage<playerCardProps> = ({
             <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
               <p>{username}</p>
             </div>
-            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-end px-2`}>
+            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-between px-2`}>
+              {correct
+                ? <button>Correct!</button>
+                : <button>Wrong!</button>
+              }
               <p>{answer}</p>
             </div>
           </div>
