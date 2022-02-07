@@ -228,7 +228,7 @@ const Quiz: NextPage = () => {
         setUsers([...users.slice(0, index), user, ...users.slice(index + 1)]);
       }
     });
-    sioCorrectAnswers(users);
+    sioCorrectAnswers();
   }
 
   function setCats(cats: string[]) {
@@ -378,7 +378,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                       <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
