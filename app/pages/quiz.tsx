@@ -46,6 +46,7 @@ const Quiz: NextPage = () => {
   const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
+    document.documentElement.style.setProperty('$secondary-color', 'green');
     // if session exists, reconnect to server
     const sessionID = localStorage.getItem('sessionID');
     if (sessionID) {
@@ -137,6 +138,7 @@ const Quiz: NextPage = () => {
         );
       }
       setAnswer('');
+      setTimer(questionsAndAnswers.timer);
       setGameState('question');
     });
 
@@ -318,7 +320,6 @@ const Quiz: NextPage = () => {
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   result={user.result} isHost={isHost} allAnswered={allAnswered}
                   user={user} />)}
-                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
               }
             </div>
