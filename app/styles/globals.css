@@ -19,7 +19,6 @@ body {
   navbar
 
   mainBtn
-  mcqBtn
   activeBtn
 
   questionInput
@@ -73,34 +72,21 @@ body {
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid #189e71;
-  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
-          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8), 0 0 0 #189e71 inset;
+          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8), 0 0 0 #189e71 inset;
   outline: 1px solid rgba(0, 0, 0, 0.6);
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-}
-
-.mcqBtn {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.75rem;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid #189e71;
-  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
-          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
-  outline: 1px solid rgba(0, 0, 0, 0.6);
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .activeBtn {
   background-color: #189e71;
-  -webkit-transition: all 0.8s;
-  transition: all 0.8s;
+  -webkit-transition: all 0.7s;
+  transition: all 0.7s;
   border: 2px solid rgba(0, 0, 0, 0.6);
   outline: 1px solid rgba(0, 0, 0, 0);
-  -webkit-box-shadow: 0.1rem 0.1rem 0.4rem black;
-          box-shadow: 0.1rem 0.1rem 0.4rem black;
+  -webkit-box-shadow: 0.1rem 0.1rem 0.4rem black, 0 0 0 5rem #189e71 inset;
+          box-shadow: 0.1rem 0.1rem 0.4rem black, 0 0 0 5rem #189e71 inset;
 }
 
 .questionInput {
@@ -112,8 +98,8 @@ body {
   outline: 1px solid black;
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
-  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
-          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8), 0 0 0 #189e71 inset;
+          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8), 0 0 0 #189e71 inset;
   -webkit-transition: all 0.6s;
   transition: all 0.6s;
 }
@@ -121,8 +107,8 @@ body {
 .questionInput:focus {
   background-color: #189e71;
   border: 2px solid black;
-  -webkit-box-shadow: 0.1rem 0.1rem 0.4rem black;
-          box-shadow: 0.1rem 0.1rem 0.4rem black;
+  -webkit-box-shadow: 0.1rem 0.1rem 0.4rem black, 15rem 0 0 #189e71 inset;
+          box-shadow: 0.1rem 0.1rem 0.4rem black, 15rem 0 0 #189e71 inset;
 }
 
 .questionInput::-webkit-input-placeholder {
@@ -163,8 +149,8 @@ body {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-  -webkit-box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
-          box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
+          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
 }
 
 .playerAnswer,
@@ -238,8 +224,9 @@ body {
 
 .winner.first {
   background-color: #f1ba23;
-  width: 90%;
+  width: 100%;
   font-size: 1.75rem;
+  margin-inline: 1rem;
 }
 
 .winner.second {
@@ -256,51 +243,6 @@ body {
 
 .winner.loser {
   width: 90%;
-}
-
-.winnerFont {
-  font-size: 1.75rem;
-  font-family: "Merienda";
-  /* font-style: italic; */
-  font-weight: bold;
-  color: #f1ba23;
-}
-
-.firstPlace {
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  padding-bottom: 2px;
-}
-.firstMedal {
-  color: #f1ba23;
-}
-.secondPlace {
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-bottom: 2px;
-}
-.secondMedal {
-  color: #999ea3;
-}
-.thirdPlace {
-  width: 100%;
-  display: flex;
-  justify-content:center;
-  align-items: center;
-  padding-bottom: 40px;
-}
-.thirdMedal {
-  color: #b1715d;
-}
-
-.exit-button {
-  z-index: 2;
 }
 
 .wrapper {
@@ -325,5 +267,10 @@ body {
 
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
+}
+
+.quizLogo {
+  height: 250px;
+  width: 250px;
 }
 /*# sourceMappingURL=globals.css.map */

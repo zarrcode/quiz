@@ -28,6 +28,9 @@ $lightened-tertiary-color: rgba(white, 0.3);
 
 $shadow: 0.5rem 0.5rem 0.5rem rgba(black, 0.8);
 $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
+$inset1: 0 0 0 $secondary-color inset;
+$inset2: 0 0 0 5rem $secondary-color inset;
+$inset3: 15rem 0 0 $secondary-color inset;
 
 /*
 
@@ -36,7 +39,6 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   navbar
 
   mainBtn
-  mcqBtn
   activeBtn
 
   questionInput
@@ -84,28 +86,17 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: $shadow;
+  box-shadow: $shadow, $inset1;
   outline: 1px solid rgba(black, 0.6);
-  transition: all 0.5s;
-}
-
-.mcqBtn {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.75rem;
-  background-color: $tertiary-color;
-  border: 2px solid $secondary-color;
-  box-shadow: $shadow;
-  outline: 1px solid rgba(black, 0.6);
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .activeBtn {
   background-color: $secondary-color;
-  transition: all 0.8s;
+  transition: all 0.7s;
   border: 2px solid rgba(black, 0.6);
   outline: 1px solid rgba(black, 0);
-  box-shadow: $shadowClose;
+  box-shadow: $shadowClose, $inset2;
 }
 
 .questionInput {
@@ -120,8 +111,7 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   &:focus {
     background-color: $secondary-color;
     border: 2px solid black;
-    box-shadow: $shadowClose;
-
+    box-shadow: $shadowClose, $inset3;
   }
   &::placeholder {
     color: white;
@@ -131,7 +121,7 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  box-shadow: $shadow;
+  box-shadow: $shadow, $inset1;
   transition: all 0.6s;
 }
 
@@ -143,7 +133,7 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   background-color: $secondary-color;
   width: 50%;
   align-self: center;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  box-shadow: $shadow;
 }
 
 .playerAnswer,
@@ -202,8 +192,9 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
 .winner {
   &.first {
     background-color: rgba(#F1BA23, 1);
-    width: 90%;
+    width: 100%;
     font-size: 1.75rem;
+    margin-inline: 1rem;
   }
   &.second {
     background-color: rgba(#999EA3, 1);
@@ -217,9 +208,6 @@ $shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
   }
   &.loser {
     width: 90%;
-  }
-  .firstPlace {
-    width: 1000px;
   }
 }
 
