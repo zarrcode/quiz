@@ -147,7 +147,7 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('final_scoreboard', () => {
-      // Reub-choob add stuff here
+      setGameState('final');
     });
 
     // on unmount, remove socket event listeners and disconnect socket
