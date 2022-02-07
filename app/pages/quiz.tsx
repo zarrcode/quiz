@@ -145,17 +145,17 @@ const Quiz: NextPage = () => {
       setAllAnswered(isAllAnswered);
     });
 
-    socket.on('scoreboard', (scoreboard, isGameOver) => {
+    socket.on('scoreboard', (scoreboard) => {
       setUsers(scoreboard);
       setGameState('scoreboard');
-      setGameOver(isGameOver);
     });
 
     socket.on('toggle_answers', (users) => {
       setUsers(users);
     });
 
-    socket.on('final_scoreboard', () => {
+    socket.on('final_scoreboard', (isGameOver) => {
+      setGameOver(isGameOver);
       setGameState('final');
     });
 
