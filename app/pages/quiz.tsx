@@ -121,13 +121,17 @@ const Quiz: NextPage = () => {
     socket.on('answer_list', (answerList, isAllAnswered) => {
       setUsers(answerList);
       // setAllAnswered(isAllAnswered);
-      if (isAllAnswered) setGameState('answers');
+      if (isAllAnswered) setAllAnswered(true);
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
       setUsers(scoreboard);
       setGameState('scoreboard');
       setGameOver(isGameOver);
+    });
+
+    socket.on('toggle_answers', (toggledAnswers) => {
+      setCorrectAnswers(toggledAnswers);
     });
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -167,8 +171,16 @@ const Quiz: NextPage = () => {
     socket.emit('submit_answer', quizCode, answer, username);
   }
 
+  function sioFinalCorrectAnswers() {
+    socket.emit('final_correct_answers', quizCode, correctAnswers);
+  }
+
   function sioCorrectAnswers() {
     socket.emit('correct_answers', quizCode, correctAnswers);
+  }
+
+  function sioStartTimer() {
+    socket.emit('start_timer');
   }
 
   function changeCorrectAnswers(ans:string) {
@@ -224,11 +236,22 @@ const Quiz: NextPage = () => {
         </div>
       );
 
-      case ('answers'): return ( // FIXME: do another state for having answered early
+      case ('answers'): return (
         <div>
-          { isHost
+          { allAnswered
+            && <div className="wrapper flex flex-col items-center">
+            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            {users.map((user) => <PlayerCard key={user.username} username={user.username}
+              gameState={gameState} answer={user.answer} self={user.username === username}
+              stateChange={changeCorrectAnswers} result={user.result}
+              isHost={isHost}
+               />)}
+          </div>
+          }
+          { !allAnswered && isHost
             ? <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            <h3>Answer: {correctAnswer}</h3>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               stateChange={changeCorrectAnswers} result={user.result}
@@ -238,6 +261,7 @@ const Quiz: NextPage = () => {
           </div>
             : <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            <h3>Answer: {correctAnswer}</h3>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               result={user.result} isHost={isHost} correct={correctAnswers.includes(user.username)}
