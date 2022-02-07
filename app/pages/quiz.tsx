@@ -39,6 +39,7 @@ const Quiz: NextPage = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
+  const [isBlocked, setIsLoading] = useState(false);
 
   useEffect(() => {
     // if session exists, reconnect to server
