@@ -144,8 +144,13 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('answer_list', (answerList, isAllAnswered) => {
-      setUsers(answerList);
-      setAllAnswered(isAllAnswered);
+      if (isAllAnswered === 'timeout') {
+        setGameState('answer');
+        setAllAnswered(true);
+      } else {
+        setUsers(answerList);
+        setAllAnswered(isAllAnswered);
+      }
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
