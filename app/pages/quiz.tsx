@@ -141,13 +141,8 @@ const Quiz: NextPage = () => {
     });
 
     socket.on('answer_list', (answerList, isAllAnswered) => {
-      if (isAllAnswered === 'timeout') {
-        setGameState('answer');
-        setAllAnswered(true);
-      } else {
-        setUsers(answerList);
-        setAllAnswered(isAllAnswered);
-      }
+      setUsers(answerList);
+      setAllAnswered(isAllAnswered);
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
@@ -168,6 +163,11 @@ const Quiz: NextPage = () => {
       setTimer(seconds);
       if (seconds < 0) setGameState('answer');
       console.log(timer);
+    });
+
+    socket.on('timeout', () => {
+      setGameState('answer');
+      setAllAnswered(true);
     });
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -277,6 +277,7 @@ const Quiz: NextPage = () => {
               <h1 className="fontSizeLarge py-4">{title}</h1>
               <h2 className="fontSizeLarge py-4">{quizCode}</h2>
               <p className="fontSizeMedium">{question}</p>
+              <p>username = {username}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
             </div>
