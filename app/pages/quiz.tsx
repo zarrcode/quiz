@@ -209,7 +209,13 @@ const Quiz: NextPage = () => {
   }
 
   function sioFinalCorrectAnswers() {
-    socket.emit('final_correct_answers', quizCode, correctAnswers);
+    const correctUsernames:string[] = [];
+    users.forEach((user) => {
+      if (user.result === 'true' && user.answer) {
+        correctUsernames.push(user.answer);
+      }
+    });
+    socket.emit('final_correct_answers', quizCode, correctUsernames);
   }
 
   function sioCorrectAnswers() {
@@ -266,15 +272,15 @@ const Quiz: NextPage = () => {
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-            <p className="py-4">Time left: {timer}</p>
+            <h2 className="fontSizeLarge py-2">{quizCode}</h2>
+            <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
-              <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-              <p className="py-4">Time left: {timer}</p>
+              <h2 className="fontSizeLarge py-2">{quizCode}</h2>
+              <p className="py-2">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
               <p className="fontSizeMedium">{question}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
