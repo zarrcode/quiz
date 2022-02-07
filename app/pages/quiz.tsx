@@ -98,7 +98,7 @@ const Quiz: NextPage = () => {
       setIsMCQ(gameData.isMultipleChoice);
       setAllAnswers(gameData.multipleChoiceAnswers);
       setCorrectAnswers(gameData.playersCorrectlyAnswered);
-      setAllAnswered(gameData.allAnswered);
+      setAllAnswered(gameData.isAllAnswered);
       setGameState(gameData.gameState);
     });
 
