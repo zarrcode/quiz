@@ -37,6 +37,7 @@ const Quiz: NextPage = () => {
   const [allAnswered, setAllAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
+  const [timer, setTimer] = useState('');
 
   useEffect(() => {
     // if session exists, reconnect to server
@@ -150,6 +151,11 @@ const Quiz: NextPage = () => {
       setGameState('final');
     });
 
+    socket.on('timer', (seconds) => {
+      setTimer(seconds);
+      console.log(timer);
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -199,9 +205,6 @@ const Quiz: NextPage = () => {
     socket.emit('final_scoreboard', quizCode);
   }
 
-  function sioStartTimer() {
-    socket.emit('start_timer');
-  }
   function sioEndGame() {
     socket.emit('game_end');
   }
