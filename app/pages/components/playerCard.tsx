@@ -1,16 +1,12 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable no-param-reassign */
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
 import { playerCardProps } from '../interfaces';
 
-// CHANGE PROP TO INCLUDE 'PAGE' AND RENDER DIFFERENTLY
 const PlayerCard: NextPage<playerCardProps> = ({
-  username, answer, score, self, gameState, stateChange, result, correct, isHost, position,
+  username, answer, score, self, gameState, stateChange, result, isHost,
+  position, allAnswered, user,
 }) => {
-  useEffect(() => {
-    if (result === 'true' && stateChange) { stateChange(username); }
-  }, []);
   switch (gameState) {
     case ('lobby'): return (
       <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col'>
@@ -28,13 +24,17 @@ const PlayerCard: NextPage<playerCardProps> = ({
             <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
               <p>{username}</p>
             </div>
-            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-between px-2`}>
-              {correct
-                ? <button onClick={() => { if (stateChange) { stateChange(username); } }}>
-                Correct!</button>
-                : <button onClick={() => { if (stateChange) { stateChange(username); } }}>
-                Wrong!</button>
-              }
+            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center ${allAnswered ? 'justify-between' : 'justify-end'} px-2`}>
+              {allAnswered
+                && <div>
+                  {result === 'true'
+                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    Correct!</button>
+                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    Wrong!</button>
+                  }
+                  </div>
+                }
               <p>{answer}</p>
             </div>
           </div>
@@ -42,7 +42,17 @@ const PlayerCard: NextPage<playerCardProps> = ({
             <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
               <p>{username}</p>
             </div>
-            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-end px-2`}>
+            <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center ${allAnswered ? 'justify-between' : 'justify-end'} px-2`}>
+              {allAnswered
+                && <div>
+                  {result === 'true'
+                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    Correct!</button>
+                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    Wrong!</button>
+                 }
+                  </div>
+                }
               <p>{answer}</p>
             </div>
           </div>

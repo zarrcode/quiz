@@ -28,6 +28,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   navbar
 
   mainBtn
+  mcqBtn
   activeBtn
 
   questionInput
@@ -49,6 +50,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   fontSizeSmall
 
   gapSize
+  gapSizeSmall
 
 */
 
@@ -78,6 +80,17 @@ $lightened-tertiary-color: rgba(white, 0.3);
   transition: all 0.5s;
 }
 
+.mcqBtn {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background-color: $tertiary-color;
+  border: 2px solid $secondary-color;
+  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
+  outline: 1px solid rgba(black, 0.6);
+  transition: all 0.5s;
+}
+
 .activeBtn {
   background-color: $secondary-color;
   transition: all 0.7s;
@@ -85,6 +98,8 @@ $lightened-tertiary-color: rgba(white, 0.3);
   outline: 1px solid rgba(black, 0);
   box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.2);
 }
+
+
 
 .questionInput {
   width: 25ch;
@@ -217,5 +232,8 @@ $lightened-tertiary-color: rgba(white, 0.3);
 
 .gapSize {
   gap: calc(-5px + 4vw);
+}
+.gapSizeSmall {
+  gap: calc(-5px + 2vw);
 }
 

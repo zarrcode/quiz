@@ -19,6 +19,7 @@ body {
   navbar
 
   mainBtn
+  mcqBtn
   activeBtn
 
   questionInput
@@ -40,6 +41,7 @@ body {
   fontSizeSmall
 
   gapSize
+  gapSizeSmall
 
 */
 .navbar {
@@ -66,6 +68,19 @@ body {
 .mainBtn {
   width: 13ch;
   height: 7ch;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #2c086d;
+  -webkit-box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+          box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  outline: 1px solid rgba(0, 0, 0, 0.6);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.mcqBtn {
+  width: 100%;
+  height: 100%;
   border-radius: 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid #2c086d;
@@ -297,5 +312,9 @@ body {
 
 .gapSize {
   gap: calc(-5px + 4vw);
+}
+
+.gapSizeSmall {
+  gap: calc(-5px + 2vw);
 }
 /*# sourceMappingURL=globals.css.map */

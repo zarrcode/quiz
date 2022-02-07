@@ -42,13 +42,15 @@ export interface playerScoreProps {
 }
 
 export interface playerCardProps extends User {
+  user: User;
   self: boolean;
   gameState: string;
-  stateChange?: (ans:string) => void;
+  stateChange?: (obj: User) => void;
   result?: string;
   correct?: boolean;
   isHost: boolean;
   position?: string;
+  allAnswered?: boolean;
 }
 
 export interface categoriesProps {
