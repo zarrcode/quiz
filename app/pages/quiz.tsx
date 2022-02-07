@@ -4,6 +4,8 @@
 import type { NextPage } from 'next';
 import { useState, useEffect } from 'react';
 import Navbar from './navbar';
+import React from 'react';
+import Confetti from 'react-confetti'
 import Button from './components/button';
 import Option from './components/option';
 import PlayerCard from './components/playerCard';
@@ -12,6 +14,9 @@ import { User } from './interfaces';
 import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMedal } from '@fortawesome/free-solid-svg-icons'
+import { Fireworks } from 'fireworks-js/dist/react'
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
@@ -233,7 +238,7 @@ const Quiz: NextPage = () => {
         setUsers([...users.slice(0, index), user, ...users.slice(index + 1)]);
       }
     });
-    sioCorrectAnswers(users);
+    sioCorrectAnswers();
   }
 
   function setCats(cats: string[]) {
@@ -337,7 +342,22 @@ const Quiz: NextPage = () => {
 
       case ('final'): return (
         <div className="wrapper flex flex-col items-center">
-          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+          <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={500}
+          recycle={false}
+          />
+          <Fireworks options = {{
+    speed: 3
+  }}style={{top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    }} />
+          <h2 className="fontSizeLarge py-4">{title}</h2>
+          <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="flex mt-20">
@@ -383,7 +403,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                       <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
