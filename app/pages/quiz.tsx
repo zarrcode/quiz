@@ -224,10 +224,6 @@ const Quiz: NextPage = () => {
     socket.emit('correct_answers', quizCode, users);
   }
 
-  function sioFinalScoreboard() {
-    socket.emit('final_scoreboard', quizCode);
-  }
-
   function sioEndGame() {
     socket.emit('game_end');
   }
@@ -336,10 +332,7 @@ const Quiz: NextPage = () => {
           <div className="flex">
             {isHost
               && <div className="px-4">
-                {gameOver
-                  ? <Button text="TO FINAL" btnPress={() => { sioFinalScoreboard(); }} isActive={false} />
-                  : <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
-                }
+              <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
               </div>
             }
           </div>
