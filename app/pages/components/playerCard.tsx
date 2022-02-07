@@ -7,7 +7,6 @@ const PlayerCard: NextPage<playerCardProps> = ({
   username, answer, score, self, gameState, stateChange, result, isHost,
   position, allAnswered, user,
 }) => {
-  console.log(user, result, allAnswered);
   switch (gameState) {
     case ('lobby'): return (
       <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col'>
