@@ -156,8 +156,8 @@ const Quiz: NextPage = () => {
       setUsers(users);
     });
 
-    socket.on('final_scoreboard', (isGameOver) => {
-      setGameOver(isGameOver);
+    socket.on('final_scoreboard', (scoreboard) => {
+      setUsers(scoreboard);
       setGameState('final');
     });
 
