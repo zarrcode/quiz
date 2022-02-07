@@ -16,6 +16,7 @@ import { User } from './interfaces';
 import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
+import logo from '../logo/quiz.png';
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
