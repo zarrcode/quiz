@@ -138,15 +138,8 @@ const Quiz: NextPage = () => {
       setGameOver(isGameOver);
     });
 
-    socket.on('toggle_answers', (username) => {
-      console.log(username);
-      if (correctAnswers.includes(username)) {
-        const index = correctAnswers.indexOf(username);
-        setCorrectAnswers([...correctAnswers.slice(0, index), ...correctAnswers.slice(index + 1)]);
-      } else {
-        setCorrectAnswers([...correctAnswers, username]);
-      }
-      console.log(correctAnswers);
+    socket.on('toggle_answers', (users) => {
+      setUsers(users);
     });
 
     socket.on('final_scoreboard', () => {
@@ -200,8 +193,8 @@ const Quiz: NextPage = () => {
     socket.emit('final_correct_answers', quizCode, correctAnswers);
   }
 
-  function sioCorrectAnswers(username: string) {
-    socket.emit('correct_answers', quizCode, username);
+  function sioCorrectAnswers() {
+    socket.emit('correct_answers', quizCode, users);
   }
 
   function sioFinalScoreboard() {
