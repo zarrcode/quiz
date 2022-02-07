@@ -43,6 +43,7 @@ const Quiz: NextPage = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
+  const [isBlocked, setIsLoading] = useState(false);
   const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
@@ -75,10 +76,8 @@ const Quiz: NextPage = () => {
       refreshStates();
     });
 
-    socket.on('session', (session) => {
-      localStorage.setItem('sessionID', session.sessionID);
-      setUsername(session.username);
-      setQuizCode(session.quizCode);
+    socket.on('session', (sessionID) => {
+      localStorage.setItem('sessionID', sessionID);
     });
 
     socket.on('game_created', (gameID) => {
@@ -121,6 +120,11 @@ const Quiz: NextPage = () => {
         ...prevUsers,
         newUser,
       ]);
+    });
+
+    socket.on('user_data', (userData) => {
+      setUsername(userData.username);
+      setQuizCode(userData.quizCode);
     });
 
     socket.on('users_leave', (sessionID) => {
@@ -280,6 +284,7 @@ const Quiz: NextPage = () => {
               <h1 className="fontSizeLarge py-4">{title}</h1>
               <h2 className="fontSizeLarge py-4">{quizCode}</h2>
               <p className="fontSizeMedium">{question}</p>
+              <p>username = {username}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
             </div>
@@ -364,7 +369,7 @@ const Quiz: NextPage = () => {
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
-          <div className="flex mt-20">
+          <div className="exit-button flex mt-20">
             <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>
@@ -409,7 +414,7 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
                       <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
