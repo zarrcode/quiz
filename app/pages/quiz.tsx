@@ -43,6 +43,7 @@ const Quiz: NextPage = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
+  const [isBlocked, setIsLoading] = useState(false);
   const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
@@ -75,10 +76,8 @@ const Quiz: NextPage = () => {
       refreshStates();
     });
 
-    socket.on('session', (session) => {
-      localStorage.setItem('sessionID', session.sessionID);
-      setUsername(session.username);
-      setQuizCode(session.quizCode);
+    socket.on('session', (sessionID) => {
+      localStorage.setItem('sessionID', sessionID);
     });
 
     socket.on('game_created', (gameID) => {
@@ -121,6 +120,11 @@ const Quiz: NextPage = () => {
         ...prevUsers,
         newUser,
       ]);
+    });
+
+    socket.on('user_data', (userData) => {
+      setUsername(userData.username);
+      setQuizCode(userData.quizCode);
     });
 
     socket.on('users_leave', (sessionID) => {
