@@ -10,9 +10,14 @@ body {
   // font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-
 $base-color: #1a1919;
-$secondary-color: #2c086d;
+// $secondary-color: #b31973;
+// $secondary-color: #b31973;
+// $secondary-color: #1d95b9;
+// $secondary-color: #e6d11b;
+$secondary-color: #189e71;
+// $secondary-color: #a2c918;
+// $secondary-color: #2c086d;
 $tertiary-color: rgba(white, 0.2);
 $lightened-tertiary-color: rgba(white, 0.3);
 
@@ -99,8 +104,6 @@ $lightened-tertiary-color: rgba(white, 0.3);
   box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.2);
 }
 
-
-
 .questionInput {
   width: 25ch;
   height: 7ch;
@@ -118,6 +121,9 @@ $lightened-tertiary-color: rgba(white, 0.3);
     color: white;
     opacity: .3;
     font-style: italic;
+  }
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
   }
   box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
   transition: all 0.6s;
@@ -236,4 +242,3 @@ $lightened-tertiary-color: rgba(white, 0.3);
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
 }
-
