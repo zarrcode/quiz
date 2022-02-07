@@ -119,7 +119,7 @@ const Quiz: NextPage = () => {
     socket.on('answer_list', (answerList, isAllAnswered) => {
       setUsers(answerList);
       // setAllAnswered(isAllAnswered);
-      if (isAllAnswered) setGameState('answers');
+      if (isAllAnswered) setAllAnswered(true);
     });
 
     socket.on('scoreboard', (scoreboard, isGameOver) => {
