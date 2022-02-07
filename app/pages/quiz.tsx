@@ -222,11 +222,38 @@ const Quiz: NextPage = () => {
         </div>
       );
 
+      // case ('answers'): return ( // FIXME: do another state for having answered early
+      //   <div>
+      //     { isHost
+      //       ? <div className="wrapper flex flex-col items-center">
+      //       <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+      //       <h3>Answer: {correctAnswer}</h3>
+      //       {users.map((user) => <PlayerCard key={user.username} username={user.username}
+      //         gameState={gameState} answer={user.answer} self={user.username === username}
+      //         stateChange={changeCorrectAnswers} result={user.result}
+      //         correct={correctAnswers.includes(user.username)} isHost={isHost}
+      //          />)}
+      //       <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioCorrectAnswers(); }} isActive={false} /></div>
+      //     </div>
+      //       : <div className="wrapper flex flex-col items-center">
+      //       <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+      //       <h3>Answer: {correctAnswer}</h3>
+      //       {users.map((user) => <PlayerCard key={user.username} username={user.username}
+      //         gameState={gameState} answer={user.answer} self={user.username === username}
+      //         result={user.result} isHost={isHost} correct={correctAnswers.includes(user.username)}
+      //          />)}
+      //     </div>
+      //     }
+      //   </div>
+      // );
+
       case ('answers'): return ( // FIXME: do another state for having answered early
         <div>
+          { !allAnswered }
           { isHost
             ? <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            <h3>Answer: {correctAnswer}</h3>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               stateChange={changeCorrectAnswers} result={user.result}
@@ -236,6 +263,7 @@ const Quiz: NextPage = () => {
           </div>
             : <div className="wrapper flex flex-col items-center">
             <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+            <h3>Answer: {correctAnswer}</h3>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               result={user.result} isHost={isHost} correct={correctAnswers.includes(user.username)}
