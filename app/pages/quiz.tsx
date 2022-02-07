@@ -55,15 +55,17 @@ const Quiz: NextPage = () => {
       } else if (err.message === 'session deleted' && inGame) {
         alert(err.message); // TODO: replace with user-friendly modal
       }
-      // refreshStates();
+      refreshStates();
     });
+
+    socket.on('disconnect', () => refreshStates());
 
     // custom disconnect handler
     socket.on('disconnect_custom', (reason) => {
       alert(reason);
       socket.disconnect();
 
-      // refreshStates();
+      refreshStates();
     });
 
     socket.on('session', (newSessionID) => {
@@ -72,10 +74,16 @@ const Quiz: NextPage = () => {
 
     socket.on('game_created', (gameID) => {
       setQuizCode(gameID);
+
+      setInGame(!inGame);
+      setCreatingQuiz(!creatingQuiz);
+      setGameState('lobby');
     });
 
     socket.on('game_joined', (newTitle) => {
+      setInGame(!inGame);
       setTitle(newTitle);
+      setGameState('lobby');
     });
 
     socket.on('game_data', (gameData) => {
@@ -324,7 +332,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Number of Questions (1 - 40) </p>
             <input type="number" placeholder="0" min={1} max={40} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 40) e.target.value = '40'; if ((parseInt(e.target.value, 10)) < 1) e.target.value = '1'; setNumberOfQuestions((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
-            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); setInGame(!inGame); setCreatingQuiz(!creatingQuiz); setGameState('lobby'); }}>Create the Quiz!</button>
+            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
@@ -333,12 +341,12 @@ const Quiz: NextPage = () => {
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col items-center gap-5">
                 <div className='mb-12'><p className="fontSizeMedium pb-[0.5rem] pt-8">What shall we call you?</p>
-                  <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" onChange={(e) => { setUsername(e.target.value); }}/></div>
+                    <input type="text" placeholder="Username ..." className="questionInput fontSizeSmall" value={username} onChange={(e) => { setUsername(e.target.value); }}/></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
-                    <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); setInGame(!inGame); setGameState('lobby'); } }} isActive={false} /></div></div>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                      <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
           </div>
