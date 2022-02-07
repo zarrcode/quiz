@@ -211,8 +211,8 @@ const Quiz: NextPage = () => {
   function sioFinalCorrectAnswers() {
     const correctUsernames:string[] = [];
     users.forEach((user) => {
-      if (user.result === 'true' && user.answer) {
-        correctUsernames.push(user.answer);
+      if (user.result === 'true') {
+        correctUsernames.push(user.username);
       }
     });
     socket.emit('final_correct_answers', quizCode, correctUsernames);
