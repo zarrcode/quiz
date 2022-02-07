@@ -26,6 +26,9 @@ $lightened-tertiary-color: rgba(white, 0.3);
   background-color: $base-color;
 }
 
+$shadow: 0.5rem 0.5rem 0.5rem rgba(black, 0.8);
+$shadowClose: 0.1rem 0.1rem 0.4rem rgba(black, 1);
+
 /*
 
   --Components--
@@ -69,6 +72,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   justify-content: space-around;
   align-items: center;
   border-bottom: 2px solid black;
+  box-shadow: 0 1px 5px 5px rgba(black, 0.3);
   &:hover {
     cursor: pointer;
   }
@@ -80,7 +84,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
+  box-shadow: $shadow;
   outline: 1px solid rgba(black, 0.6);
   transition: all 0.5s;
 }
@@ -91,17 +95,17 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 0.75rem;
   background-color: $tertiary-color;
   border: 2px solid $secondary-color;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(black, 0.4);
+  box-shadow: $shadow;
   outline: 1px solid rgba(black, 0.6);
   transition: all 0.5s;
 }
 
 .activeBtn {
   background-color: $secondary-color;
-  transition: all 0.7s;
+  transition: all 0.8s;
   border: 2px solid rgba(black, 0.6);
   outline: 1px solid rgba(black, 0);
-  box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.4), inset 0.1rem 0.1rem 0.25rem 0.1rem rgba(black, 0.2);
+  box-shadow: $shadowClose;
 }
 
 .questionInput {
@@ -115,7 +119,9 @@ $lightened-tertiary-color: rgba(white, 0.3);
   color: white;
   &:focus {
     background-color: $secondary-color;
-    border: 2px solid $secondary-color;
+    border: 2px solid black;
+    box-shadow: $shadowClose;
+
   }
   &::placeholder {
     color: white;
@@ -125,7 +131,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
+  box-shadow: $shadow;
   transition: all 0.6s;
 }
 
@@ -148,8 +154,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   border-radius: 1rem;
   display:flex;
   justify-content: space-between;
-  box-shadow: 0.125rem 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.4);
-
+  box-shadow: $shadow;
   .name {
     font-weight: bold;
   }
@@ -161,7 +166,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
 .playerCard {
   .pc-lobby {
     border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
-    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
+    box-shadow: $shadow;
     background-color: $tertiary-color;
     border: 2px solid $secondary-color;
     .pc-lobby-name {
@@ -185,7 +190,7 @@ $lightened-tertiary-color: rgba(white, 0.3);
   .pc-answers {
     border: 2px solid $secondary-color;
     border-radius: 0.25rem 1.5rem 0.25rem 1.5rem;
-    box-shadow: 0.25rem 0.25rem 0.25rem 0 rgba(black, 0.6);
+    box-shadow: $shadow;
     background-color: $tertiary-color;
     &.self {
       background-color: rgba(white, 0.3);
