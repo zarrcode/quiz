@@ -128,6 +128,10 @@ const Quiz: NextPage = () => {
       setGameOver(isGameOver);
     });
 
+    socket.on('toggle_answers', (toggledAnswers) => {
+      setCorrectAnswers(toggledAnswers);
+    });
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -165,8 +169,16 @@ const Quiz: NextPage = () => {
     socket.emit('submit_answer', quizCode, answer, username);
   }
 
+  function sioFinalCorrectAnswers() {
+    socket.emit('final_correct_answers', quizCode, correctAnswers);
+  }
+
   function sioCorrectAnswers() {
     socket.emit('correct_answers', quizCode, correctAnswers);
+  }
+
+  function sioStartTimer() {
+    socket.emit('start_timer');
   }
 
   function changeCorrectAnswers(ans:string) {
