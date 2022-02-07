@@ -215,8 +215,11 @@ const Quiz: NextPage = () => {
   function changeCorrectAnswers(obj: User) {
     users.forEach((user) => {
       if (user === obj) {
-        if (user.result === 'true') { user.result = 'false'; }
-        else if (user.result === 'false') { user.result = 'true'; }
+        if (user.result === 'true') {
+          user.result = 'false';
+        } else if (user.result === 'false') {
+          user.result = 'true';
+        }
         const index = users.indexOf(user);
         setUsers([...users.slice(0, index), user, ...users.slice(index + 1)]);
       }
@@ -314,7 +317,7 @@ const Quiz: NextPage = () => {
             {isHost
               && <div className="px-4">
                 {gameOver
-                  ? <Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} />
+                  ? <Button text="TO FINAL" btnPress={() => { sioFinalScoreboard(); }} isActive={false} />
                   : <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
                 }
               </div>
