@@ -153,6 +153,7 @@ const Quiz: NextPage = () => {
 
     socket.on('timer', (seconds) => {
       setTimer(seconds);
+      if (!seconds) setGameState('answer');
       console.log(timer);
     });
 
