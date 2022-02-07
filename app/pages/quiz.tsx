@@ -148,7 +148,7 @@ const Quiz: NextPage = () => {
 
     socket.on('timer', (seconds) => {
       setTimer(seconds);
-      if (!seconds) setGameState('answer');
+      if (seconds < 0) setGameState('answer');
       console.log(timer);
     });
 
