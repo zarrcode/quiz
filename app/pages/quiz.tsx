@@ -43,7 +43,6 @@ const Quiz: NextPage = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
-  const [isBlocked, setIsLoading] = useState(false);
   const [questionTime, setQuestionTime] = useState('');
 
   useEffect(() => {
@@ -82,16 +81,10 @@ const Quiz: NextPage = () => {
 
     socket.on('game_created', (gameID) => {
       setQuizCode(gameID);
-
-      setInGame(!inGame);
-      setCreatingQuiz(!creatingQuiz);
-      setGameState('lobby');
     });
 
     socket.on('game_joined', (newTitle) => {
-      setInGame(!inGame);
       setTitle(newTitle);
-      setGameState('lobby');
     });
 
     socket.on('game_data', (gameData) => {
@@ -152,17 +145,17 @@ const Quiz: NextPage = () => {
       setAllAnswered(isAllAnswered);
     });
 
-    socket.on('scoreboard', (scoreboard, isGameOver) => {
+    socket.on('scoreboard', (scoreboard) => {
       setUsers(scoreboard);
       setGameState('scoreboard');
-      setGameOver(isGameOver);
     });
 
     socket.on('toggle_answers', (users) => {
       setUsers(users);
     });
 
-    socket.on('final_scoreboard', () => {
+    socket.on('final_scoreboard', (isGameOver) => {
+      setGameOver(isGameOver);
       setGameState('final');
     });
 
@@ -399,7 +392,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
             <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 300) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
-            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { sioCreateGame(); }}>Create the Quiz!</button>
+            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { setInGame(!inGame); setGameState('lobby'); setCreatingQuiz(!creatingQuiz); sioCreateGame(); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
@@ -412,8 +405,8 @@ const Quiz: NextPage = () => {
                 <div><p className="fontSizeMedium pb-[0.25rem]">Create a Quiz</p>
                   <Button text="Create" btnPress={() => { if (username) { setCreatingQuiz(!creatingQuiz); setIsHost(true); } }} isActive={false} /></div>
                 <div><p className="fontSizeMedium pb-[0.25rem]"> Or join a Quiz?</p>
-                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" value={quizCode || ''} onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
-                      <Button text="Join" btnPress={() => { if (username) { sioJoinGame(); } }} isActive={false} /></div></div>
+                  <div className="flex gapSize"><input type="text" placeholder="Code ..." className="questionInput fontSizeSmall mb-2" onChange={(e) => { e.target.value = e.target.value.toUpperCase(); setQuizCode(e.target.value); }}/>
+                      <Button text="Join" btnPress={() => { if (username) { setInGame(!inGame); setGameState('lobby'); sioJoinGame(); } }} isActive={false} /></div></div>
               </div>
             </div>
           </div>
