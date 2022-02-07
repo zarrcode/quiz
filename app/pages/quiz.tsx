@@ -223,7 +223,7 @@ const Quiz: NextPage = () => {
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
           {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
-          <button onClick={() => { setGameState('final'); }} > send to final</button>
+          <button onClick={() => { setGameState('final');  }} > send to final</button>
         </div>
       );
 
@@ -291,8 +291,14 @@ const Quiz: NextPage = () => {
           gameState={gameState} score={user.score} self={user.username === username}
           isHost={isHost} />)}
           <div className="flex">
-            <div className="px-4"><Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>
-            <div className="px-4"><Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} /></div>
+            {isHost
+              && <div className="px-4">
+                {gameOver
+                  ? <Button text="TO FINAL" btnPress={() => { setGameState('final'); }} isActive={false} />
+                  : <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
+                }
+              </div>
+            }
           </div>
         </div>
       );
@@ -303,7 +309,7 @@ const Quiz: NextPage = () => {
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="flex mt-20">
-            <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); }} isActive={false} /></div>
+            <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>
       );
