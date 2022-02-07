@@ -7,7 +7,6 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons'
 const FinalScore: NextPage<finalProps> = ({ position, username, score }) => {
   switch (position) {
     case (1): return (
-
       <div className="firstPlace">
       <PlayerCard self={false} gameState={'final'} isHost={false}
       username={username} score={score} position={'first'} />

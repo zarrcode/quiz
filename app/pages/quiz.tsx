@@ -344,18 +344,17 @@ const Quiz: NextPage = () => {
           recycle={false}
           />
           <Fireworks options = {{
-    speed: 3
-  }}style={{top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    position: 'fixed',
-    }} />
+            speed: 3}}style={{top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            }} />
           <h2 className="fontSizeLarge py-4">{title}</h2>
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
-          <div className="flex mt-20">
+          <div className="exit-button flex mt-20">
             <div className="px-4"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
           </div>
         </div>
