@@ -70,7 +70,7 @@ const PlayerCard: NextPage<playerCardProps> = ({
     </div>
     );
     case ('final'): return (
-      <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col items-center'>
+      <div className='playerCard w-[90%] h-[3rem] my-[0.25rem] rounded flex flex-col items-center'>
         <div className={` pc-lobby h-full flex items-center justify-center px-2 winner ${position}`}>
           <div className={`flex items-center justify-between h-full w-[90%] winner ${position}`}>
             <p className="font-bold px-4">{username}</p>
