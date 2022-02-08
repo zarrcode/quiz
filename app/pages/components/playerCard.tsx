@@ -28,10 +28,14 @@ const PlayerCard: NextPage<playerCardProps> = ({
               {allAnswered
                 && <div>
                   {result === 'true'
-                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Correct!</button>
-                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Wrong!</button>
+                    ? <label className="container">
+                      <input type="checkbox" checked={result === 'true'} onClick={() => { if (stateChange) { stateChange(user); } }}/>
+                      <span className="checkmark"></span>
+                      </label>
+                    :  <label className="container">
+                        <input type="checkbox"  onClick={() => { if (stateChange) { stateChange(user); } }}/>
+                        <span className="checkmark"></span>
+                      </label>
                   }
                   </div>
                 }
