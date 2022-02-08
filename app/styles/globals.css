@@ -348,6 +348,10 @@ body {
   width: Min(95vw, 50rem);
 }
 
+.fontSizeXLarge {
+  font-size: calc(2rem + 1.5vw);
+}
+
 .fontSizeLarge {
   font-size: calc(1.25rem + 1vw);
 }
@@ -380,7 +384,6 @@ body {
   user-select: none;
 }
 
-/* Hide the browser's default checkbox */
 .container input {
   position: absolute;
   opacity: 0;
@@ -389,7 +392,6 @@ body {
   width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   left: 0%;
@@ -409,7 +411,6 @@ body {
   background-color: #ffffff;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
@@ -420,7 +421,6 @@ body {
   display: block;
 }
 
-/* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 30%;
   top: 2%;
@@ -431,5 +431,9 @@ body {
   border-radius: 3px;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.customFont {
+  font-family: 'Chilanka';
 }
 /*# sourceMappingURL=globals.css.map */

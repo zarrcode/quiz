@@ -295,6 +295,9 @@ $inset3: 15rem 0 0 $secondary-color inset;
   width: Min(95vw, 50rem);
 }
 
+.fontSizeXLarge {
+  font-size: calc(2rem + 1.5vw);
+}
 .fontSizeLarge {
   font-size: calc(1.25rem + 1vw);
 }
@@ -326,7 +329,6 @@ $inset3: 15rem 0 0 $secondary-color inset;
 
 }
 
-/* Hide the browser's default checkbox */
 .container input {
   position: absolute;
   opacity: 0;
@@ -335,12 +337,9 @@ $inset3: 15rem 0 0 $secondary-color inset;
   width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  // top: 0rem;
   left: 0%;
-  // right:0rem;
   height: 130%;
   width: 85%;
   border-radius: 6px;
@@ -357,7 +356,6 @@ $inset3: 15rem 0 0 $secondary-color inset;
   background-color: #ffffff;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
@@ -368,7 +366,6 @@ $inset3: 15rem 0 0 $secondary-color inset;
   display: block;
 }
 
-/* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 30%;
   top: 2%;
@@ -380,4 +377,8 @@ $inset3: 15rem 0 0 $secondary-color inset;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.customFont {
+  font-family: 'Chilanka'
 }
