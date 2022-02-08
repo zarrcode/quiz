@@ -246,14 +246,18 @@ body {
 
 .winner.second {
   background-color: #999ea3;
-  width: 90%;
+  width: 100%;
   font-size: 1.5rem;
+  /* margin-right: 0; */
+  margin-inline: 1rem;
+
 }
 
 .winner.third {
   background-color: #b1715d;
-  width: 90%;
+  width: 100%;
   font-size: 1.25rem;
+  margin-inline: 1rem;
 }
 
 .winner.loser {
@@ -284,10 +288,11 @@ body {
 
 .firstMedal {
   color: #f1ba23;
+  margin-left:1rem
 }
 
 .secondPlace {
-  width: 100%;
+  width: 90%;
   height: 100%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -303,14 +308,19 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding-bottom: 2px;
+  /* border: 2px solid #189e71; */
+  margin-top: 2rem;
+
 }
 
 .secondMedal {
   color: #999ea3;
+  margin-left:1rem
+  /* border: 2px solid #189e71; */
 }
 
 .thirdPlace {
-  width: 100%;
+  width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

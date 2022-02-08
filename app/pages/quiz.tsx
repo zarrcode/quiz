@@ -348,7 +348,7 @@ const Quiz: NextPage = () => {
           recycle={false}
           />
           <Fireworks options = {{
-            speed: 3,
+            speed: 2,
           }}style={{
             top: 0,
             left: 0,

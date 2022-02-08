@@ -225,7 +225,7 @@ $inset3: 15rem 0 0 $secondary-color inset;
 }
 
 .winnerFont {
-  font-size: 1.75rem;
+  font-size: 2.75rem;
   font-family: "Merienda";
   /* font-style: italic; */
   font-weight: bold;
@@ -238,9 +238,11 @@ $inset3: 15rem 0 0 $secondary-color inset;
   display: flex;
   align-items: center;
   padding-bottom: 2px;
+
 }
 .firstMedal {
   color: #f1ba23;
+  margin-left:35px;
 }
 .secondPlace {
   width: 100%;
@@ -250,9 +252,14 @@ $inset3: 15rem 0 0 $secondary-color inset;
   flex-direction: row;
   align-items: center;
   padding-bottom: 2px;
+  margin-top: 30px;
+  // margin:0px;
+  // padding:0px;
+  // border: 0px;
 }
 .secondMedal {
   color: #999ea3;
+  // border: 2px solid $secondary-color;
 }
 .thirdPlace {
   width: 100%;
