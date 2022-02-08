@@ -1,14 +1,14 @@
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Navbar from './navbar';
 import Button from './components/button';
 import { getFact } from './api/apiService';
-import React from 'react';
 import logo from '../logo/Quiz.jpeg';
 
 const Home: NextPage = () => {
   const [randomFact, setRandomFact] = useState('');
+  const [isActive, setIsActive] = useState(false);
 
   async function getRandomFact() {
     const fact = await getFact();
@@ -24,13 +24,12 @@ const Home: NextPage = () => {
   return (
     <div className="bg min-h-screen h-full w-screen flex flex-col items-center">
       <Navbar />
-      <div className="py-32 wrapper text-center h-screen flex flex-col items-center justify-around">
-        <div className="quizLogo">
-        <Image src={logo} alt="logo"/>
+      <div className="py-12 wrapper text-center h-screen flex flex-col items-center justify-around">
+        <div className="relative w-full h-1/2">
+          <Image src={logo} alt="quiz logo" layout="fill" objectFit='contain' />
         </div>
         <p className="fontSizeMedium px-4">{randomFact}</p>
-        <p className="fontSizeMedium px-4">{}</p>
-        <Button text="Get New Fact!" btnPress={() => { getRandomFact(); }} isActive={false} />
+        <button className={`mainBtn ${isActive && 'buttonDrop'} `} onClick={() => { getRandomFact(); setIsActive(true); setTimeout(() => { setIsActive(false); }, 1000); }}>Get New Fact!</button>
       </div>
     </div>
   );
