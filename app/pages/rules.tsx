@@ -6,7 +6,15 @@ const Rules: NextPage = () => (
       <Navbar />
       <div className="py-20 wrapper text-center h-screen">
         <br/>
-        <p className="px-4 fontSizeMedium">These are the rules: <br/> <br/> Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem similique ducimus amet sapiente natus nihil necessitatibus repellendus. <br/> <br/> porro expedita error tempora perspiciatis velit ullam officiis, architecto cupiditate reprehenderit recusandae illum aliquid odio inventore hic. Nostrum adipisci earum itaque odio magni. <br/> <br/> Iusto incidunt sapiente minima illum ratione voluptatem, quis voluptatibus natus nihil tempore tempora consectetur harum voluptates officiis similique! Odio, sunt.</p>
+        <p className="fontSizeLarge pb-4">Rules: <br/></p>
+        <p className="fontSizeMedium">The host creates a lobby following the 'Create the Quiz!' button,
+        choosing the Quiz options. <br/>
+        This lobby will display the unique Quiz code for that lobby so that others can join. <br/>
+        The host can then begin the Quiz.<br/><br/>
+        After each question the Host may edit answers being correct or incorrect. <br/>
+        After the select number of questions, the winners are shown on the final leaderboard!<br/>
+        </p>
+        <p className="fontSizeLarge py-4"> Good Luck! </p>
       </div>
     </div>
 );
