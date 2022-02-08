@@ -2,7 +2,7 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
 
-const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+const apiKey = process.env.NEXT_PUBLIC_API_KEY || 'xPL61bEK8JXO49JzCXzXhg==ukDqPAl4ZnfZQm8W';
 
 export function getFact() {
   if (apiKey) {

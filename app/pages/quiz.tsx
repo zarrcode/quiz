@@ -45,6 +45,7 @@ const Quiz: NextPage = () => {
   const [isMCQ, setIsMCQ] = useState(false);
   const [timer, setTimer] = useState('');
   const [questionTime, setQuestionTime] = useState('');
+  const [createBtnAnim, setCreateBtnAnim] = useState(false);
 
   useEffect(() => {
     document.documentElement.style.setProperty('$secondary-color', 'green');
@@ -398,7 +399,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
             <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 300) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
-            <button className="mainBtn activeBtn fontSizeLarge m-8" onClick={() => { setInGame(!inGame); setGameState('lobby'); setCreatingQuiz(!creatingQuiz); sioCreateGame(); }}>Create the Quiz!</button>
+            <button className={`createBtn fontSizeLarge m-8 ${createBtnAnim && 'createBtnAnim'}`} onClick={() => { setCreateBtnAnim(true); setInGame(!inGame); setGameState('lobby'); setCreatingQuiz(!creatingQuiz); sioCreateGame(); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
@@ -407,7 +408,6 @@ const Quiz: NextPage = () => {
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col justify-start items-center gap-5">
               <div className="logoCreateQuiz">
-              <Image src={logo} alt="logo" />
               </div>
                 <div className='mb-12'><p className="fontSizeMedium pb-[0.5rem] pt-8">What shall we call you?</p>
                     <input type="text" placeholder="Username..." className="questionInput fontSizeSmall" value={username || ''} onChange={(e) => { setUsername(e.target.value); }}/></div>
