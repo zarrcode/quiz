@@ -6,6 +6,7 @@ import Button from './components/button';
 import { getFact } from './api/apiService';
 import logo from '../logo/Quiz.jpeg';
 
+
 const Home: NextPage = () => {
   const [randomFact, setRandomFact] = useState('');
   const [isActive, setIsActive] = useState(false);

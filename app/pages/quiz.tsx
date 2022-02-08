@@ -16,7 +16,7 @@ import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
 import logo from '../logo/Quiz.jpeg';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 
 const Quiz: NextPage = () => {
   const [inGame, setInGame] = useState(false);
@@ -278,16 +278,15 @@ const Quiz: NextPage = () => {
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
-            {/* <h2 className="fontSizeLarge py-2">{quizCode}</h2> */}
-            {timer && <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
+            {timer && <div className={`timerCircle ${(Number(timer)<6 && Number(timer)%2 === 0) && 'dangerEven'} ${(Number(timer)<6 && Number(timer)%2 !== 0) && 'dangerOdd'}`}><span className="font-bold text-lg">{timer}</span></div>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
-              <h2 className="fontSizeLarge py-2">{quizCode}</h2>
-              {timer && <p className="py-2">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
-              <p className="fontSizeMedium">{question}</p>
+              {/* <h2 className="fontSizeLarge py-2">{quizCode}</h2> */}
+              {timer && <div className={`timerCircle ${(Number(timer)<6 && Number(timer)%2 === 0) && 'dangerEven'} ${(Number(timer)<6 && Number(timer)%2 !== 0) && 'dangerOdd'}`}><span className="font-bold text-lg">{timer}</span></div>}
+              <p className="mt-5 fontSizeMedium">{question}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
             </div>
@@ -299,7 +298,6 @@ const Quiz: NextPage = () => {
         <div>
           { !allAnswered
             ? <div className="wrapper flex flex-col items-center">
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               isHost={isHost} allAnswered={allAnswered} user={user}
@@ -309,17 +307,17 @@ const Quiz: NextPage = () => {
               {isHost
                 ? <div className="wrapper flex flex-col items-center">
                 <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-                <h3>Answer: {correctAnswer}</h3>
+                <h3 className="answerFont">Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   stateChange={changeCorrectAnswers} result={user.result}
                   isHost={isHost}
                   allAnswered={allAnswered} user={user} />)}
-                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
+                <div className="py-6"><Button text="SCOREBOARD" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
                 : <div className="wrapper flex flex-col items-center">
                 <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-                <h3>Answer: {correctAnswer}</h3>
+                <h3 className="answerFont">Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   result={user.result} isHost={isHost} allAnswered={allAnswered}
@@ -334,13 +332,13 @@ const Quiz: NextPage = () => {
       case ('scoreboard'): return (
         <div className="wrapper flex flex-col items-center">
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-          {users.map((user) => <PlayerCard key={user.username} username={user.username}
-          gameState={gameState} score={user.score} self={user.username === username}
-          isHost={isHost} user={user} />)}
+          {users.map((user, i) => <PlayerCard key={user.username} username={user.username}
+            position={(i+1).toString()} gameState={gameState} score={user.score} self={user.username === username}
+            isHost={isHost} user={user} />)}
           <div className="flex">
             {isHost
               && <div className="px-4">
-              <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
+              <Button text="Next Question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
               </div>
             }
           </div>
@@ -352,11 +350,11 @@ const Quiz: NextPage = () => {
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={500}
+          numberOfPieces={1500}
           recycle={false}
           />
           <Fireworks options = {{
-            speed: 2,
+            speed: 25,
           }}style={{
             top: 0,
             left: 0,
@@ -365,7 +363,7 @@ const Quiz: NextPage = () => {
             position: 'fixed',
           }} />
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-          <h1 className="winnerFont">WINNER!</h1>
+          <h1 className="winnerFont">WINNER</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="exit-button flex mt-20">

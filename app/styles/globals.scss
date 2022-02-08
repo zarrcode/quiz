@@ -68,6 +68,7 @@ $inset3: 18rem 0 0 $secondary-color inset;
   fontSizelarge
   fontSizeMedium
   fontSizeSmall
+  answerFont
 
   gapSize
   gapSizeSmall
@@ -250,30 +251,30 @@ $inset3: 18rem 0 0 $secondary-color inset;
 .winner {
   &.first {
     background-color: rgba(#F1BA23, 1);
-    width: 100%;
-    font-size: 1.75rem;
+    width: 95%;
+    font-size: 1.5rem;
     margin-inline: 1rem;
   }
   &.second {
     background-color: rgba(#999EA3, 1);
-    width: 90%;
-    font-size: 1.5rem;
+    width: 95%;
+    font-size: 1.25rem;
   }
   &.third {
     background-color: rgba(#B1715D,1);
-    width: 90%;
-    font-size: 1.25rem;
+    width: 95%;
+    font-size: 1rem;
   }
   &.loser {
-    width: 90%;
+    width: 75%;
   }
 }
 
 .winnerFont {
-  font-size: 2.75rem;
-  font-family: "Merienda";
-  /* font-style: italic; */
-  font-weight: bold;
+  font-size: 2rem;
+  font-family: "Georgia";
+  // font-style: italic;
+  // font-weight: bold;
   color: #f1ba23;
 }
 
@@ -287,10 +288,10 @@ $inset3: 18rem 0 0 $secondary-color inset;
 }
 .firstMedal {
   color: #f1ba23;
-  margin-left:35px;
+  // margin-left:35px;
 }
 .secondPlace {
-  width: 100%;
+  width: 90%;
   height: 100%;
   justify-content: center;
   display: flex;
@@ -307,7 +308,7 @@ $inset3: 18rem 0 0 $secondary-color inset;
   // border: 2px solid $secondary-color;
 }
 .thirdPlace {
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content:center;
   align-items: center;
@@ -332,6 +333,28 @@ $inset3: 18rem 0 0 $secondary-color inset;
   margin-left:1000px
 }
 
+.timerCircle {
+  background: #2c2e2e;
+  height:5rem;
+  width:3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-color: #167e5b;
+  border-radius:50%;
+  color:#fcfcfc;
+  &.dangerEven {
+    background-color: rgba(#751313,1);
+    color:#ffffff;
+  }
+  &.dangerOdd {
+    background-color: rgba(#ca1111,1);
+    color:#ffffff;
+  }
+  // margin-bottom: 20px;
+}
+
 
 // --UTILITY CLASSES--
 
@@ -351,6 +374,12 @@ $inset3: 18rem 0 0 $secondary-color inset;
 }
 .fontSizeSmall {
   font-size: calc(0.75rem + 0.5vw);
+}
+
+.answerFont {
+  font-size: calc(1rem + 0.65vw);
+  font-style: italic;
+  margin-bottom:1.2rem;
 }
 
 .gapSize {
@@ -408,6 +437,7 @@ $inset3: 18rem 0 0 $secondary-color inset;
   -ms-user-select: none;
   user-select: none;
   // border-radius: 2px;
+  // color: #167e5b;
 
 }
 
@@ -448,25 +478,13 @@ $inset3: 18rem 0 0 $secondary-color inset;
   display: block;
 }
 
-.container .checkmark:after {
-  left: 30%;
-  top: 2%;
-  width: 35%;
-  height: 75%;
-  border: solid #167e5b;
-  border-width: 0 5px 5px 0;
-  border-radius: 3px;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
 
 .container .checkmark:after {
   left: 30%;
   top: 2%;
   width: 35%;
   height: 75%;
-  border: solid #167e5b;
+  border: solid #1dc78e;
   border-width: 0 5px 5px 0;
   border-radius: 3px;
   -webkit-transform: rotate(45deg);
@@ -475,5 +493,5 @@ $inset3: 18rem 0 0 $secondary-color inset;
 }
 
 .customFont {
-  font-family: 'Chilanka'
+  font-family: 'Georgia'
 }
