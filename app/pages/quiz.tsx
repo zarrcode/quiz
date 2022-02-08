@@ -16,6 +16,7 @@ import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
 import logo from '../logo/Quiz.jpeg';
+import WebFont from 'webfontloader';
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
@@ -173,6 +174,13 @@ const Quiz: NextPage = () => {
       setAllAnswered(true);
     });
 
+    WebFont.load({
+      google: {
+        families: ['Chilanka']
+      }
+    });
+
+
     // on unmount, remove socket event listeners and disconnect socket
     return () => {
       if (socket.connected) socket.disconnect();
@@ -258,10 +266,10 @@ const Quiz: NextPage = () => {
     switch (gameState) {
       case ('lobby'): return (
         <div className="wrapper flex flex-col items-center">
-          <h1 className="fontSizeLarge py-4">{title}</h1>
-          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+          <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
           {users.map((user) => <PlayerCard user={user} key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
+          <h2 className="customFont fontSizeLarge py-4">Code: {quizCode}</h2>
           {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
         </div>
       );
@@ -270,8 +278,8 @@ const Quiz: NextPage = () => {
         <div>
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
-            <h1 className="fontSizeLarge py-4">{title}</h1>
-            <h2 className="fontSizeLarge py-2">{quizCode}</h2>
+            <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
+            {/* <h2 className="fontSizeLarge py-2">{quizCode}</h2> */}
             {timer && <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
@@ -301,7 +309,7 @@ const Quiz: NextPage = () => {
             : <div>
               {isHost
                 ? <div className="wrapper flex flex-col items-center">
-                <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+                <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
                 <h3>Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
                   gameState={gameState} answer={user.answer} self={user.username === username}
@@ -326,7 +334,7 @@ const Quiz: NextPage = () => {
 
       case ('scoreboard'): return (
         <div className="wrapper flex flex-col items-center">
-          <h2 className="fontSizeLarge py-4">{quizCode}</h2>
+          <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
           {users.map((user) => <PlayerCard key={user.username} username={user.username}
           gameState={gameState} score={user.score} self={user.username === username}
           isHost={isHost} user={user} />)}
@@ -349,7 +357,7 @@ const Quiz: NextPage = () => {
           recycle={false}
           />
           <Fireworks options = {{
-            speed: 3,
+            speed: 2,
           }}style={{
             top: 0,
             left: 0,
@@ -357,7 +365,7 @@ const Quiz: NextPage = () => {
             height: '100%',
             position: 'fixed',
           }} />
-          <h2 className="fontSizeLarge py-4">{title}</h2>
+          <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}

@@ -247,6 +247,69 @@ $inset3: 15rem 0 0 $secondary-color inset;
   }
 }
 
+.winnerFont {
+  font-size: 2.75rem;
+  font-family: "Merienda";
+  /* font-style: italic; */
+  font-weight: bold;
+  color: #f1ba23;
+}
+
+.firstPlace {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+
+}
+.firstMedal {
+  color: #f1ba23;
+  margin-left:35px;
+}
+.secondPlace {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 2px;
+  margin-top: 30px;
+  // margin:0px;
+  // padding:0px;
+  // border: 0px;
+}
+.secondMedal {
+  color: #999ea3;
+  // border: 2px solid $secondary-color;
+}
+.thirdPlace {
+  width: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  padding-bottom: 40px;
+}
+.thirdMedal {
+  color: #b1715d;
+}
+
+.finalTitle {
+  font-size:80px;
+  font-family: Courier, monospace;
+}
+
+.exit-button {
+  z-index: 2;
+  /* width: 1000px; */
+}
+
+.tick {
+  height: 100px;
+  margin-left:1000px
+}
+
 
 // --UTILITY CLASSES--
 
@@ -255,6 +318,9 @@ $inset3: 15rem 0 0 $secondary-color inset;
   width: Min(95vw, 50rem);
 }
 
+.fontSizeXLarge {
+  font-size: calc(2rem + 1.5vw);
+}
 .fontSizeLarge {
   font-size: calc(1.25rem + 1vw);
 }
@@ -311,4 +377,72 @@ $inset3: 15rem 0 0 $secondary-color inset;
     transform: rotate(15000deg);
   }
 
+}
+/* Customize the label (the container) */
+.container {
+  position: relative;
+  padding-left: 2.7rem;
+  // margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  // border-radius: 2px;
+
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0%;
+  height: 130%;
+  width: 85%;
+  border-radius: 6px;
+  margin-left: 1rem;
+  margin-top: 0px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: rgb(223, 250, 229);
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #ffffff;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 30%;
+  top: 2%;
+  width: 35%;
+  height: 75%;
+  border: solid #167e5b;
+  border-width: 0 5px 5px 0;
+  border-radius: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.customFont {
+  font-family: 'Chilanka'
 }

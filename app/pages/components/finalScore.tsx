@@ -7,21 +7,21 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons'
 const FinalScore: NextPage<finalProps> = ({ position, username, score }) => {
   switch (position) {
     case (1): return (
-      <div className="first w-[80%]">
+      <div className="firstPlace first w-[80%]">
       <PlayerCard user={{ username }} self={false} gameState={'final'} isHost={false}
       username={username} score={score} position={'first'} />
-      <FontAwesomeIcon className="firstMedal fa-2x" icon={faMedal} />
+      <FontAwesomeIcon className="firstMedal fa-3x" icon={faMedal} />
       </div>
     );
     case (2): return (
-      <div className="second w-[80%]">
+      <div className="secondPlace flex second w-[80%]">
       <PlayerCard user={{ username }} self={false} gameState={'final'} isHost={false}
        username={username} score={score} position={'second'} />
        <FontAwesomeIcon className="secondMedal fa-2x" icon={faMedal} />
        </div>
     );
     case (3): return (
-      <div className="third w-[80%]">
+      <div className="thirdPlace third w-[80%]">
       <PlayerCard user={{ username }} self={false} gameState={'final'} isHost={false}
        username={username} score={score} position={'third'} />
        <FontAwesomeIcon className="thirdMedal fa-2x" icon={faMedal} />

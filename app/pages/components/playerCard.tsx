@@ -28,10 +28,14 @@ const PlayerCard: NextPage<playerCardProps> = ({
               {allAnswered
                 && <div>
                   {result === 'true'
-                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Correct!</button>
-                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Wrong!</button>
+                    ? <label className="container">
+                      <input type="checkbox" checked={result === 'true'} onClick={() => { if (stateChange) { stateChange(user); } }}/>
+                      <span className="checkmark"></span>
+                      </label>
+                    :  <label className="container">
+                        <input type="checkbox"  onClick={() => { if (stateChange) { stateChange(user); } }}/>
+                        <span className="checkmark"></span>
+                      </label>
                   }
                   </div>
                 }
@@ -70,7 +74,7 @@ const PlayerCard: NextPage<playerCardProps> = ({
     </div>
     );
     case ('final'): return (
-      <div className='playerCard w-[90%] h-[3rem] m-[0.25rem] rounded flex flex-col items-center'>
+      <div className='playerCard w-[90%] h-[3rem] my-[0.25rem] rounded flex flex-col items-center'>
         <div className={` pc-lobby h-full flex items-center justify-center px-2 winner ${position}`}>
           <div className={`flex items-center justify-between h-full w-[90%] winner ${position}`}>
             <p className="font-bold px-4">{username}</p>
