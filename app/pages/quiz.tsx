@@ -16,7 +16,7 @@ import { socket } from '../services/socket';
 import MultipleAnswers from './components/multipleAnswers';
 import FinalScore from './components/finalScore';
 import logo from '../logo/Quiz.jpeg';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 
 const Quiz: NextPage = () => {
   const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
@@ -174,11 +174,11 @@ const Quiz: NextPage = () => {
       setAllAnswered(true);
     });
 
-    WebFont.load({
-      google: {
-        families: ['Chilanka']
-      }
-    });
+    // WebFont.load({
+    //   google: {
+    //     families: ['Space Mono']
+    //   }
+    // });
 
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -308,7 +308,7 @@ const Quiz: NextPage = () => {
               {isHost
                 ? <div className="wrapper flex flex-col items-center">
                 <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-                <h3>Answer: {correctAnswer}</h3>
+                <h3 className="answerFont">Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   stateChange={changeCorrectAnswers} result={user.result}
@@ -318,7 +318,7 @@ const Quiz: NextPage = () => {
               </div>
                 : <div className="wrapper flex flex-col items-center">
                 <h2 className="fontSizeLarge py-4">{quizCode}</h2>
-                <h3>Answer: {correctAnswer}</h3>
+                <h3 className="answerFont">Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
                   gameState={gameState} answer={user.answer} self={user.username === username}
                   result={user.result} isHost={isHost} allAnswered={allAnswered}
@@ -333,9 +333,9 @@ const Quiz: NextPage = () => {
       case ('scoreboard'): return (
         <div className="wrapper flex flex-col items-center">
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-          {users.map((user) => <PlayerCard key={user.username} username={user.username}
-          gameState={gameState} score={user.score} self={user.username === username}
-          isHost={isHost} user={user} />)}
+          {users.map((user, i) => <PlayerCard key={user.username} username={user.username}
+            position={(i+1).toString()} gameState={gameState} score={user.score} self={user.username === username}
+            isHost={isHost} user={user} />)}
           <div className="flex">
             {isHost
               && <div className="px-4">
@@ -355,7 +355,7 @@ const Quiz: NextPage = () => {
           recycle={false}
           />
           <Fireworks options = {{
-            speed: 2,
+            speed: 25,
           }}style={{
             top: 0,
             left: 0,
@@ -364,7 +364,7 @@ const Quiz: NextPage = () => {
             position: 'fixed',
           }} />
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
-          <h1 className="winnerFont">WINNER!</h1>
+          <h1 className="winnerFont">WINNER</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="exit-button flex mt-20">

@@ -66,9 +66,10 @@ const PlayerCard: NextPage<playerCardProps> = ({
     case ('scoreboard'): return (
       <div className='playerCard w-[90%] h-[5rem] m-[0.25rem] rounded flex flex-col'>
       <div className={` ${self && 'self'} pc-answers-name h-2/5 w-1/3 ml-4 flex justify-center items-center rounded-t-full font-bold`}>
-        <p>{username}</p>
+        <p>{position === '1' ? position+'st' : position === '2' ? position+'nd' : position === '3' ? position+'rd' : position === '4' ? position+'th' : position+'th'}</p>
       </div>
-      <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-end px-8 font-bold`}>
+      <div className={` ${self && 'self'} pc-answers rounded-2xl h-3/5 flex items-center justify-between px-8 font-bold`}>
+       <p>{username}</p>
         <p>{score}</p>
       </div>
     </div>

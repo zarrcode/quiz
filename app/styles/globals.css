@@ -39,6 +39,7 @@ body {
   fontSizelarge
   fontSizeMedium
   fontSizeSmall
+  answerFont
 
   gapSize
   gapSizeSmall
@@ -265,32 +266,30 @@ body {
 
 .winner.first {
   background-color: #f1ba23;
-  width: 100%;
-  font-size: 1.75rem;
+  width: 95%;
+  font-size: 1.5rem;
   margin-inline: 1rem;
 }
 
 .winner.second {
   background-color: #999ea3;
-  width: 90%;
-  font-size: 1.5rem;
+  width: 95%;
+  font-size: 1.25rem;
 }
 
 .winner.third {
   background-color: #b1715d;
-  width: 90%;
-  font-size: 1.25rem;
+  width: 95%;
+  font-size: 1rem;
 }
 
 .winner.loser {
-  width: 90%;
+  width: 75%;
 }
 
 .winnerFont {
   font-size: 2rem;
-  font-family: "Chilanka";
-  /* font-style: italic; */
-  font-weight: bold;
+  font-family: "Georgia";
   color: #f1ba23;
 }
 
@@ -310,11 +309,10 @@ body {
 
 .firstMedal {
   color: #f1ba23;
-  margin-left: 35px;
 }
 
 .secondPlace {
-  width: 100%;
+  width: 90%;
   height: 100%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -338,7 +336,7 @@ body {
 }
 
 .thirdPlace {
-  width: 100%;
+  width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -388,6 +386,12 @@ body {
 
 .fontSizeSmall {
   font-size: calc(0.75rem + 0.5vw);
+}
+
+.answerFont {
+  font-size: calc(1rem + 0.65vw);
+  font-style: italic;
+  margin-bottom: 1.2rem;
 }
 
 .gapSize {
@@ -562,6 +566,6 @@ body {
 }
 
 .customFont {
-  font-family: 'Chilanka';
+  font-family: 'Georgia';
 }
 /*# sourceMappingURL=globals.css.map */
