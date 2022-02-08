@@ -356,7 +356,7 @@ const Quiz: NextPage = () => {
             height: '100%',
             position: 'fixed',
           }} />
-          <h2 className="fontSizeLarge py-4">{title}</h2>
+          <h2 className="finalTitle py-4">{title}</h2>
           <h1 className="winnerFont">WINNER!</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}

@@ -246,18 +246,14 @@ body {
 
 .winner.second {
   background-color: #999ea3;
-  width: 100%;
+  width: 90%;
   font-size: 1.5rem;
-  /* margin-right: 0; */
-  margin-inline: 1rem;
-
 }
 
 .winner.third {
   background-color: #b1715d;
-  width: 100%;
+  width: 90%;
   font-size: 1.25rem;
-  margin-inline: 1rem;
 }
 
 .winner.loser {
@@ -265,7 +261,7 @@ body {
 }
 
 .winnerFont {
-  font-size: 1.75rem;
+  font-size: 2.75rem;
   font-family: "Merienda";
   /* font-style: italic; */
   font-weight: bold;
@@ -288,11 +284,11 @@ body {
 
 .firstMedal {
   color: #f1ba23;
-  margin-left:1rem
+  margin-left: 35px;
 }
 
 .secondPlace {
-  width: 90%;
+  width: 100%;
   height: 100%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -308,19 +304,15 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding-bottom: 2px;
-  /* border: 2px solid #189e71; */
-  margin-top: 2rem;
-
+  margin-top: 30px;
 }
 
 .secondMedal {
   color: #999ea3;
-  margin-left:1rem
-  /* border: 2px solid #189e71; */
 }
 
 .thirdPlace {
-  width: 80%;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -337,9 +329,19 @@ body {
   color: #b1715d;
 }
 
+.finalTitle {
+  font-size: 80px;
+  font-family: Courier, monospace;
+}
+
 .exit-button {
   z-index: 2;
   /* width: 1000px; */
+}
+
+.tick {
+  height: 100px;
+  margin-left: 1000px;
 }
 
 .wrapper {
@@ -364,5 +366,70 @@ body {
 
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
+}
+
+/* Customize the label (the container) */
+.container {
+  position: relative;
+  padding-left: 2.7rem;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  left: 0%;
+  height: 130%;
+  width: 85%;
+  border-radius: 6px;
+  margin-left: 1rem;
+  margin-top: 0px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #dffae5;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #ffffff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 30%;
+  top: 2%;
+  width: 35%;
+  height: 75%;
+  border: solid #167e5b;
+  border-width: 0 5px 5px 0;
+  border-radius: 3px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 /*# sourceMappingURL=globals.css.map */

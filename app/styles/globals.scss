@@ -272,9 +272,19 @@ $inset3: 15rem 0 0 $secondary-color inset;
   color: #b1715d;
 }
 
+.finalTitle {
+  font-size:80px;
+  font-family: Courier, monospace;
+}
+
 .exit-button {
   z-index: 2;
   /* width: 1000px; */
+}
+
+.tick {
+  height: 100px;
+  margin-left:1000px
 }
 
 
@@ -300,4 +310,74 @@ $inset3: 15rem 0 0 $secondary-color inset;
 }
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
+}
+/* Customize the label (the container) */
+.container {
+  position: relative;
+  padding-left: 2.7rem;
+  // margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  // border-radius: 2px;
+
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  // top: 0rem;
+  left: 0%;
+  // right:0rem;
+  height: 130%;
+  width: 85%;
+  border-radius: 6px;
+  margin-left: 1rem;
+  margin-top: 0px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: rgb(223, 250, 229);
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #ffffff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 30%;
+  top: 2%;
+  width: 35%;
+  height: 75%;
+  border: solid #167e5b;
+  border-width: 0 5px 5px 0;
+  border-radius: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
