@@ -32,8 +32,8 @@ const PlayerCard: NextPage<playerCardProps> = ({
                       <input type="checkbox" checked={result === 'true'} onClick={() => { if (stateChange) { stateChange(user); } }}/>
                       <span className="checkmark"></span>
                       </label>
-                    :  <label className="container">
-                        <input type="checkbox"  onClick={() => { if (stateChange) { stateChange(user); } }}/>
+                    : <label className="container">
+                        <input type="checkbox" onClick={() => { if (stateChange) { stateChange(user); } }}/>
                         <span className="checkmark"></span>
                       </label>
                   }

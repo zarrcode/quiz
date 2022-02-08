@@ -19,10 +19,6 @@ import logo from '../logo/Quiz.jpeg';
 import WebFont from 'webfontloader';
 
 const Quiz: NextPage = () => {
-  const mockUsers = [{ username: 'steve', answer: 'wrong answer', score: 0 },
-    { username: 'R', answer: 'correct answer', score: 5 },
-    { username: 'bob', answer: 'steve sucks', score: 2 }];
-
   const [inGame, setInGame] = useState(false);
   const [creatingQuiz, setCreatingQuiz] = useState(false);
   const [username, setUsername] = useState('');
@@ -84,6 +80,9 @@ const Quiz: NextPage = () => {
 
     socket.on('game_created', (gameID) => {
       setQuizCode(gameID);
+      setInGame(true);
+      setGameState('lobby');
+      setCreatingQuiz(false);
     });
 
     socket.on('game_joined', (newTitle) => {
@@ -174,11 +173,11 @@ const Quiz: NextPage = () => {
       setAllAnswered(true);
     });
 
-    WebFont.load({
-      google: {
-        families: ['Chilanka']
-      }
-    });
+    // WebFont.load({
+    //   google: {
+    //     families: ['Chilanka']
+    //   }
+    // });
 
 
     // on unmount, remove socket event listeners and disconnect socket
@@ -401,7 +400,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
             <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 300) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
-            <button className={`createBtn fontSizeLarge m-8 ${createBtnAnim && 'createBtnAnim'}`} onClick={() => { setCreateBtnAnim(true); setInGame(!inGame); setGameState('lobby'); setCreatingQuiz(!creatingQuiz); sioCreateGame(); }}>Create the Quiz!</button>
+            <button className={`createBtn fontSizeLarge m-8 ${createBtnAnim && 'createBtnAnim'}`} onClick={() => { setCreateBtnAnim(true); setTimeout(() => { sioCreateGame(); }, 1000); }}>Create the Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
