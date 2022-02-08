@@ -355,6 +355,32 @@ $inset3: 18rem 0 0 $secondary-color inset;
   // margin-bottom: 20px;
 }
 
+.finalAnimations {
+  z-index: 2;
+}
+
+.logoCreatePage {
+  margin-top: 0;
+  height: 100px;
+  width: 150px;
+  position: static;
+  margin-bottom:10px;
+}
+.logoQuizOptions {
+  display:flex;
+  width: 80px;
+  margin-left: 50%;
+  margin-right:50%;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:10px;
+}
+.logoFinal {
+  margin-top: 1rem;
+  width: 5rem;
+  z-index: 1;
+}
+
 
 // --UTILITY CLASSES--
 

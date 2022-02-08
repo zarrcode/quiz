@@ -415,6 +415,40 @@ body {
   color: #ffffff;
 }
 
+.finalAnimations {
+  z-index: 2;
+}
+
+.logoCreatePage {
+  margin-top: 0;
+  height: 100px;
+  width: 150px;
+  position: static;
+  margin-bottom: 10px;
+}
+
+.logoQuizOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 80px;
+  margin-left: 50%;
+  margin-right: 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+
+.logoFinal {
+  margin-top: 1rem;
+  width: 5rem;
+  z-index: 1;
+}
+
 .wrapper {
   width: Min(95vw, 50rem);
 }
