@@ -313,7 +313,7 @@ const Quiz: NextPage = () => {
                   stateChange={changeCorrectAnswers} result={user.result}
                   isHost={isHost}
                   allAnswered={allAnswered} user={user} />)}
-                <div className="py-6"><Button text="SCOREBOARD" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
+                <div className="py-6"><Button text="Scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
                 : <div className="wrapper flex flex-col items-center">
                 <h2 className="fontSizeLarge py-4">{quizCode}</h2>
@@ -389,6 +389,9 @@ const Quiz: NextPage = () => {
           // CREATE QUIZ OPTIONS PAGE
           ? <div>
           <div className="py-4 wrapper text-center min-h-screen h-full">
+            <div className="logoQuizOptions">
+              <Image src={logo} alt="quiz logo" layout="intrinsic" objectFit='contain' />
+            </div>
             <Button text="Back" btnPress={() => { setCreatingQuiz(!creatingQuiz); }} isActive={true} />
             <input type="text" placeholder="Quiz Title ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setTitle(e.target.value); }}/>
             <Option text="Difficulty" buttons={['Easy', 'Medium', 'Hard']} active={setDifficulty} />
@@ -406,6 +409,9 @@ const Quiz: NextPage = () => {
             <Navbar/>
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col justify-start items-center gap-5">
+              <div className="logoHolder">
+                <Image src={logo} alt="quiz logo" objectFit='contain'/>
+              </div>
               <div className="logoCreateQuiz">
               </div>
                 <div className='mb-12'><p className="fontSizeMedium pb-[0.5rem] pt-8">What shall we call you?</p>

@@ -415,6 +415,29 @@ body {
   color: #ffffff;
 }
 
+.logoHolder {
+  margin-top: 0;
+  height: 100px;
+  width: 150px;
+  position: static;
+  margin-bottom: 10px;
+}
+
+.logoQuizOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 37%;
+  width: 25%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+}
+
 .wrapper {
   width: Min(95vw, 50rem);
 }
