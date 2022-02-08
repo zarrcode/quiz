@@ -19,6 +19,7 @@ body {
   navbar
 
   mainBtn
+  mcqBtn
   activeBtn
 
   questionInput
@@ -60,6 +61,7 @@ body {
   border-bottom: 2px solid black;
   -webkit-box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.3);
           box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.3);
+  z-index: 10;
 }
 
 .navbar:hover {
@@ -77,6 +79,19 @@ body {
   outline: 1px solid rgba(0, 0, 0, 0.6);
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+.mcqBtn {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #189e71;
+  -webkit-box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
+          box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.8);
+  outline: 1px solid rgba(0, 0, 0, 0.6);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .activeBtn {
@@ -245,52 +260,6 @@ body {
   width: 90%;
 }
 
-.winnerFont {
-  font-size: 1.75rem;
-  font-family: "Merienda";
-  /* font-style: italic; */
-  font-weight: bold;
-  color: #f1ba23;
-}
-
-.firstPlace {
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  padding-bottom: 2px;
-}
-.firstMedal {
-  color: #f1ba23;
-}
-.secondPlace {
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-bottom: 2px;
-}
-.secondMedal {
-  color: #999ea3;
-}
-.thirdPlace {
-  width: 100%;
-  display: flex;
-  justify-content:center;
-  align-items: center;
-  padding-bottom: 40px;
-}
-.thirdMedal {
-  color: #b1715d;
-}
-
-.exit-button {
-  z-index: 2;
-  /* width: 1000px; */
-}
-
 .wrapper {
   width: Min(95vw, 50rem);
 }
@@ -314,15 +283,4 @@ body {
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
 }
-
-.quizLogo {
-  height: 250px;
-  width: 250px;
-  /* margin-bottom: 0; */
-}
-.logoCreateQuiz {
-  height: 130px;
-  width: 130px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-}
+/*# sourceMappingURL=globals.css.map */
