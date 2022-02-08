@@ -278,7 +278,6 @@ const Quiz: NextPage = () => {
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
-            {/* <h2 className="fontSizeLarge py-2">{quizCode}</h2> */}
             {timer && <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
@@ -299,7 +298,6 @@ const Quiz: NextPage = () => {
         <div>
           { !allAnswered
             ? <div className="wrapper flex flex-col items-center">
-            <h2 className="fontSizeLarge py-4">{quizCode}</h2>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               isHost={isHost} allAnswered={allAnswered} user={user}
@@ -352,7 +350,7 @@ const Quiz: NextPage = () => {
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={500}
+          numberOfPieces={1500}
           recycle={false}
           />
           <Fireworks options = {{
