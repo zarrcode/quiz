@@ -388,7 +388,7 @@ body {
 
 .timerCircle {
   background: #2c2e2e;
-  height: 3.5rem;
+  height: 5rem;
   width: 3.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -605,19 +605,7 @@ body {
   top: 2%;
   width: 35%;
   height: 75%;
-  border: solid #167e5b;
-  border-width: 0 5px 5px 0;
-  border-radius: 3px;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.container .checkmark:after {
-  left: 30%;
-  top: 2%;
-  width: 35%;
-  height: 75%;
-  border: solid #167e5b;
+  border: solid #1dc78e;
   border-width: 0 5px 5px 0;
   border-radius: 3px;
   -webkit-transform: rotate(45deg);

@@ -277,7 +277,7 @@ const Quiz: NextPage = () => {
         <div>
           {isMCQ
             ? <div className="wrapper flex flex-col items-center h-screen">
-            <h1 className="customFont timerCircle fontSizeXLarge py-4">{title}</h1>
+            <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
             {timer && <div className={`timerCircle ${(Number(timer)<6 && Number(timer)%2 === 0) && 'dangerEven'} ${(Number(timer)<6 && Number(timer)%2 !== 0) && 'dangerOdd'}`}><span className="font-bold text-lg">{timer}</span></div>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
@@ -313,7 +313,7 @@ const Quiz: NextPage = () => {
                   stateChange={changeCorrectAnswers} result={user.result}
                   isHost={isHost}
                   allAnswered={allAnswered} user={user} />)}
-                <div className="py-6"><Button text="go to scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
+                <div className="py-6"><Button text="SCOREBOARD" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
                 : <div className="wrapper flex flex-col items-center">
                 <h2 className="fontSizeLarge py-4">{quizCode}</h2>
@@ -338,7 +338,7 @@ const Quiz: NextPage = () => {
           <div className="flex">
             {isHost
               && <div className="px-4">
-              <Button text="new question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
+              <Button text="Next Question" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} />
               </div>
             }
           </div>
