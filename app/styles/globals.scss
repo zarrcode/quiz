@@ -311,6 +311,28 @@ $inset3: 15rem 0 0 $secondary-color inset;
   margin-left:1000px
 }
 
+.timerCircle {
+  background: #2c2e2e;
+  height:3.5rem;
+  width:3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-color: #167e5b;
+  border-radius:50%;
+  color:#fcfcfc;
+  &.dangerEven {
+    background-color: rgba(#5db187,1);
+    color:#ce1111;
+  }
+  &.dangerOdd {
+    background-color: rgba(#ffffff,1);
+    color:#ce1111;
+  }
+  // margin-bottom: 20px;
+}
+
 
 // --UTILITY CLASSES--
 
