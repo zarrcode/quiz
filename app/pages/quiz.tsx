@@ -271,14 +271,14 @@ const Quiz: NextPage = () => {
             ? <div className="wrapper flex flex-col items-center h-screen">
             <h1 className="fontSizeLarge py-4">{title}</h1>
             <h2 className="fontSizeLarge py-2">{quizCode}</h2>
-            <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
+            {timer && <p className="py-2 text-sm">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
             <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
               <h2 className="fontSizeLarge py-2">{quizCode}</h2>
-              <p className="py-2">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>
+              {timer && <p className="py-2">Time left: <span className="font-bold text-lg px-1">{timer}</span>s</p>}
               <p className="fontSizeMedium">{question}</p>
               <input type="text" placeholder="Answer ..." className="questionInput fontSizeSmall mt-6" onChange={(e) => { setAnswer(e.target.value); }}/>
               <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
