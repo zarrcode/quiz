@@ -347,6 +347,7 @@ const Quiz: NextPage = () => {
 
       case ('final'): return (
         <div className="wrapper flex flex-col items-center">
+          <div className="finalAnimations">
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
@@ -362,12 +363,16 @@ const Quiz: NextPage = () => {
             height: '100%',
             position: 'fixed',
           }} />
+          </div>
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
           <h1 className="winnerFont">WINNER</h1>
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="exit-button flex mt-20">
             <div className="px-4 z-20"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
+          </div>
+          <div className="logoFinal">
+                <Image src={logo} alt="quiz logo" objectFit='contain'/>
           </div>
         </div>
       );
@@ -388,7 +393,7 @@ const Quiz: NextPage = () => {
         {!inGame && creatingQuiz
           // CREATE QUIZ OPTIONS PAGE
           ? <div>
-          <div className="py-4 wrapper text-center min-h-screen h-full">
+          <div className="py-4 wrapper text-center flex flex-col items-center min-h-screen h-full">
             <div className="logoQuizOptions">
               <Image src={logo} alt="quiz logo" layout="intrinsic" objectFit='contain' />
             </div>
@@ -401,7 +406,7 @@ const Quiz: NextPage = () => {
             <p className="fontSizeLarge text-white pt-6">Time per Question (seconds)</p>
             <input type="number" placeholder="0" min={0} max={300} className="questionInput fontSizeSmall mt-6" onChange={(e) => { if ((parseInt(e.target.value, 10)) > 300) e.target.value = '300'; if ((parseInt(e.target.value, 10)) < 0) e.target.value = '0'; setQuestionTime((Math.floor(parseInt(e.target.value, 10))).toString()); }}/>
             <Categories cats={['General Knowledge', 'Books', 'Films', 'Music', 'Musicals', 'Television', 'Video Games', 'Science', 'Computers', 'Mathematics', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Comics', 'Anime'].sort()} setCats={setCats} />
-            <button className={`createBtn fontSizeLarge m-8 ${createBtnAnim && 'createBtnAnim'}`} onClick={() => { setCreateBtnAnim(true); setTimeout(() => { sioCreateGame(); }, 1000); }}>Create the Quiz!</button>
+            <button className={`createBtn fontSizeLarge m-8 ${createBtnAnim && 'createBtnAnim'}`} onClick={() => { setCreateBtnAnim(true); setTimeout(() => { sioCreateGame(); }, 1000); }}>Create Quiz!</button>
           </div>
         </div>
           // JOIN / CREATE QUIZ PAGE
@@ -409,7 +414,7 @@ const Quiz: NextPage = () => {
             <Navbar/>
             <div className="py-20 wrapper text-center min-h-screen">
               <div className="flex flex-col justify-start items-center gap-5">
-              <div className="logoHolder">
+              <div className="logoCreatePage">
                 <Image src={logo} alt="quiz logo" objectFit='contain'/>
               </div>
               <div className="logoCreateQuiz">

@@ -415,7 +415,11 @@ body {
   color: #ffffff;
 }
 
-.logoHolder {
+.finalAnimations {
+  z-index: 2;
+}
+
+.logoCreatePage {
   margin-top: 0;
   height: 100px;
   width: 150px;
@@ -427,15 +431,22 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-left: 37%;
-  width: 25%;
+  width: 80px;
+  margin-left: 50%;
+  margin-right: 50%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.logoFinal {
+  margin-top: 1rem;
+  width: 5rem;
+  z-index: 1;
 }
 
 .wrapper {
