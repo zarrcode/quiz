@@ -28,18 +28,14 @@ const PlayerCard: NextPage<playerCardProps> = ({
               {allAnswered
                 && <div>
                   {result === 'true'
-                    ? <label className="container">
-                      <input type="checkbox" checked={result === 'true'} onClick={() => { if (stateChange) { stateChange(user); } }}/>
-                      <span className="checkmark"></span>
-                      </label>
-                    : <label className="container">
-                        <input type="checkbox" onClick={() => { if (stateChange) { stateChange(user); } }}/>
-                        <span className="checkmark"></span>
-                      </label>
-                  }
+                    ? <button className="text-3xl pl-4" onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    ✓</button>
+                    : <button className="text-3xl pl-4" onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    ✗</button>
+                 }
                   </div>
                 }
-              <p>{answer}</p>
+              <p className="pr-4 text-xl">{answer}</p>
             </div>
           </div>
           : <div className='playerCard w-[90%] h-[5rem] m-[0.25rem] rounded flex flex-col'>
@@ -50,14 +46,14 @@ const PlayerCard: NextPage<playerCardProps> = ({
               {allAnswered
                 && <div>
                   {result === 'true'
-                    ? <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Correct!</button>
-                    : <button onClick={() => { if (stateChange) { stateChange(user); } }}>
-                    Wrong!</button>
+                    ? <button className="text-3xl pl-4" onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    ✓</button>
+                    : <button className="text-3xl pl-4" onClick={() => { if (stateChange) { stateChange(user); } }}>
+                    ✗</button>
                  }
                   </div>
                 }
-              <p>{answer}</p>
+              <p className="pr-4 text-xl">{answer}</p>
             </div>
           </div>
         }
