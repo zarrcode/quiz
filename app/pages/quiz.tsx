@@ -280,7 +280,7 @@ const Quiz: NextPage = () => {
             <h1 className="customFont fontSizeXLarge py-4">{title}</h1>
             {timer && <div className={`timerCircle ${(Number(timer)<6 && Number(timer)%2 === 0) && 'dangerEven'} ${(Number(timer)<6 && Number(timer)%2 !== 0) && 'dangerOdd'}`}><span className="font-bold text-lg">{timer}</span></div>}
             <MultipleAnswers text={question} buttons={allAnswers} active={setAnswer} />
-            <button className="mainBtn my-4" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
+            <button className="mainBtn mb-4 p-2" onClick={() => { sioSubmitAnswer(); setGameState('answers'); }} >Submit Answer</button>
           </div>
             : <div className="wrapper flex flex-col items-center">
               <h1 className="fontSizeLarge py-4">{title}</h1>
@@ -298,6 +298,7 @@ const Quiz: NextPage = () => {
         <div>
           { !allAnswered
             ? <div className="wrapper flex flex-col items-center">
+                <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
             {users.map((user) => <PlayerCard key={user.username} username={user.username}
               gameState={gameState} answer={user.answer} self={user.username === username}
               isHost={isHost} allAnswered={allAnswered} user={user}
@@ -316,6 +317,7 @@ const Quiz: NextPage = () => {
                 <div className="py-6"><Button text="Scoreboard" btnPress={() => { sioFinalCorrectAnswers(); }} isActive={false} /></div>
               </div>
                 : <div className="wrapper flex flex-col items-center">
+                <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
                 <h2 className="fontSizeLarge py-4">{quizCode}</h2>
                 <h3 className="answerFont">Answer: {correctAnswer}</h3>
                 {users.map((user) => <PlayerCard key={user.username} username={user.username}
@@ -333,7 +335,8 @@ const Quiz: NextPage = () => {
         <div className="wrapper flex flex-col items-center">
           <h2 className="customFont fontSizeXLarge py-4">{title}</h2>
           {users.map((user, i) => <PlayerCard key={user.username} username={user.username}
-            position={(i+1).toString()} gameState={gameState} score={user.score} self={user.username === username}
+            position={(i+1).toString()} gameState={gameState}
+            score={user.score} self={user.username === username}
             isHost={isHost} user={user} />)}
           <div className="flex">
             {isHost
@@ -369,10 +372,10 @@ const Quiz: NextPage = () => {
          {users.map((user) => <FinalScore key={user.username} username={user.username}
          position={users.indexOf(user) + 1} score={user.score} />)}
           <div className="exit-button flex mt-20">
-            <div className="px-4 z-20"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>
+            {isHost && <div className="px-4 z-20"><Button text="Exit Game" btnPress={() => { sioEndGame(); refreshStates(); }} isActive={false} /></div>}
           </div>
           <div className="logoFinal">
-                <Image src={logo} alt="quiz logo" objectFit='contain'/>
+            <Image src={logo} alt="quiz logo" objectFit='contain'/>
           </div>
         </div>
       );

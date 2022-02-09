@@ -16,12 +16,13 @@ $base-color: #1a1919;
 // $secondary-color: #e6d11b; // yellow
 // $secondary-color: #189e71; // green
 // $secondary-color: #a2c918; // lime
+$secondary-color: #92C71F; // tick colour (lime)
 // $secondary-color: #2c086d; // purple
 // $secondary-color: #d68213; // orange
 // $secondary-color: #a70d55; // pinky/red
 // $secondary-color: #b30000; // red
 // $secondary-color: #000000; // black
-$secondary-color: #d4af0a; // orange/yellow
+// $secondary-color: #d4af0a; // orange/yellow
 
 
 
@@ -87,7 +88,7 @@ $inset3: 18rem 0 0 $secondary-color inset;
   background-color: $secondary-color;
   position: fixed;
   width: 102vw;
-  height: 4.75rem;
+  height: 4rem;
   left:-1vw;
   display:flex;
   justify-content: space-around;
@@ -336,12 +337,12 @@ $inset3: 18rem 0 0 $secondary-color inset;
 .timerCircle {
   background: #2c2e2e;
   height:5rem;
-  width:3.5rem;
+  width:5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-width: 2px;
-  border-color: #167e5b;
+  border-color: $secondary-color;
   border-radius:50%;
   color:#fcfcfc;
   &.dangerEven {
@@ -409,7 +410,7 @@ $inset3: 18rem 0 0 $secondary-color inset;
 }
 
 .gapSize {
-  gap: calc(-5px + 4vw);
+  gap: calc(-10px + 3vw);
 }
 .gapSizeSmall {
   gap: calc(-5px + 2vw);
