@@ -8,6 +8,10 @@ body {
   color: white;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .bg {
   background-color: #1a1919;
 }

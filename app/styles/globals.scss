@@ -9,6 +9,9 @@ body {
   color: white;
   // font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 
 $base-color: #1a1919;
 // $secondary-color: #b31973; // pink

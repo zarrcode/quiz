@@ -259,6 +259,7 @@ const Quiz: NextPage = () => {
     setInGame(false); setCreatingQuiz(false); setUsername(''); setQuizCode(''); setDifficulty('');
     setMultipleChoice(''); setNumberOfQuestions(''); setCategories([]); setTitle('');
     setGameState(''); setUsers([]); setIsHost(false); setQuestion(''); setAnswer('');
+    setCreateBtnAnim(false);
   }
 
   function renderGameState() {
