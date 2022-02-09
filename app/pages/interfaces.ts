@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { Dispatch, SetStateAction } from 'react';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 export interface User {
   username: string;
@@ -11,7 +12,8 @@ export interface User {
 }
 
 export interface navbarProps {
-  text:string;
+  text: string;
+  icon:IconDefinition;
   url:string;
 }
 
