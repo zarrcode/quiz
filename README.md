@@ -1,4 +1,4 @@
-![image](./readme-Images/Logo.png)
+![image](./readme-images/Logo.png)
 
 Quiz is a web application that is ideal for having a pub quiz anywhere, anytime.
 This site contains a Home page, Rules page and Quiz pages.
