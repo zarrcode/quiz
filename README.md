@@ -3,9 +3,9 @@
 Quiz is a web application that is ideal for having a pub quiz anywhere, anytime.
 This site contains a Home page, Rules page and Quiz pages.
 
-![image](./readme-Images/Lobby.png)
-![image](./readme-Images/Question.png)
-![image](./readme-Images/FinalScoreboard.png)
+![image](./readme-images/Lobby.png)
+![image](./readme-images/Question.png)
+![image](./readme-images/FinalScoreboard.png)
 
 ## Getting started
 
