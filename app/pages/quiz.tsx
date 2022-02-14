@@ -270,7 +270,7 @@ const Quiz: NextPage = () => {
           {users.map((user) => <PlayerCard user={user} key={user.username} username={user.username}
           gameState={gameState} self={user.username === username} isHost={isHost} />)}
           <h2 className="customFont fontSizeLarge py-4">Code: {quizCode}</h2>
-          {isHost && <div className="py-4"><Button text="start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
+          {isHost && <div className="py-4"><Button text="Start game" btnPress={() => { sioRetrieveQuestion(); }} isActive={false} /></div>}
         </div>
       );
 

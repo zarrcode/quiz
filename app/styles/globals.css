@@ -375,6 +375,11 @@ body {
   color: #b1715d;
 }
 
+.icons {
+  color: #1a1919;
+  background-color: black;
+}
+
 .finalTitle {
   font-size: 80px;
   font-family: Courier, monospace;
